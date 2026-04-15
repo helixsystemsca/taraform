@@ -15,10 +15,19 @@ function greetingForTara() {
   return "Welcome back, Tara ❤️";
 }
 
+/** Same string on server + first client paint to avoid hydration mismatch (React #418). */
+const GREETING_PLACEHOLDER = "Welcome, Tara";
+
 export function StudyHeader(props: { onImportClick: () => void; onExport: () => void }) {
   const selectedSectionId = useStudyStore((s) => s.selectedSectionId);
   const selectSection = useStudyStore((s) => s.selectSection);
   const uploadBusy = useStudyStore((s) => s.uploadBusy);
+
+  const [greeting, setGreeting] = React.useState(GREETING_PLACEHOLDER);
+
+  React.useLayoutEffect(() => {
+    setGreeting(greetingForTara());
+  }, []);
 
   return (
     <GlassCard className="mb-5 px-5 py-4">
@@ -28,7 +37,7 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
             Taraform
           </div>
           <h1 className="mt-1 text-xl font-semibold tracking-[-0.03em] text-white sm:text-2xl">
-            {greetingForTara()}
+            {greeting}
           </h1>
           <p className="mt-1 max-w-xl text-sm text-white/60">
             Calm, grounded study for nursing grad school — one section at a time.
