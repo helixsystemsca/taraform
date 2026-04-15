@@ -45,10 +45,10 @@ export function Dashboard() {
   return (
     <div className="space-y-5">
       <GlassCard className="relative overflow-hidden p-6 sm:p-8">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-rose-100/[0.08] via-transparent to-transparent" />
         <div className="relative flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="max-w-xl space-y-3">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/8 px-3 py-1 text-xs font-medium text-emerald-100/90 ring-1 ring-white/12">
+            <div className="inline-flex items-center gap-2 rounded-full bg-rose-50/[0.08] px-3 py-1 text-xs font-medium text-rose-100/90 ring-1 ring-rose-200/15">
               <Sparkles className="h-3.5 w-3.5" />
               For Tara — nursing grad school
             </div>
@@ -107,7 +107,7 @@ export function Dashboard() {
       {sections.length === 0 && !uploadBusy ? (
         <GlassCard className="flex flex-col items-center justify-center gap-4 px-6 py-16 text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/8 ring-1 ring-white/15">
-            <BookOpen className="h-7 w-7 text-sky-200/90" />
+            <BookOpen className="h-7 w-7 text-rose-200/90" />
           </div>
           <div>
             <div className="text-lg font-semibold text-white">No sections yet</div>
@@ -133,10 +133,10 @@ export function Dashboard() {
                 onClick={() => selectSection(s.id)}
                 className={cn(
                   "glass text-left transition active:scale-[0.99]",
-                  "rounded-3xl p-5 ring-1 ring-white/12 hover:bg-white/8 hover:ring-white/18",
+                  "rounded-[1.75rem] p-5 ring-1 ring-rose-100/12 hover:bg-rose-50/[0.06] hover:ring-rose-200/22",
                 )}
               >
-                <div className="text-xs font-medium text-emerald-200/85">
+                <div className="text-xs font-medium text-rose-200/85">
                   Chapter {s.chapterNumber}
                   {s.pageNumber ? ` · ~p. ${s.pageNumber}` : ""}
                 </div>
@@ -146,7 +146,7 @@ export function Dashboard() {
                   {(s.keyConcepts ?? []).slice(0, 4).map((k) => (
                     <span
                       key={k}
-                      className="rounded-full bg-white/8 px-2.5 py-0.5 text-[11px] text-white/70 ring-1 ring-white/10"
+                      className="rounded-full bg-rose-50/[0.08] px-2.5 py-0.5 text-[11px] text-rose-50/75 ring-1 ring-rose-200/15"
                     >
                       {k}
                     </span>

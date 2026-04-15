@@ -49,7 +49,7 @@ export function Sidebar() {
   return (
     <GlassCard className="p-0">
       <div className="flex items-center gap-2 border-b border-white/10 px-5 py-4">
-        <BookOpen className="h-4 w-4 text-emerald-200/90" />
+        <BookOpen className="h-4 w-4 text-rose-200/90" />
         <div className="text-sm font-semibold text-white">Your library</div>
       </div>
       <ScrollArea className="h-[calc(100dvh-200px)] px-3 pb-4 pt-2">
@@ -80,7 +80,7 @@ export function Sidebar() {
                           className={cn(
                             "w-full rounded-xl px-2 py-2.5 text-left text-[13px] leading-snug text-white/78 transition hover:bg-white/6",
                             active &&
-                              "bg-gradient-to-b from-white/14 to-white/10 text-white ring-1 ring-white/14 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]",
+                              "bg-gradient-to-b from-rose-50/[0.14] to-rose-50/[0.06] text-white ring-1 ring-rose-200/20 shadow-[inset_0_1px_0_rgba(255,245,250,0.22)]",
                           )}
                           onClick={() => selectSection(s.id)}
                         >

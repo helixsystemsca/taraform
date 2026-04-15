@@ -101,7 +101,7 @@ export function SectionView(props: { sectionId: string }) {
   return (
     <div className="space-y-4">
       <GlassCard className="relative overflow-hidden p-5 sm:p-6">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-rose-100/[0.08] via-transparent to-transparent" />
         <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <Button type="button" variant="ghost" size="sm" className="-ml-2 mb-2" onClick={() => selectSection(null)}>
@@ -130,7 +130,7 @@ export function SectionView(props: { sectionId: string }) {
       ) : null}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="w-full flex-wrap justify-start gap-1 rounded-2xl bg-white/6 p-1 ring-1 ring-white/12 backdrop-blur-xl">
+        <TabsList className="w-full flex-wrap justify-start gap-1 rounded-2xl bg-white/[0.06] p-1 ring-1 ring-rose-100/12 backdrop-blur-xl">
           <TabsTrigger value="content">Content</TabsTrigger>
           <TabsTrigger value="notes">My Notes</TabsTrigger>
           <TabsTrigger value="quiz">Generate Quiz</TabsTrigger>
@@ -149,7 +149,7 @@ export function SectionView(props: { sectionId: string }) {
                   <mark
                     key={i}
                     className={cn(
-                      "rounded-md bg-emerald-300/18 px-1 py-0.5 text-white ring-1 ring-emerald-200/15",
+                      "rounded-md bg-rose-300/20 px-1 py-0.5 text-rose-50 ring-1 ring-rose-200/25",
                     )}
                   >
                     {p.hit}

@@ -138,7 +138,7 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
                   "w-full rounded-2xl px-4 py-3 text-left text-sm text-white/88 ring-1 ring-white/12 transition",
                   "bg-white/6 hover:bg-white/9",
                   selected && step === "answer" && "bg-white/11 ring-white/18",
-                  showKey && isCorrectChoice && "bg-emerald-400/12 ring-emerald-300/22",
+                  showKey && isCorrectChoice && "bg-rose-400/14 ring-rose-300/28",
                   showKey && selected && !isCorrectChoice && "bg-red-400/10 ring-red-300/22",
                 )}
                 disabled={step === "reflect"}
@@ -181,8 +181,8 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
               className={cn(
                 "rounded-2xl p-4 text-sm ring-1",
                 lastCorrect
-                  ? "bg-emerald-400/10 text-emerald-50 ring-emerald-300/20"
-                  : "bg-amber-400/8 text-amber-50 ring-amber-300/18",
+                  ? "bg-rose-400/12 text-rose-50 ring-rose-300/25"
+                  : "bg-amber-400/9 text-amber-50 ring-amber-300/20",
               )}
             >
               <div className="font-medium">{lastCorrect ? "Correct" : "Let’s tighten this up"}</div>

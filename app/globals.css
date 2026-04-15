@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05070d;
-  --foreground: #f1f5ff;
-  --muted: rgba(255, 255, 255, 0.65);
-  --muted-2: rgba(255, 255, 255, 0.42);
+  /* Warm “Apple dark” with a blush undertone */
+  --background: #0c090d;
+  --foreground: #faf7f8;
+  --muted: rgba(255, 245, 248, 0.68);
+  --muted-2: rgba(255, 230, 240, 0.45);
 
-  --glass-bg: rgba(255, 255, 255, 0.08);
-  --glass-ring: rgba(255, 255, 255, 0.14);
-  --glass-highlight: rgba(255, 255, 255, 0.22);
+  --blush: #fbcfe8;
+  --blush-soft: #fce7f3;
+  --rose-glow: rgba(251, 207, 232, 0.35);
+
+  --glass-bg: rgba(255, 255, 255, 0.075);
+  --glass-ring: rgba(255, 228, 240, 0.18);
+  --glass-highlight: rgba(255, 255, 255, 0.26);
 }
 
 @theme inline {
@@ -25,6 +30,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 @layer base {
@@ -36,10 +43,11 @@ body {
 @layer utilities {
   .bg-taraform {
     background:
-      radial-gradient(1200px 800px at 20% 10%, rgba(56, 189, 248, 0.22), transparent 60%),
-      radial-gradient(900px 700px at 85% 15%, rgba(52, 211, 153, 0.18), transparent 58%),
-      radial-gradient(1100px 900px at 50% 105%, rgba(99, 102, 241, 0.12), transparent 65%),
-      linear-gradient(180deg, rgba(10, 12, 23, 0.92), rgba(5, 7, 13, 0.98));
+      radial-gradient(1000px 720px at 12% -5%, rgba(252, 231, 243, 0.22), transparent 55%),
+      radial-gradient(900px 640px at 88% 8%, rgba(251, 207, 232, 0.2), transparent 58%),
+      radial-gradient(800px 600px at 50% 100%, rgba(224, 242, 254, 0.1), transparent 62%),
+      radial-gradient(700px 500px at 70% 45%, rgba(244, 201, 255, 0.08), transparent 55%),
+      linear-gradient(180deg, rgba(18, 10, 16, 0.97), rgba(8, 6, 10, 0.99));
   }
 
   .glass {
@@ -47,16 +55,18 @@ body {
     border: 1px solid var(--glass-ring);
     box-shadow:
       inset 0 1px 0 0 var(--glass-highlight),
-      0 24px 90px rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(18px);
+      0 24px 90px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(255, 182, 212, 0.04);
+    backdrop-filter: blur(20px) saturate(1.15);
   }
 
   .glass-soft {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.065);
+    border: 1px solid rgba(255, 220, 235, 0.14);
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.18),
-      0 18px 70px rgba(0, 0, 0, 0.38);
-    backdrop-filter: blur(16px);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+      0 20px 80px rgba(0, 0, 0, 0.36),
+      0 0 80px rgba(251, 207, 232, 0.06);
+    backdrop-filter: blur(18px) saturate(1.12);
   }
 }

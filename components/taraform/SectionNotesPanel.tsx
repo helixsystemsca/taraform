@@ -118,8 +118,8 @@ export function SectionNotesPanel({
             width="100%"
             height="360px"
             strokeWidth={3}
-            strokeColor="rgba(236, 254, 255, 0.92)"
-            canvasColor="rgba(0, 0, 0, 0.18)"
+            strokeColor="rgba(255, 241, 246, 0.92)"
+            canvasColor="rgba(24, 12, 20, 0.28)"
             onStroke={() => schedulePersistSketch()}
           />
         </div>

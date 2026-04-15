@@ -129,8 +129,8 @@ export function AnalyticsPanel(props: { sectionId: string }) {
                   }}
                 />
                 <Legend wrapperStyle={{ fontSize: 12, color: "rgba(255,255,255,0.65)" }} />
-                <Bar yAxisId="left" dataKey="timeMin" name="Minutes" fill="rgba(56, 189, 248, 0.55)" radius={[8, 8, 0, 0]} />
-                <Line yAxisId="right" type="monotone" dataKey="avgConfidence" name="Avg confidence %" stroke="rgba(52, 211, 153, 0.95)" strokeWidth={2} dot />
+                <Bar yAxisId="left" dataKey="timeMin" name="Minutes" fill="rgba(251, 207, 232, 0.55)" radius={[8, 8, 0, 0]} />
+                <Line yAxisId="right" type="monotone" dataKey="avgConfidence" name="Avg confidence %" stroke="rgba(253, 186, 211, 0.95)" strokeWidth={2} dot />
               </ComposedChart>
             </ResponsiveContainer>
           )}

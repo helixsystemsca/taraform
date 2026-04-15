@@ -9,7 +9,7 @@ function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
     <div
       data-slot="card"
       className={cn(
-        "rounded-3xl bg-white/6 ring-1 ring-white/12 shadow-[0_10px_50px_rgba(0,0,0,0.35)] backdrop-blur-xl",
+        "rounded-[1.75rem] bg-white/[0.065] ring-1 ring-rose-100/12 shadow-[0_10px_50px_rgba(0,0,0,0.34),0_0_0_1px_rgba(255,182,212,0.05)] backdrop-blur-xl",
         className,
       )}
       {...props}
@@ -50,7 +50,7 @@ function CardDescription({
   return (
     <p
       data-slot="card-description"
-      className={cn("text-sm text-white/70", className)}
+      className={cn("text-sm text-rose-50/65", className)}
       {...props}
     />
   );

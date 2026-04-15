@@ -25,13 +25,13 @@ export function GlassFAB({ label, disabled, className, inputProps }: GlassFABPro
       <span className="sr-only">{label}</span>
       <span
         className={cn(
-          "glass flex h-[58px] w-[58px] items-center justify-center rounded-full ring-1 ring-white/20",
-          "shadow-[0_22px_90px_rgba(0,0,0,0.55)] transition duration-300 ease-out",
-          "group-hover:scale-105 group-hover:shadow-[0_26px_100px_rgba(56,189,248,0.18)]",
+          "glass flex h-[58px] w-[58px] items-center justify-center rounded-full ring-1 ring-rose-200/25",
+          "shadow-[0_22px_90px_rgba(0,0,0,0.5),0_0_48px_rgba(251,113,133,0.15)] transition duration-300 ease-out",
+          "group-hover:scale-105 group-hover:shadow-[0_28px_100px_rgba(244,114,182,0.22),0_0_64px_rgba(253,186,211,0.2)]",
           "group-active:scale-[0.97]",
         )}
       >
-        <Plus className="h-7 w-7 text-white transition group-hover:rotate-90 duration-500 ease-out" />
+        <Plus className="h-7 w-7 text-rose-50 transition group-hover:rotate-90 duration-500 ease-out" />
       </span>
     </label>
   );

@@ -33,13 +33,13 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
     <GlassCard className="mb-5 px-5 py-4">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="text-xs font-medium uppercase tracking-[0.14em] text-emerald-200/80">
+          <div className="text-xs font-medium uppercase tracking-[0.14em] text-rose-200/85">
             Taraform
           </div>
           <h1 className="mt-1 text-xl font-semibold tracking-[-0.03em] text-white sm:text-2xl">
             {greeting}
           </h1>
-          <p className="mt-1 max-w-xl text-sm text-white/60">
+          <p className="mt-1 max-w-xl text-sm text-rose-50/55">
             Calm, grounded study for nursing grad school — one section at a time.
           </p>
         </div>
