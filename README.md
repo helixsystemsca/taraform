@@ -32,9 +32,16 @@ Apple-inspired study companion for nursing grad school: upload scanned textbook 
    npm run dev
    ```
 
-   The app is configured with `basePath: "/taraform"`. Open:
+   Open:
 
-   `http://localhost:3000/taraform`
+   `http://localhost:3000`
+
+   **Custom domain (e.g. `taraform.helixsystems.ca`):** keep **no** `basePath` (default).  
+   **Subpath only** (e.g. `helixsystems.ca/taraform`): set in `.env.local`:
+
+   `NEXT_PUBLIC_BASE_PATH=/taraform`
+
+   and add the same value to Vercel → Project → Environment Variables, then redeploy.
 
 4. **Production build**
 
@@ -68,9 +75,9 @@ All study data stays in the browser (`localStorage`, key `taraform-study-storage
 
 - `src/app` — App Router, server actions for AI.
 - `src/stores/useStudyStore.ts` — persisted Zustand study state.
-- `src/components/taraform` — screens (dashboard, section, quiz, analytics).
-- `src/components/glass` — reusable liquid-glass surfaces.
-- `src/lib` — AI helpers, extraction mapping, base path for `/taraform` assets.
+- `components/taraform` — screens (dashboard, section, quiz, analytics).
+- `components/glass` — reusable liquid-glass surfaces.
+- `lib` — AI helpers, extraction mapping, optional `withAppBasePath` when using a subpath.
 
 ## License
 
