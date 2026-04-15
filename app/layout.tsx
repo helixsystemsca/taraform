@@ -16,8 +16,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-dvh bg-taraform antialiased">
+    <html lang="en">
+      <body className="min-h-dvh bg-taraform text-ink antialiased">
         <StoreHydration />
         {children}
       </body>

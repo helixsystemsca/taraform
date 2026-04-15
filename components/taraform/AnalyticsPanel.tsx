@@ -57,6 +57,9 @@ function buildSuggestion(
   return `Review “${worst.title}” — ${worst.reason}.`;
 }
 
+const TICK = "#6b5b52";
+const GRID = "rgba(120, 113, 108, 0.12)";
+
 export function AnalyticsPanel(props: { sectionId: string }) {
   const sections = useStudyStore((s) => s.sections);
   const quizResults = useStudyStore((s) => s.quizResults);
@@ -96,41 +99,41 @@ export function AnalyticsPanel(props: { sectionId: string }) {
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <GlassCard className="p-5">
-        <div className="text-base font-semibold text-white">Study insight</div>
-        <p className="mt-2 text-sm leading-relaxed text-white/70">{suggestion}</p>
+        <div className="font-display text-base font-semibold text-ink">Study insight</div>
+        <p className="mt-2 text-sm leading-relaxed text-ink/65">{suggestion}</p>
         {currentAvg != null ? (
-          <p className="mt-3 text-xs text-white/45">This section’s average confidence: {currentAvg}%</p>
+          <p className="mt-3 text-xs text-ink/45">This section’s average confidence: {currentAvg}%</p>
         ) : (
-          <p className="mt-3 text-xs text-white/45">No quiz data for this section yet.</p>
+          <p className="mt-3 text-xs text-ink/45">No quiz data for this section yet.</p>
         )}
       </GlassCard>
 
       <GlassCard className="p-5">
-        <div className="text-base font-semibold text-white">Time & confidence</div>
-        <p className="mt-1 text-xs text-white/50">Minutes studied vs. average self-reported confidence.</p>
+        <div className="font-display text-base font-semibold text-ink">Time & confidence</div>
+        <p className="mt-1 text-xs text-ink/50">Minutes studied vs. average self-reported confidence.</p>
         <div className="mt-4 h-[260px] w-full">
           {!hasData ? (
-            <div className="flex h-full items-center justify-center rounded-2xl bg-white/4 text-sm text-white/55 ring-1 ring-white/10">
+            <div className="flex h-full items-center justify-center rounded-2xl border border-stone-200/70 bg-blush-medium/40 text-sm text-ink/55">
               Take a quiz to unlock charts.
             </div>
           ) : (
             <ResponsiveContainer width="100%" height="100%">
               <ComposedChart data={chartData} margin={{ top: 8, right: 8, left: -18, bottom: 4 }}>
-                <CartesianGrid stroke="rgba(255,255,255,0.08)" vertical={false} />
-                <XAxis dataKey="name" tick={{ fill: "rgba(255,255,255,0.55)", fontSize: 10 }} interval={0} angle={-16} textAnchor="end" height={54} />
-                <YAxis yAxisId="left" tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }} />
-                <YAxis yAxisId="right" orientation="right" tick={{ fill: "rgba(255,255,255,0.5)", fontSize: 10 }} domain={[0, 100]} />
+                <CartesianGrid stroke={GRID} vertical={false} />
+                <XAxis dataKey="name" tick={{ fill: TICK, fontSize: 10 }} interval={0} angle={-16} textAnchor="end" height={54} />
+                <YAxis yAxisId="left" tick={{ fill: TICK, fontSize: 10 }} />
+                <YAxis yAxisId="right" orientation="right" tick={{ fill: TICK, fontSize: 10 }} domain={[0, 100]} />
                 <Tooltip
                   contentStyle={{
-                    background: "rgba(10, 12, 23, 0.9)",
-                    border: "1px solid rgba(255,255,255,0.14)",
+                    background: "rgba(253, 245, 242, 0.96)",
+                    border: "1px solid rgba(232, 210, 201, 0.9)",
                     borderRadius: 14,
-                    color: "white",
+                    color: "#3d2b1f",
                   }}
                 />
-                <Legend wrapperStyle={{ fontSize: 12, color: "rgba(255,255,255,0.65)" }} />
-                <Bar yAxisId="left" dataKey="timeMin" name="Minutes" fill="rgba(251, 207, 232, 0.55)" radius={[8, 8, 0, 0]} />
-                <Line yAxisId="right" type="monotone" dataKey="avgConfidence" name="Avg confidence %" stroke="rgba(253, 186, 211, 0.95)" strokeWidth={2} dot />
+                <Legend wrapperStyle={{ fontSize: 12, color: "rgba(61, 43, 31, 0.65)" }} />
+                <Bar yAxisId="left" dataKey="timeMin" name="Minutes" fill="rgba(232, 210, 201, 0.85)" radius={[8, 8, 0, 0]} />
+                <Line yAxisId="right" type="monotone" dataKey="avgConfidence" name="Avg confidence %" stroke="rgba(184, 122, 107, 0.95)" strokeWidth={2} dot={{ fill: "rgba(184, 122, 107, 0.95)" }} />
               </ComposedChart>
             </ResponsiveContainer>
           )}

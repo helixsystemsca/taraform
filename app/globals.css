@@ -1,27 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  /* Warm “Apple dark” with a blush undertone */
-  --background: #0c090d;
-  --foreground: #faf7f8;
-  --muted: rgba(255, 245, 248, 0.68);
-  --muted-2: rgba(255, 230, 240, 0.45);
+  /* Reference: creamy blush light UI + warm ink */
+  --ink: #3d2b1f;
+  --blush-cream: #fdf5f2;
+  --blush-medium: #f9e7e0;
+  --blush-dust: #e8d2c9;
+  --blush-sheet: #fffcfb;
+  --copper: #b87a6b;
 
-  --blush: #fbcfe8;
-  --blush-soft: #fce7f3;
-  --rose-glow: rgba(251, 207, 232, 0.35);
+  --background: var(--blush-cream);
+  --foreground: var(--ink);
 
-  --glass-bg: rgba(255, 255, 255, 0.075);
-  --glass-ring: rgba(255, 228, 240, 0.18);
-  --glass-highlight: rgba(255, 255, 255, 0.26);
+  --glass-bg: rgba(255, 252, 251, 0.72);
+  --glass-ring: rgba(255, 255, 255, 0.55);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-ink: #3d2b1f;
+  --color-blush-cream: #fdf5f2;
+  --color-blush-medium: #f9e7e0;
+  --color-blush-dust: #e8d2c9;
+  --color-blush-sheet: #fffcfb;
+  --color-copper: #b87a6b;
+
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial,
+    "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial,
     "Apple Color Emoji", "Segoe UI Emoji";
+  --font-display: ui-serif, "New York", "Iowan Old Style", "Palatino Linotype",
+    "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
 }
@@ -41,32 +51,40 @@ body {
 }
 
 @layer utilities {
-  .bg-taraform {
-    background:
-      radial-gradient(1000px 720px at 12% -5%, rgba(252, 231, 243, 0.22), transparent 55%),
-      radial-gradient(900px 640px at 88% 8%, rgba(251, 207, 232, 0.2), transparent 58%),
-      radial-gradient(800px 600px at 50% 100%, rgba(224, 242, 254, 0.1), transparent 62%),
-      radial-gradient(700px 500px at 70% 45%, rgba(244, 201, 255, 0.08), transparent 55%),
-      linear-gradient(180deg, rgba(18, 10, 16, 0.97), rgba(8, 6, 10, 0.99));
+  .font-display {
+    font-family: var(--font-display);
   }
 
+  /* Soft top “wave” + creamy field (editorial app reference) */
+  .bg-taraform {
+    background-color: var(--blush-cream);
+    background-image:
+      radial-gradient(120% 55% at 50% -15%, rgba(232, 210, 201, 0.55), transparent 52%),
+      radial-gradient(90% 45% at 100% 0%, rgba(249, 231, 224, 0.9), transparent 45%),
+      radial-gradient(70% 40% at 0% 30%, rgba(255, 252, 251, 0.95), transparent 50%),
+      linear-gradient(180deg, #f9e7e0 0%, #fdf5f2 28%, #fdf5f2 100%);
+    background-attachment: fixed;
+  }
+
+  /* Liquid glass on light: frosted white + blush edge */
   .glass {
     background: var(--glass-bg);
-    border: 1px solid var(--glass-ring);
+    border: 1px solid rgba(255, 255, 255, 0.65);
     box-shadow:
       inset 0 1px 0 0 var(--glass-highlight),
-      0 24px 90px rgba(0, 0, 0, 0.42),
-      0 0 0 1px rgba(255, 182, 212, 0.04);
-    backdrop-filter: blur(20px) saturate(1.15);
+      0 18px 50px rgba(61, 43, 31, 0.06),
+      0 0 0 1px rgba(232, 210, 201, 0.35);
+    backdrop-filter: blur(22px) saturate(1.08);
   }
 
   .glass-soft {
-    background: rgba(255, 255, 255, 0.065);
-    border: 1px solid rgba(255, 220, 235, 0.14);
+    background: rgba(255, 252, 251, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.7);
     box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
-      0 20px 80px rgba(0, 0, 0, 0.36),
-      0 0 80px rgba(251, 207, 232, 0.06);
-    backdrop-filter: blur(18px) saturate(1.12);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
+      0 14px 40px rgba(61, 43, 31, 0.05),
+      0 0 0 1px rgba(232, 210, 201, 0.28);
+    backdrop-filter: blur(18px) saturate(1.05);
   }
+
 }

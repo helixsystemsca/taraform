@@ -84,11 +84,11 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
   if (finished) {
     return (
       <GlassCard className="p-8 text-center">
-        <div className="text-lg font-semibold text-white">Quiz complete</div>
-        <p className="mt-2 text-sm text-white/65">
+        <div className="font-display text-lg font-semibold text-ink">Quiz complete</div>
+        <p className="mt-2 text-sm text-ink/65">
           Nice work, Tara. Your confidence and timing were saved for analytics.
         </p>
-        <div className="mt-4 text-xs text-white/45">Session time ≈ {totalElapsedSec}s</div>
+        <div className="mt-4 text-xs text-ink/45">Session time ≈ {totalElapsedSec}s</div>
       </GlassCard>
     );
   }
@@ -100,13 +100,13 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
           <CardTitle className="text-base sm:text-lg">
             Question {activeIndex + 1} / {props.questions.length}
           </CardTitle>
-          <div className="flex items-center gap-2 text-xs text-white/55">
-            <Clock className="h-4 w-4" />
+          <div className="flex items-center gap-2 text-xs text-ink/50">
+            <Clock className="h-4 w-4 text-copper" />
             {totalElapsedSec}s
           </div>
         </div>
         <CardDescription className="flex items-center gap-2">
-          <HelpCircle className="h-4 w-4 text-white/50" />
+          <HelpCircle className="h-4 w-4 text-copper" />
           {q.type === "select_all"
             ? "Select all that apply"
             : q.type === "case_study"
@@ -117,12 +117,12 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
 
       <div className="space-y-4">
         {q.type === "case_study" ? (
-          <div className="rounded-2xl bg-black/22 p-4 text-sm leading-relaxed text-white/82 ring-1 ring-white/10">
+          <div className="rounded-2xl border border-stone-200/80 bg-blush-medium/50 p-4 text-sm leading-relaxed text-ink/85">
             {q.vignette}
           </div>
         ) : null}
 
-        <div className="text-[15px] leading-relaxed text-white">{q.prompt}</div>
+        <div className="text-[15px] leading-relaxed text-ink">{q.prompt}</div>
 
         <div className="space-y-2">
           {q.choices.map((c, idx) => {
@@ -135,11 +135,10 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
                 key={idx}
                 type="button"
                 className={cn(
-                  "w-full rounded-2xl px-4 py-3 text-left text-sm text-white/88 ring-1 ring-white/12 transition",
-                  "bg-white/6 hover:bg-white/9",
-                  selected && step === "answer" && "bg-white/11 ring-white/18",
-                  showKey && isCorrectChoice && "bg-rose-400/14 ring-rose-300/28",
-                  showKey && selected && !isCorrectChoice && "bg-red-400/10 ring-red-300/22",
+                  "w-full rounded-2xl border border-stone-200/70 bg-white/60 px-4 py-3 text-left text-sm text-ink/90 transition hover:bg-blush-sheet/95",
+                  selected && step === "answer" && "border-blush-dust/50 bg-blush-medium/60 ring-1 ring-copper/15",
+                  showKey && isCorrectChoice && "border-emerald-300/70 bg-emerald-50/90",
+                  showKey && selected && !isCorrectChoice && "border-red-200 bg-red-50/90",
                 )}
                 disabled={step === "reflect"}
                 onClick={() => {
@@ -179,20 +178,20 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
           <div className="space-y-4 pt-1">
             <div
               className={cn(
-                "rounded-2xl p-4 text-sm ring-1",
+                "rounded-2xl border p-4 text-sm",
                 lastCorrect
-                  ? "bg-rose-400/12 text-rose-50 ring-rose-300/25"
-                  : "bg-amber-400/9 text-amber-50 ring-amber-300/20",
+                  ? "border-emerald-200/80 bg-emerald-50/90 text-ink"
+                  : "border-amber-200/80 bg-amber-50/85 text-ink",
               )}
             >
               <div className="font-medium">{lastCorrect ? "Correct" : "Let’s tighten this up"}</div>
-              <p className="mt-2 text-white/80">{q.rationale}</p>
+              <p className="mt-2 text-ink/75">{q.rationale}</p>
             </div>
 
-            <div className="space-y-2 rounded-2xl bg-black/20 p-4 ring-1 ring-white/10">
+            <div className="space-y-2 rounded-2xl border border-stone-200/70 bg-blush-medium/40 p-4">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-white/80">How confident do you feel?</span>
-                <span className="tabular-nums text-white/55">{confidence}%</span>
+                <span className="text-ink/80">How confident do you feel?</span>
+                <span className="tabular-nums text-ink/50">{confidence}%</span>
               </div>
               <Slider
                 value={[confidence]}

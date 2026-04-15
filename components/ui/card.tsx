@@ -9,7 +9,7 @@ function Card({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
     <div
       data-slot="card"
       className={cn(
-        "rounded-[1.75rem] bg-white/[0.065] ring-1 ring-rose-100/12 shadow-[0_10px_50px_rgba(0,0,0,0.34),0_0_0_1px_rgba(255,182,212,0.05)] backdrop-blur-xl",
+        "rounded-[1.75rem] border border-white/70 bg-blush-sheet/90 shadow-[0_12px_40px_rgba(61,43,31,0.06)] backdrop-blur-xl",
         className,
       )}
       {...props}
@@ -37,7 +37,7 @@ function CardTitle({
   return (
     <h3
       data-slot="card-title"
-      className={cn("text-lg font-semibold tracking-[-0.02em]", className)}
+      className={cn("font-display text-lg font-semibold tracking-[-0.02em] text-ink", className)}
       {...props}
     />
   );
@@ -50,7 +50,7 @@ function CardDescription({
   return (
     <p
       data-slot="card-description"
-      className={cn("text-sm text-rose-50/65", className)}
+      className={cn("text-sm text-ink/60", className)}
       {...props}
     />
   );
@@ -83,4 +83,3 @@ function CardFooter({
 }
 
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter };
-

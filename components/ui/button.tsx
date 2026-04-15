@@ -7,17 +7,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-[transform,background-color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-rose-300/45 focus-visible:ring-offset-0 active:scale-[0.99]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-[transform,background-color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-copper/35 focus-visible:ring-offset-2 focus-visible:ring-offset-blush-cream active:scale-[0.99]",
   {
     variants: {
       variant: {
         default:
-          "bg-white/[0.11] text-white shadow-[inset_0_1px_0_0_rgba(255,245,250,0.35)] ring-1 ring-rose-100/15 hover:bg-white/[0.14] hover:ring-rose-100/20",
+          "border border-copper/25 bg-blush-sheet/90 text-ink shadow-sm shadow-stone-900/5 hover:bg-white hover:border-copper/35",
         primary:
-          "bg-gradient-to-b from-rose-300/35 via-pink-200/22 to-fuchsia-200/12 text-white ring-1 ring-rose-200/25 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.35),0_8px_40px_rgba(251,113,133,0.12)] hover:from-rose-300/45 hover:via-pink-200/28 hover:to-fuchsia-200/16",
-        ghost: "bg-transparent text-white/88 hover:bg-rose-50/[0.06]",
+          "border border-blush-dust/60 bg-gradient-to-b from-blush-dust to-[#dcc4bb] text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] hover:from-[#ebd5cc] hover:to-[#d2b6ac]",
+        ghost: "border border-transparent bg-transparent text-ink/80 hover:bg-blush-medium/60",
         destructive:
-          "bg-red-500/15 text-red-50 ring-1 ring-red-300/25 hover:bg-red-500/20",
+          "border border-red-200/80 bg-red-50 text-red-900 hover:bg-red-100",
       },
       size: {
         default: "h-11 px-5",
@@ -54,4 +54,3 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = "Button";
 
 export { Button, buttonVariants };
-

@@ -87,7 +87,7 @@ export function SectionView(props: { sectionId: string }) {
   if (!section) {
     return (
       <GlassCard className="p-6">
-        <p className="text-sm text-white/70">This section is no longer in your library.</p>
+        <p className="text-sm text-ink/65">This section is no longer in your library.</p>
         <Button type="button" variant="ghost" className="mt-3" onClick={() => selectSection(null)}>
           <ArrowLeft className="h-4 w-4" />
           Back
@@ -101,16 +101,16 @@ export function SectionView(props: { sectionId: string }) {
   return (
     <div className="space-y-4">
       <GlassCard className="relative overflow-hidden p-5 sm:p-6">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-rose-100/[0.08] via-transparent to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blush-dust/25 via-transparent to-transparent" />
         <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <Button type="button" variant="ghost" size="sm" className="-ml-2 mb-2" onClick={() => selectSection(null)}>
-              <ArrowLeft className="h-4 w-4" />
+              <ArrowLeft className="h-4 w-4 text-copper" />
               Library
             </Button>
             <CardHeader className="p-0">
               <CardTitle className="text-xl tracking-[-0.04em] sm:text-2xl">{section.title}</CardTitle>
-              <CardDescription className="mt-2 text-[13px] text-white/55">
+              <CardDescription className="mt-2 text-[13px]">
                 Chapter {section.chapterNumber}: {section.chapterTitle}
                 {section.pageNumber ? ` · ~page ${section.pageNumber}` : ""}
               </CardDescription>
@@ -126,11 +126,11 @@ export function SectionView(props: { sectionId: string }) {
       </GlassCard>
 
       {error ? (
-        <GlassCard className="border border-red-300/25 bg-red-500/10 p-4 text-sm text-red-100/90">{error}</GlassCard>
+        <GlassCard className="border border-red-200 bg-red-50/90 p-4 text-sm text-red-800">{error}</GlassCard>
       ) : null}
 
       <Tabs value={tab} onValueChange={setTab}>
-        <TabsList className="w-full flex-wrap justify-start gap-1 rounded-2xl bg-white/[0.06] p-1 ring-1 ring-rose-100/12 backdrop-blur-xl">
+        <TabsList className="h-auto min-h-11 w-full flex-wrap justify-start gap-1 rounded-2xl py-2">
           <TabsTrigger value="content">Content</TabsTrigger>
           <TabsTrigger value="notes">My Notes</TabsTrigger>
           <TabsTrigger value="quiz">Generate Quiz</TabsTrigger>
@@ -138,24 +138,28 @@ export function SectionView(props: { sectionId: string }) {
         </TabsList>
 
         <TabsContent value="content" className="mt-4">
-          <GlassCard className="p-5 sm:p-6">
-            <div className="text-sm font-medium text-white/90">Extracted text</div>
-            <p className="mt-1 text-xs text-white/50">Key concepts are highlighted when they match the phrase list.</p>
-            <div className="mt-4 whitespace-pre-wrap text-[15px] leading-relaxed text-white/88">
-              {highlighted.map((p, i) =>
-                typeof p === "string" ? (
-                  <React.Fragment key={i}>{p}</React.Fragment>
-                ) : (
-                  <mark
-                    key={i}
-                    className={cn(
-                      "rounded-md bg-rose-300/20 px-1 py-0.5 text-rose-50 ring-1 ring-rose-200/25",
-                    )}
-                  >
-                    {p.hit}
-                  </mark>
-                ),
-              )}
+          <GlassCard className="overflow-hidden p-0">
+            <div className="border-b border-stone-200/60 bg-blush-medium/70 px-5 py-3 sm:px-6">
+              <div className="font-display text-sm font-semibold text-ink">Extracted text</div>
+              <p className="mt-0.5 text-xs text-ink/50">Key concepts are highlighted when they match the phrase list.</p>
+            </div>
+            <div className="bg-white/40 px-5 py-5 sm:px-6">
+              <div className="whitespace-pre-wrap text-[15px] leading-relaxed text-ink/88">
+                {highlighted.map((p, i) =>
+                  typeof p === "string" ? (
+                    <React.Fragment key={i}>{p}</React.Fragment>
+                  ) : (
+                    <mark
+                      key={i}
+                      className={cn(
+                        "rounded-md border border-copper/25 bg-blush-dust/35 px-1 py-0.5 text-ink",
+                      )}
+                    >
+                      {p.hit}
+                    </mark>
+                  ),
+                )}
+              </div>
             </div>
           </GlassCard>
         </TabsContent>
@@ -170,7 +174,7 @@ export function SectionView(props: { sectionId: string }) {
           />
           <div className="mt-4 flex justify-end">
             <Button type="button" variant="default" onClick={() => void onGenerateQuiz()} disabled={isGenerating}>
-              <Wand2 className="h-4 w-4" />
+              <Wand2 className="h-4 w-4 text-copper" />
               Turn notes + page into quiz
             </Button>
           </div>
@@ -179,8 +183,8 @@ export function SectionView(props: { sectionId: string }) {
         <TabsContent value="quiz" className="mt-4 space-y-4">
           {!quiz?.length ? (
             <GlassCard className="p-6">
-              <div className="text-base font-semibold text-white">NCLEX-style quiz</div>
-              <p className="mt-2 text-sm text-white/60">
+              <div className="font-display text-base font-semibold text-ink">NCLEX-style quiz</div>
+              <p className="mt-2 text-sm text-ink/60">
                 Eight to twelve questions, grounded only in this section’s extracted text and key concepts.
               </p>
               <Button className="mt-5" variant="primary" onClick={() => void onGenerateQuiz()} disabled={isGenerating}>

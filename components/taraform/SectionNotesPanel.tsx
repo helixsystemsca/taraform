@@ -65,8 +65,8 @@ export function SectionNotesPanel({
   return (
     <div className="grid gap-4 lg:grid-cols-2">
       <GlassCard className="p-5">
-        <div className="text-sm font-medium text-white/90">Typed notes</div>
-        <p className="mt-1 text-xs text-white/50">Fallback editor — auto-saves as you type.</p>
+        <div className="text-sm font-medium text-ink">Typed notes</div>
+        <p className="mt-1 text-xs text-ink/50">Fallback editor — auto-saves as you type.</p>
         <Textarea
           className="mt-3 min-h-[200px]"
           value={textNote}
@@ -78,8 +78,8 @@ export function SectionNotesPanel({
       <GlassCard className="p-5">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <div className="text-sm font-medium text-white/90">Handwriting</div>
-            <p className="mt-1 text-xs text-white/50">True pen strokes — saved as vector paths.</p>
+            <div className="text-sm font-medium text-ink">Handwriting</div>
+            <p className="mt-1 text-xs text-ink/50">True pen strokes — saved as vector paths.</p>
           </div>
           <div className="flex gap-2">
             <Button
@@ -111,15 +111,15 @@ export function SectionNotesPanel({
             </Button>
           </div>
         </div>
-        <div className="mt-3 overflow-hidden rounded-2xl ring-1 ring-white/12">
+        <div className="mt-3 overflow-hidden rounded-2xl border border-stone-200/80 bg-white/50">
           <ReactSketchCanvas
             key={sectionId}
             ref={canvasRef}
             width="100%"
             height="360px"
             strokeWidth={3}
-            strokeColor="rgba(255, 241, 246, 0.92)"
-            canvasColor="rgba(24, 12, 20, 0.28)"
+            strokeColor="rgba(61, 43, 31, 0.85)"
+            canvasColor="rgba(253, 245, 242, 0.95)"
             onStroke={() => schedulePersistSketch()}
           />
         </div>

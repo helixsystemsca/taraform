@@ -17,7 +17,7 @@ const DialogOverlay = React.forwardRef<
   <DialogPrimitive.Overlay
     ref={ref}
     className={cn(
-      "fixed inset-0 z-50 bg-black/55 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+      "fixed inset-0 z-50 bg-stone-900/25 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
       className,
     )}
     {...props}
@@ -34,7 +34,7 @@ const DialogContent = React.forwardRef<
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed left-1/2 top-1/2 z-50 w-[min(560px,calc(100%-24px))] -translate-x-1/2 -translate-y-1/2 rounded-3xl bg-white/8 p-6 ring-1 ring-white/14 shadow-[0_30px_120px_rgba(0,0,0,0.55)] backdrop-blur-2xl outline-none",
+        "fixed left-1/2 top-1/2 z-50 w-[min(560px,calc(100%-24px))] -translate-x-1/2 -translate-y-1/2 rounded-[1.75rem] border border-white/70 bg-blush-sheet/95 p-6 text-ink shadow-[0_28px_80px_rgba(61,43,31,0.12)] backdrop-blur-2xl outline-none",
         className,
       )}
       {...props}
@@ -67,7 +67,7 @@ const DialogTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
-    className={cn("text-lg font-semibold tracking-[-0.02em] text-white", className)}
+    className={cn("font-display text-lg font-semibold tracking-[-0.02em] text-ink", className)}
     {...props}
   />
 ));
@@ -79,7 +79,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn("text-sm text-white/70", className)}
+    className={cn("text-sm text-ink/65", className)}
     {...props}
   />
 ));

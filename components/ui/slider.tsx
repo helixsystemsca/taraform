@@ -17,13 +17,12 @@ const Slider = React.forwardRef<
     )}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-white/[0.09] ring-1 ring-rose-100/12">
-      <SliderPrimitive.Range className="absolute h-full bg-gradient-to-r from-rose-300/70 via-pink-300/55 to-fuchsia-200/45" />
+    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full border border-stone-200/60 bg-blush-medium/80">
+      <SliderPrimitive.Range className="absolute h-full bg-gradient-to-r from-blush-dust/90 to-copper/50" />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="block h-6 w-6 rounded-full bg-white/22 ring-1 ring-rose-100/25 shadow-[inset_0_1px_0_rgba(255,250,252,0.45),0_8px_28px_rgba(251,113,133,0.2)] backdrop-blur-xl outline-none focus-visible:ring-2 focus-visible:ring-rose-300/50" />
+    <SliderPrimitive.Thumb className="block h-6 w-6 rounded-full border border-white/80 bg-blush-sheet shadow-[0_4px_14px_rgba(61,43,31,0.12)] outline-none focus-visible:ring-2 focus-visible:ring-copper/35" />
   </SliderPrimitive.Root>
 ));
 Slider.displayName = SliderPrimitive.Root.displayName;
 
 export { Slider };
-

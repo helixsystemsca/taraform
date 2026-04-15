@@ -1,5 +1,5 @@
-import { AppShell } from "@/components/taraform/AppShell";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <AppShell />;
+  redirect("/home");
 }
