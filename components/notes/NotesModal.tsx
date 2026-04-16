@@ -190,35 +190,57 @@ export function NotesModal({
       <div className="absolute inset-0 p-3 sm:p-6">
         <div
           className={cn(
-            "relative mx-auto h-full w-full max-w-[1180px]",
+            "relative mx-auto flex h-full w-full max-w-[1180px] flex-col",
             "transition duration-200 will-change-transform",
             open ? "scale-100 opacity-100" : "scale-[0.985] opacity-0",
           )}
         >
-          <div className="pointer-events-none absolute left-0 right-0 top-0 z-30 flex justify-center pt-3 sm:pt-4">
-            <NotesToolbar
-              tool={tool}
-              onToolChange={setTool}
-              color={color}
-              onColorChange={setColor}
-              size={size}
-              onSizeChange={setSize}
-              canUndo={canUndo}
-              canRedo={canRedo}
-              onUndo={undo}
-              onRedo={redo}
-              onClear={() => setStrokes([], { replace: false })}
-              onSave={() => void saveNow()}
-              onExportPng={() => {
-                const dataUrl = exportPngRef.current?.();
-                if (!dataUrl) return;
-                downloadDataUrl(dataUrl, `taraform-note-${new Date().toISOString().slice(0, 10)}.png`);
-              }}
-            />
-          </div>
+          <header className="sticky top-3 z-30 mb-3 sm:mb-4">
+            <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
+              <div className="pointer-events-none" />
+              <div className="pointer-events-none flex justify-center">
+                <NotesToolbar
+                  tool={tool}
+                  onToolChange={setTool}
+                  color={color}
+                  onColorChange={setColor}
+                  size={size}
+                  onSizeChange={setSize}
+                  canUndo={canUndo}
+                  canRedo={canRedo}
+                  onUndo={undo}
+                  onRedo={redo}
+                  onClear={() => setStrokes([], { replace: false })}
+                  onSave={() => void saveNow()}
+                  onExportPng={() => {
+                    const dataUrl = exportPngRef.current?.();
+                    if (!dataUrl) return;
+                    downloadDataUrl(dataUrl, `taraform-note-${new Date().toISOString().slice(0, 10)}.png`);
+                  }}
+                />
+              </div>
+              <div className="flex items-center justify-end gap-2">
+                <div className="pointer-events-none hidden lg:block">
+                  <div className="rounded-full border border-stone-200/70 bg-white/65 px-3 py-1.5 text-xs font-medium text-ink/60 shadow-sm shadow-stone-900/5 backdrop-blur-xl">
+                    {saveBadge.dirty
+                      ? "Saving…"
+                      : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={close}
+                  className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-200/70 bg-white/70 text-ink/70 shadow-sm shadow-stone-900/10 backdrop-blur-xl hover:bg-white/85"
+                  aria-label="Close notes"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+            </div>
+          </header>
 
-          <div className="absolute inset-0 grid grid-cols-1 gap-4 pt-[92px] sm:pt-[100px] lg:grid-cols-[280px_1fr] lg:gap-5">
-            <aside className="glass pointer-events-auto hidden overflow-hidden rounded-[22px] border border-stone-200/70 bg-white/45 pt-2 shadow-sm shadow-stone-900/5 backdrop-blur-xl lg:block">
+          <div className="flex min-h-0 flex-1 items-start gap-3 sm:gap-4 lg:gap-5">
+            <aside className="glass pointer-events-auto hidden w-[280px] shrink-0 overflow-hidden rounded-[22px] border border-stone-200/70 bg-white/45 shadow-sm shadow-stone-900/5 backdrop-blur-xl lg:block">
               <div className="flex items-center justify-between gap-2 border-b border-stone-200/70 bg-blush-medium/40 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-copper" />
@@ -300,7 +322,7 @@ export function NotesModal({
               </div>
             </aside>
 
-            <div className="relative h-[calc(100dvh-96px)] pt-2 lg:h-[calc(100dvh-104px)]">
+            <div className="relative min-w-0 flex-1 self-stretch">
               <NotesCanvas
                 strokes={strokes}
                 onChangeStrokes={setStrokes}
@@ -311,23 +333,6 @@ export function NotesModal({
                   exportPngRef.current = fn;
                 }}
               />
-
-              <div className="pointer-events-none absolute right-4 top-4 z-30 hidden lg:block">
-                <div className="rounded-full border border-stone-200/70 bg-white/65 px-3 py-1.5 text-xs font-medium text-ink/60 shadow-sm shadow-stone-900/5 backdrop-blur-xl">
-                  {saveBadge.dirty
-                    ? "Saving…"
-                    : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={close}
-                className="pointer-events-auto absolute right-3 top-3 z-40 inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-200/70 bg-white/70 text-ink/70 shadow-sm shadow-stone-900/10 backdrop-blur-xl hover:bg-white/85"
-                aria-label="Close notes"
-              >
-                <X className="h-5 w-5" />
-              </button>
             </div>
           </div>
         </div>

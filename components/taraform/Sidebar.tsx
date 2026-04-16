@@ -17,6 +17,7 @@ export function Sidebar() {
   const sections = useStudyStore((s) => s.sections);
   const selectedSectionId = useStudyStore((s) => s.selectedSectionId);
   const selectSection = useStudyStore((s) => s.selectSection);
+  const quizAttempts = useStudyStore((s) => s.quizAttempts);
 
   const groups = React.useMemo(() => {
     const map = new Map<string, StudySection[]>();
@@ -73,6 +74,10 @@ export function Sidebar() {
                   <div className="mt-1 space-y-1">
                     {secs.map((s) => {
                       const active = s.id === selectedSectionId;
+                      const attempts = quizAttempts[s.id] ?? [];
+                      const last = attempts[attempts.length - 1];
+                      const weak = (last?.scorePct ?? 100) < 70 && attempts.length > 0;
+                      const strong = (last?.scorePct ?? 0) >= 85 && attempts.length > 0;
                       return (
                         <button
                           key={s.id}
@@ -84,7 +89,11 @@ export function Sidebar() {
                           )}
                           onClick={() => selectSection(s.id)}
                         >
-                          <div className="truncate font-medium">{s.title || "[Untitled]"}</div>
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="min-w-0 truncate font-medium">{s.title || "[Untitled]"}</div>
+                            {weak ? <span className="h-2 w-2 shrink-0 rounded-full bg-red-500/80" /> : null}
+                            {!weak && strong ? <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500/80" /> : null}
+                          </div>
                           <div className="mt-0.5 truncate text-[11px] text-ink/45">
                             {(s.keyConcepts ?? []).slice(0, 2).join(" · ") || "Tap to study"}
                           </div>

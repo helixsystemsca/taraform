@@ -24,6 +24,13 @@ export interface QuizResult {
   timeSpent: number;
 }
 
+export interface QuizAttempt {
+  attemptedAt: number;
+  correct: number;
+  total: number;
+  scorePct: number;
+}
+
 export type TaraformExportV1 = {
   version: 1;
   exportedAt: string;
@@ -32,6 +39,7 @@ export type TaraformExportV1 = {
   sketchPathsJson: Record<string, string>;
   quizzes: Record<string, QuizQuestionWithId[]>;
   quizResults: Record<string, QuizResult[]>;
+  quizAttempts: Record<string, QuizAttempt[]>;
   timeSpent: Record<string, number>;
   selectedSectionId: string | null;
 };
@@ -49,6 +57,7 @@ type StudyStore = {
   sketchPathsJson: Record<string, string>;
   quizzes: Record<string, QuizQuestionWithId[]>;
   quizResults: Record<string, QuizResult[]>;
+  quizAttempts: Record<string, QuizAttempt[]>;
   timeSpent: Record<string, number>;
 
   addSections: (newSections: StudySection[]) => void;
@@ -57,6 +66,7 @@ type StudyStore = {
   updateSketchPathsJson: (sectionId: string, json: string) => void;
   setQuizForSection: (sectionId: string, questions: QuizQuestionWithId[]) => void;
   addQuizResult: (sectionId: string, result: QuizResult) => void;
+  addQuizAttempt: (sectionId: string, attempt: QuizAttempt) => void;
   updateTimeSpent: (sectionId: string, seconds: number) => void;
   resetStore: () => void;
   exportSnapshot: () => string;
@@ -70,6 +80,7 @@ const emptyState = {
   sketchPathsJson: {} as Record<string, string>,
   quizzes: {} as Record<string, QuizQuestionWithId[]>,
   quizResults: {} as Record<string, QuizResult[]>,
+  quizAttempts: {} as Record<string, QuizAttempt[]>,
   timeSpent: {} as Record<string, number>,
 };
 
@@ -112,6 +123,14 @@ export const useStudyStore = create<StudyStore>()(
           },
         })),
 
+      addQuizAttempt: (sectionId, attempt) =>
+        set((s) => ({
+          quizAttempts: {
+            ...s.quizAttempts,
+            [sectionId]: [...(s.quizAttempts[sectionId] || []), attempt].slice(-50),
+          },
+        })),
+
       updateTimeSpent: (sectionId, seconds) =>
         set((s) => ({
           timeSpent: {
@@ -132,6 +151,7 @@ export const useStudyStore = create<StudyStore>()(
           sketchPathsJson: s.sketchPathsJson,
           quizzes: s.quizzes,
           quizResults: s.quizResults,
+          quizAttempts: s.quizAttempts,
           timeSpent: s.timeSpent,
           selectedSectionId: s.selectedSectionId,
         };
@@ -152,6 +172,8 @@ export const useStudyStore = create<StudyStore>()(
           quizzes: parsed.quizzes && typeof parsed.quizzes === "object" ? parsed.quizzes : {},
           quizResults:
             parsed.quizResults && typeof parsed.quizResults === "object" ? parsed.quizResults : {},
+          quizAttempts:
+            parsed.quizAttempts && typeof parsed.quizAttempts === "object" ? parsed.quizAttempts : {},
           timeSpent: parsed.timeSpent && typeof parsed.timeSpent === "object" ? parsed.timeSpent : {},
           selectedSectionId:
             typeof parsed.selectedSectionId === "string" || parsed.selectedSectionId === null
@@ -171,6 +193,7 @@ export const useStudyStore = create<StudyStore>()(
         sketchPathsJson: s.sketchPathsJson,
         quizzes: s.quizzes,
         quizResults: s.quizResults,
+        quizAttempts: s.quizAttempts,
         timeSpent: s.timeSpent,
       }),
     },

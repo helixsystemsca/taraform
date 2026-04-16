@@ -28,16 +28,19 @@ function isAnswerCorrect(
 
 export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWithId[] }) {
   const addQuizResult = useStudyStore((s) => s.addQuizResult);
+  const addQuizAttempt = useStudyStore((s) => s.addQuizAttempt);
   const updateTimeSpent = useStudyStore((s) => s.updateTimeSpent);
 
   const [sessionStart] = React.useState(() => Date.now());
   const questionStartedAt = React.useRef(Date.now());
+  const correctCountRef = React.useRef(0);
   const [activeIndex, setActiveIndex] = React.useState(0);
   const [step, setStep] = React.useState<Step>("answer");
   const [pickedIndex, setPickedIndex] = React.useState<number | null>(null);
   const [pickedSet, setPickedSet] = React.useState<Set<number>>(() => new Set());
   const [lastCorrect, setLastCorrect] = React.useState(false);
   const [confidence, setConfidence] = React.useState(72);
+  const loggedAttemptRef = React.useRef(false);
 
   const q = props.questions[activeIndex];
 
@@ -51,8 +54,6 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
 
   const totalElapsedSec = Math.max(0, Math.round((Date.now() - sessionStart) / 1000));
 
-  if (!q) return null;
-
   function submitAnswer() {
     if (q.type === "select_all") {
       if (pickedSet.size === 0) return;
@@ -64,6 +65,7 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
 
   function continueAfterReflection() {
     const dt = Math.max(1, Math.round((Date.now() - questionStartedAt.current) / 1000));
+    if (lastCorrect) correctCountRef.current += 1;
     addQuizResult(props.sectionId, {
       questionId: q.id,
       confidence,
@@ -81,6 +83,21 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
 
   const finished = activeIndex >= props.questions.length;
 
+  React.useEffect(() => {
+    if (!finished) return;
+    if (loggedAttemptRef.current) return;
+    loggedAttemptRef.current = true;
+    const total = props.questions.length;
+    const correct = Math.max(0, Math.min(total, correctCountRef.current));
+    const scorePct = total > 0 ? Math.round((correct / total) * 100) : 0;
+    addQuizAttempt(props.sectionId, {
+      attemptedAt: Date.now(),
+      correct,
+      total,
+      scorePct,
+    });
+  }, [addQuizAttempt, finished, props.questions.length, props.sectionId]);
+
   if (finished) {
     return (
       <GlassCard className="p-8 text-center">
@@ -92,6 +109,8 @@ export function QuizRunner(props: { sectionId: string; questions: QuizQuestionWi
       </GlassCard>
     );
   }
+
+  if (!q) return null;
 
   return (
     <GlassCard className="p-5 sm:p-6">
