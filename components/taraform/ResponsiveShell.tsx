@@ -1,12 +1,12 @@
 "use client";
 
 import * as React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BarChart3, BookOpen, Home, NotebookPen, PanelLeft, Sparkles, Library, UploadCloud, ListChecks } from "lucide-react";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { TaraformLogo } from "@/components/taraform/TaraformLogo";
 import { cn } from "@/lib/utils";
 
 type NavItem = {
@@ -101,29 +101,13 @@ function FocusTopBar({ pathname }: { pathname: string }) {
               <DialogHeader className="border-b border-stone-200/70 bg-[#fdfaf6] px-5 py-4">
                 <div className="flex items-center justify-between gap-3">
                   <DialogTitle className="text-base">Navigate</DialogTitle>
-                  <Image
-                    src="/taraform.png"
-                    alt="Taraform"
-                    width={640}
-                    height={160}
-                    className="h-auto w-44 max-h-14 shrink-0 object-contain object-right sm:w-52 sm:max-h-16"
-                    sizes="208px"
-                    priority
-                  />
+                  <TaraformLogo variant="dialog" />
                 </div>
               </DialogHeader>
               <SidebarNav pathname={pathname} />
             </DialogContent>
           </Dialog>
-          <Image
-            src="/taraform.png"
-            alt="Taraform"
-            width={640}
-            height={160}
-            className="h-auto w-40 max-h-14 object-contain object-left sm:w-48 sm:max-h-16"
-            sizes="(max-width: 640px) 192px, 224px"
-            priority
-          />
+          <TaraformLogo variant="compact" />
         </div>
         <div className="text-xs text-ink/45">Focus mode</div>
       </div>
@@ -150,16 +134,8 @@ export function ResponsiveShell({ children }: { children: React.ReactNode }) {
         <div className="flex gap-5">
           <aside className="hidden w-[260px] shrink-0 lg:block">
             <div className="glass overflow-hidden rounded-[1.75rem]">
-              <div className="flex items-center justify-between gap-3 border-b border-stone-200/70 bg-[#fdfaf6] px-5 py-5">
-                <Image
-                  src="/taraform.png"
-                  alt="Taraform"
-                  width={800}
-                  height={200}
-                  className="h-auto w-full max-h-24 object-contain object-left sm:max-h-28"
-                  sizes="220px"
-                  priority
-                />
+              <div className="flex items-center border-b border-stone-200/70 bg-[#fdfaf6] px-4 py-3 sm:px-5 sm:py-3.5">
+                <TaraformLogo variant="sidebar" />
               </div>
               <SidebarNav pathname={pathname} />
             </div>
