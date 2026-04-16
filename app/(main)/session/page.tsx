@@ -16,6 +16,7 @@ type Phase = "loading" | "recall" | "mcq" | "feedback" | "done";
 export default function SessionPage() {
   const sections = useStudyStore((s) => s.sections);
   const deviceId = React.useMemo(() => getDeviceId(), []);
+  const supabase = React.useMemo(() => supabaseBrowser(), []);
 
   const [phase, setPhase] = React.useState<Phase>("loading");
   const [queue, setQueue] = React.useState<ConceptRow[]>([]);
@@ -35,7 +36,7 @@ export default function SessionPage() {
 
   React.useEffect(() => {
     if (!deviceId) return;
-    const supabase = supabaseBrowser();
+    if (!supabase) return;
     const nowIso = new Date().toISOString();
     void supabase
       .from("concepts")
@@ -50,7 +51,19 @@ export default function SessionPage() {
         setIdx(0);
         setPhase(list.length ? "recall" : "done");
       });
-  }, [deviceId]);
+  }, [deviceId, supabase]);
+
+  if (!supabase) {
+    return (
+      <GlassCard className="p-6">
+        <div className="font-display text-base font-semibold text-ink">Supabase not configured</div>
+        <p className="mt-2 text-sm text-ink/60">
+          Add <span className="font-mono">NEXT_PUBLIC_SUPABASE_URL</span> and <span className="font-mono">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>{" "}
+          to your environment to enable spaced repetition sessions.
+        </p>
+      </GlassCard>
+    );
+  }
 
   async function loadQuestion() {
     if (!current || !section) return;

@@ -12,10 +12,11 @@ import { supabaseBrowser } from "@/lib/supabase";
 export default function ReviewPage() {
   const deviceId = React.useMemo(() => getDeviceId(), []);
   const [due, setDue] = React.useState<ConceptRow[]>([]);
+  const supabase = React.useMemo(() => supabaseBrowser(), []);
 
   React.useEffect(() => {
     if (!deviceId) return;
-    const supabase = supabaseBrowser();
+    if (!supabase) return;
     const nowIso = new Date().toISOString();
     void supabase
       .from("concepts")
@@ -25,7 +26,19 @@ export default function ReviewPage() {
       .order("strength", { ascending: true })
       .limit(50)
       .then(({ data }) => setDue((data as ConceptRow[] | null) ?? []));
-  }, [deviceId]);
+  }, [deviceId, supabase]);
+
+  if (!supabase) {
+    return (
+      <GlassCard className="p-6">
+        <div className="font-display text-base font-semibold text-ink">Supabase not configured</div>
+        <p className="mt-2 text-sm text-ink/60">
+          Add <span className="font-mono">NEXT_PUBLIC_SUPABASE_URL</span> and <span className="font-mono">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>{" "}
+          to your environment to enable spaced repetition review.
+        </p>
+      </GlassCard>
+    );
+  }
 
   return (
     <div className="space-y-5">

@@ -16,10 +16,11 @@ export default function ConceptsPage() {
   const [selectedSectionId, setSelectedSectionId] = React.useState<string | "all">("all");
 
   const deviceId = React.useMemo(() => getDeviceId(), []);
+  const supabase = React.useMemo(() => supabaseBrowser(), []);
 
   async function refresh() {
     if (!deviceId) return;
-    const supabase = supabaseBrowser();
+    if (!supabase) return;
     let q = supabase.from("concepts").select("*").eq("device_id", deviceId);
     if (selectedSectionId !== "all") q = q.eq("section_id", selectedSectionId);
     const { data } = await q.order("next_review", { ascending: true });
@@ -29,7 +30,7 @@ export default function ConceptsPage() {
   React.useEffect(() => {
     void refresh();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [deviceId, selectedSectionId]);
+  }, [deviceId, selectedSectionId, supabase]);
 
   async function generateForSection(sectionId: string) {
     if (!deviceId) return;
@@ -58,6 +59,18 @@ export default function ConceptsPage() {
       <GlassCard className="p-6">
         <div className="font-display text-base font-semibold text-ink">No concepts yet</div>
         <p className="mt-2 text-sm text-ink/60">Upload a page on Home to create sections first.</p>
+      </GlassCard>
+    );
+  }
+
+  if (!supabase) {
+    return (
+      <GlassCard className="p-6">
+        <div className="font-display text-base font-semibold text-ink">Supabase not configured</div>
+        <p className="mt-2 text-sm text-ink/60">
+          Add <span className="font-mono">NEXT_PUBLIC_SUPABASE_URL</span> and <span className="font-mono">NEXT_PUBLIC_SUPABASE_ANON_KEY</span>{" "}
+          to your environment to enable concept storage.
+        </p>
       </GlassCard>
     );
   }
