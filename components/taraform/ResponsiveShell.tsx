@@ -3,8 +3,20 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, BookOpen, Home, NotebookPen, PanelLeft, Sparkles, Library, UploadCloud, ListChecks } from "lucide-react";
+import {
+  BarChart3,
+  BookOpen,
+  Home,
+  NotebookPen,
+  PanelLeft,
+  Sparkles,
+  Library,
+  UploadCloud,
+  ListChecks,
+  Plus,
+} from "lucide-react";
 
+import { AppTopBar } from "@/components/taraform/AppTopBar";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { TaraformLogo } from "@/components/taraform/TaraformLogo";
 import { cn } from "@/lib/utils";
@@ -33,7 +45,7 @@ function isActive(pathname: string, href: string) {
 
 function SidebarNav({ pathname }: { pathname: string }) {
   return (
-    <nav className="space-y-1 p-3">
+    <nav className="flex flex-col gap-1 px-3 py-4">
       {NAV.map((item) => {
         const Icon = item.icon;
         const active = isActive(pathname, item.href);
@@ -42,13 +54,13 @@ function SidebarNav({ pathname }: { pathname: string }) {
             key={item.href}
             href={item.href}
             className={cn(
-              "flex items-center gap-3 rounded-2xl px-3 py-2 text-sm transition",
-              "border border-transparent hover:bg-blush-medium/45",
-              active ? "border-blush-dust/45 bg-white/75 text-ink" : "text-ink/70",
+              "flex items-center gap-3 rounded-lg px-3 py-3 text-[15px] font-normal transition-editorial",
+              "text-ink-secondary hover:bg-black/[0.03] hover:text-ink",
+              active && "bg-rose-light text-[#7a4e4e] shadow-none",
             )}
           >
-            <Icon className={cn("h-4 w-4", active ? "text-copper" : "text-ink/45")} />
-            <span className="font-medium">{item.label}</span>
+            <Icon className={cn("h-[18px] w-[18px] shrink-0 stroke-[1.5]", active ? "text-rose-deep" : "text-ink-muted")} />
+            <span>{item.label}</span>
           </Link>
         );
       })}
@@ -57,10 +69,16 @@ function SidebarNav({ pathname }: { pathname: string }) {
 }
 
 function BottomNav({ pathname }: { pathname: string }) {
+  const shortNav = NAV.slice(0, 4);
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 border-t border-stone-200/70 bg-blush-sheet/85 backdrop-blur-xl lg:hidden">
-      <div className="mx-auto grid max-w-[680px] grid-cols-4 px-3 py-2">
-        {NAV.map((item) => {
+    <div
+      className={cn(
+        "fixed inset-x-0 bottom-0 z-40 border-t border-[rgba(120,90,80,0.08)] lg:hidden",
+        "bg-[rgba(251,248,244,0.92)] backdrop-blur-xl",
+      )}
+    >
+      <div className="mx-auto grid max-w-[680px] grid-cols-4 px-2 py-2">
+        {shortNav.map((item) => {
           const Icon = item.icon;
           const active = isActive(pathname, item.href);
           return (
@@ -68,12 +86,12 @@ function BottomNav({ pathname }: { pathname: string }) {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center justify-center gap-1 rounded-2xl px-2 py-2 text-[11px] transition",
-                active ? "bg-white/70 text-ink" : "text-ink/55 hover:bg-blush-medium/40",
+                "flex flex-col items-center justify-center gap-1 rounded-lg px-2 py-2 text-[10px] font-medium transition-editorial",
+                active ? "bg-rose-light/90 text-[#7a4e4e]" : "text-ink-muted hover:bg-black/[0.04]",
               )}
             >
-              <Icon className={cn("h-5 w-5", active ? "text-copper" : "text-ink/45")} />
-              <span className="font-medium">{item.label}</span>
+              <Icon className="h-5 w-5 stroke-[1.5]" />
+              <span className="line-clamp-1">{item.label}</span>
             </Link>
           );
         })}
@@ -84,23 +102,28 @@ function BottomNav({ pathname }: { pathname: string }) {
 
 function FocusTopBar({ pathname }: { pathname: string }) {
   return (
-    <div className="sticky top-0 z-30 border-b border-stone-200/70 bg-[#fdfaf6]/95 backdrop-blur-xl">
+    <div
+      className={cn(
+        "sticky top-0 z-30 border-b border-[rgba(120,90,80,0.08)]",
+        "bg-[rgba(251,248,244,0.92)] backdrop-blur-xl",
+      )}
+    >
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <div className="flex items-center gap-2">
           <Dialog>
             <DialogTrigger asChild>
               <button
                 type="button"
-                className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-stone-200/70 bg-white/60 text-ink/75 hover:bg-blush-medium/50"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[rgba(120,90,80,0.1)] bg-surface-panel/90 text-ink-secondary transition-editorial hover:bg-rose-light/50"
                 aria-label="Open navigation"
               >
-                <PanelLeft className="h-5 w-5 text-copper" />
+                <PanelLeft className="h-5 w-5 stroke-[1.5]" />
               </button>
             </DialogTrigger>
             <DialogContent className="p-0">
-              <DialogHeader className="border-b border-stone-200/70 bg-[#fdfaf6] px-5 py-4">
+              <DialogHeader className="border-b border-[rgba(120,90,80,0.08)] bg-surface-panel px-5 py-4">
                 <div className="flex items-center justify-between gap-3">
-                  <DialogTitle className="text-base">Navigate</DialogTitle>
+                  <DialogTitle className="text-base font-medium text-ink">Navigate</DialogTitle>
                   <TaraformLogo variant="dialog" />
                 </div>
               </DialogHeader>
@@ -109,7 +132,7 @@ function FocusTopBar({ pathname }: { pathname: string }) {
           </Dialog>
           <TaraformLogo variant="compact" />
         </div>
-        <div className="text-xs text-ink/45">Focus mode</div>
+        <div className="text-xs font-medium text-ink-muted">Focus mode</div>
       </div>
     </div>
   );
@@ -121,30 +144,51 @@ export function ResponsiveShell({ children }: { children: React.ReactNode }) {
 
   if (isNotes) {
     return (
-      <div className="min-h-dvh">
+      <div className="min-h-dvh bg-taraform">
         <FocusTopBar pathname={pathname} />
-        <div className="mx-auto w-full max-w-[1180px] px-4 pb-10 pt-5 sm:px-6">{children}</div>
+        <div className="mx-auto w-full max-w-[1180px] px-4 pb-24 pt-6 sm:px-6 lg:pb-10">{children}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-dvh pb-24 lg:pb-0">
-      <div className="mx-auto w-full max-w-[1180px] px-4 pb-10 pt-5 sm:px-6">
-        <div className="flex gap-5">
-          <aside className="hidden w-[260px] shrink-0 lg:block">
-            <div className="glass overflow-hidden rounded-[1.75rem]">
-              <div className="flex items-center border-b border-stone-200/70 bg-[#fdfaf6] px-4 py-3 sm:px-5 sm:py-3.5">
-                <TaraformLogo variant="sidebar" />
-              </div>
-              <SidebarNav pathname={pathname} />
-            </div>
-          </aside>
-          <main className="min-w-0 flex-1">{children}</main>
+    <div className="flex min-h-dvh bg-taraform pb-24 lg:pb-0">
+      <aside className="hidden w-[248px] shrink-0 flex-col border-r border-[rgba(120,90,80,0.08)] bg-surface-sidebar lg:flex">
+        <div className="border-b border-[rgba(120,90,80,0.08)] px-4 py-4">
+          <TaraformLogo variant="sidebar" />
+          <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-muted">Nursing · local-first</p>
         </div>
+        <div className="flex-1 overflow-y-auto">
+          <SidebarNav pathname={pathname} />
+        </div>
+        <div className="border-t border-[rgba(120,90,80,0.08)] p-4">
+          <Link
+            href="/upload"
+            className={cn(
+              "flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-[#fbf8f4]",
+              "bg-copper shadow-warm transition-editorial hover:bg-rose-deep hover:shadow-warm-hover active:scale-[0.99]",
+            )}
+          >
+            <Plus className="h-4 w-4 stroke-[2]" />
+            New material
+          </Link>
+          <div className="mt-3 flex flex-col gap-1 text-center">
+            <Link
+              href="/plan"
+              className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted transition-editorial hover:text-ink-secondary"
+            >
+              Study plan
+            </Link>
+          </div>
+        </div>
+      </aside>
+
+      <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+        <AppTopBar />
+        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-10 lg:py-8">{children}</div>
       </div>
+
       <BottomNav pathname={pathname} />
     </div>
   );
 }
-

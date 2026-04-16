@@ -5,7 +5,7 @@ import Link from "next/link";
 
 import { SectionView } from "@/components/taraform/SectionView";
 import { Sidebar } from "@/components/taraform/Sidebar";
-import { StudyHeader } from "@/components/taraform/StudyHeader";
+import { StudyFocusCard } from "@/components/taraform/StudyFocusCard";
 import { GlassCard } from "@/components/glass/GlassCard";
 import { useStudyStore } from "@/stores/useStudyStore";
 
@@ -41,8 +41,7 @@ export function StudyView() {
   }
 
   return (
-    <div className="space-y-5 pb-6">
-      <StudyHeader onImportClick={() => importRef.current?.click()} onExport={onExport} />
+    <div className="flex min-h-0 flex-1 flex-col">
       <input
         ref={importRef}
         type="file"
@@ -51,26 +50,49 @@ export function StudyView() {
         onChange={onImportFile}
       />
 
-      <div className="flex flex-col gap-5 lg:flex-row">
-        <aside className="hidden w-[300px] shrink-0 lg:block">
+      <div className="mb-6 flex flex-wrap items-center justify-end gap-2">
+        <button
+          type="button"
+          onClick={onExport}
+          className="rounded-lg border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 px-3 py-2 text-xs font-medium text-ink-secondary transition-editorial hover:border-copper/25 hover:text-ink"
+        >
+          Export JSON
+        </button>
+        <button
+          type="button"
+          onClick={() => importRef.current?.click()}
+          className="rounded-lg bg-copper px-3 py-2 text-xs font-medium text-[#fbf8f4] shadow-warm transition-editorial hover:bg-rose-deep hover:shadow-warm-hover active:scale-[0.99]"
+        >
+          Import backup
+        </button>
+      </div>
+
+      <div className="grid min-h-0 flex-1 gap-6 lg:grid-cols-[minmax(260px,360px)_minmax(0,1fr)] lg:items-start lg:gap-8">
+        <aside className="min-h-0 lg:sticky lg:top-0 lg:max-h-[calc(100dvh-7.5rem)] lg:self-start lg:overflow-y-auto">
           <Sidebar />
         </aside>
-        <main className="min-w-0 flex-1">
+
+        <div className="relative min-h-[320px] min-w-0 lg:max-h-[calc(100dvh-7.5rem)] lg:overflow-y-auto">
           {selectedSectionId ? (
-            <SectionView sectionId={selectedSectionId} />
+            <>
+              <SectionView sectionId={selectedSectionId} />
+              <div className="pointer-events-none fixed bottom-24 right-4 z-30 sm:bottom-8 sm:right-8 lg:bottom-10 lg:right-10">
+                <StudyFocusCard className="pointer-events-auto" />
+              </div>
+            </>
           ) : (
-            <GlassCard className="p-6 sm:p-8">
-              <div className="font-display text-lg font-semibold text-ink">Choose a section</div>
-              <p className="mt-2 text-sm leading-relaxed text-ink/60">
+            <GlassCard className="border border-[rgba(120,90,80,0.08)] p-8 shadow-warm">
+              <div className="font-display text-xl font-medium tracking-[-0.02em] text-ink">Choose a section</div>
+              <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink-secondary">
                 Upload a page on{" "}
-                <Link href="/home" className="font-medium text-copper underline-offset-2 hover:underline">
+                <Link href="/home" className="font-medium text-rose-deep underline-offset-2 hover:underline">
                   Home
                 </Link>
-                , then tap a section card — or use the chapter list on larger screens.
+                , then open a section from the library — or expand a chapter in the list.
               </p>
             </GlassCard>
           )}
-        </main>
+        </div>
       </div>
     </div>
   );

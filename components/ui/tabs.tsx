@@ -14,7 +14,7 @@ const TabsList = React.forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      "inline-flex h-11 items-center justify-center rounded-full border border-white/60 bg-blush-sheet/70 p-1 shadow-sm shadow-stone-900/5 backdrop-blur-md",
+      "inline-flex h-auto min-h-10 flex-wrap items-center justify-start gap-1 rounded-lg border border-[rgba(120,90,80,0.1)] bg-surface-panel/80 p-1 shadow-sm",
       className,
     )}
     {...props}
@@ -29,7 +29,9 @@ const TabsTrigger = React.forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      "inline-flex items-center justify-center whitespace-nowrap rounded-full px-4 py-2 text-sm font-medium text-ink/60 transition data-[state=active]:border data-[state=active]:border-blush-dust/50 data-[state=active]:bg-white data-[state=active]:text-ink data-[state=active]:shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper/30 disabled:pointer-events-none disabled:opacity-50",
+      "inline-flex items-center justify-center whitespace-nowrap rounded-md px-3.5 py-2 text-[13px] font-medium text-ink-secondary transition-editorial",
+      "hover:text-ink data-[state=active]:bg-surface-page data-[state=active]:text-ink data-[state=active]:shadow-sm",
+      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-copper/20 disabled:pointer-events-none disabled:opacity-50",
       className,
     )}
     {...props}
@@ -41,11 +43,7 @@ const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={cn("mt-4 outline-none", className)}
-    {...props}
-  />
+  <TabsPrimitive.Content ref={ref} className={cn("mt-4 outline-none", className)} {...props} />
 ));
 TabsContent.displayName = TabsPrimitive.Content.displayName;
 

@@ -37,7 +37,7 @@ export function HomeView() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-8">
       <StudyHeader onImportClick={() => importRef.current?.click()} onExport={onExport} />
       <input
         ref={importRef}

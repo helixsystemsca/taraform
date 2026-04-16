@@ -99,17 +99,17 @@ export function SectionView(props: { sectionId: string }) {
   const highlighted = highlightText(section.extractedText, section.keyConcepts ?? []);
 
   return (
-    <div className="space-y-4">
-      <GlassCard className="relative overflow-hidden p-5 sm:p-6">
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-blush-dust/25 via-transparent to-transparent" />
-        <div className="relative flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+    <div className="space-y-6">
+      <GlassCard className="relative overflow-hidden p-6 sm:p-7">
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-rose-light/40 via-transparent to-transparent" />
+        <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="min-w-0">
             <Button type="button" variant="ghost" size="sm" className="-ml-2 mb-2" onClick={() => selectSection(null)}>
               <ArrowLeft className="h-4 w-4 text-copper" />
               Library
             </Button>
             <CardHeader className="p-0">
-              <CardTitle className="text-xl tracking-[-0.04em] sm:text-2xl">{section.title}</CardTitle>
+              <CardTitle className="text-xl font-medium tracking-[-0.03em] sm:text-2xl">{section.title}</CardTitle>
               <CardDescription className="mt-2 text-[13px]">
                 Chapter {section.chapterNumber}: {section.chapterTitle}
                 {section.pageNumber ? ` · ~page ${section.pageNumber}` : ""}
@@ -139,12 +139,12 @@ export function SectionView(props: { sectionId: string }) {
 
         <TabsContent value="content" className="mt-4">
           <GlassCard className="overflow-hidden p-0">
-            <div className="border-b border-stone-200/60 bg-blush-medium/70 px-5 py-3 sm:px-6">
-              <div className="font-display text-sm font-semibold text-ink">Extracted text</div>
-              <p className="mt-0.5 text-xs text-ink/50">Key concepts are highlighted when they match the phrase list.</p>
+            <div className="border-b border-[rgba(120,90,80,0.08)] bg-rose-light/35 px-5 py-3 sm:px-6">
+              <div className="font-display text-sm font-medium text-ink">Extracted text</div>
+              <p className="mt-0.5 text-xs text-ink-secondary">Key concepts are highlighted when they match the phrase list.</p>
             </div>
-            <div className="bg-white/40 px-5 py-5 sm:px-6">
-              <div className="whitespace-pre-wrap text-[15px] leading-relaxed text-ink/88">
+            <div className="bg-surface-page/80 px-6 py-8 sm:px-10 sm:py-10">
+              <div className="mx-auto max-w-[700px] whitespace-pre-wrap text-[16px] leading-[1.65] text-ink">
                 {highlighted.map((p, i) =>
                   typeof p === "string" ? (
                     <React.Fragment key={i}>{p}</React.Fragment>
@@ -152,7 +152,8 @@ export function SectionView(props: { sectionId: string }) {
                     <mark
                       key={i}
                       className={cn(
-                        "rounded-md border border-copper/25 bg-blush-dust/35 px-1 py-0.5 text-ink",
+                        "rounded px-1 py-0.5 text-ink [box-decoration-break:clone]",
+                        "bg-highlight",
                       )}
                     >
                       {p.hit}

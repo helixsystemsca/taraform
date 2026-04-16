@@ -7,23 +7,23 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-medium transition-[transform,background-color,box-shadow,opacity] disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:ring-2 focus-visible:ring-copper/35 focus-visible:ring-offset-2 focus-visible:ring-offset-blush-cream active:scale-[0.99]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-editorial disabled:pointer-events-none disabled:opacity-45 outline-none focus-visible:ring-2 focus-visible:ring-copper/25 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-page active:scale-[0.99]",
   {
     variants: {
       variant: {
         default:
-          "border border-copper/25 bg-blush-sheet/90 text-ink shadow-sm shadow-stone-900/5 hover:bg-white hover:border-copper/35",
+          "border border-[rgba(120,90,80,0.12)] bg-surface-panel/95 text-ink-secondary shadow-sm hover:border-copper/22 hover:bg-[rgba(232,214,214,0.35)] hover:text-ink",
         primary:
-          "border border-blush-dust/60 bg-gradient-to-b from-blush-dust to-[#dcc4bb] text-ink shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] hover:from-[#ebd5cc] hover:to-[#d2b6ac]",
-        ghost: "border border-transparent bg-transparent text-ink/80 hover:bg-blush-medium/60",
+          "border border-transparent bg-copper text-[#fbf8f4] shadow-warm hover:bg-rose-deep hover:shadow-warm-hover",
+        ghost: "border border-transparent bg-transparent text-ink-secondary hover:bg-black/[0.04] hover:text-ink",
         destructive:
-          "border border-red-200/80 bg-red-50 text-red-900 hover:bg-red-100",
+          "border border-red-200/70 bg-[rgba(254,242,242,0.95)] text-red-900 hover:bg-red-100/90",
       },
       size: {
-        default: "h-11 px-5",
+        default: "h-10 px-5",
         sm: "h-9 px-4 text-[13px]",
-        lg: "h-12 px-6 text-base",
-        icon: "h-11 w-11 px-0",
+        lg: "h-11 px-6 text-[15px]",
+        icon: "h-10 w-10 px-0",
       },
     },
     defaultVariants: {

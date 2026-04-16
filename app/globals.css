@@ -1,45 +1,65 @@
 @import "tailwindcss";
 
 :root {
-  /* Reference: creamy blush light UI + warm ink */
-  --ink: #3d2b1f;
-  --blush-cream: #fdf5f2;
-  --blush-medium: #f9e7e0;
-  --blush-dust: #e8d2c9;
-  --blush-sheet: #fffcfb;
-  --copper: #b87a6b;
+  /* Cream + blush — warm editorial system (no pure white/black) */
+  --ink: #2b2b2b;
+  --ink-secondary: #7a6f6a;
+  --ink-muted: #a89c96;
+  --surface-page: #f6f2ec;
+  --surface-panel: #fbf8f4;
+  --surface-sidebar: #efeae4;
+  --rose: #c58f8f;
+  --rose-deep: #a86e6e;
+  --rose-light: #e8d6d6;
+  --highlight: #f1e0e0;
+  --accent-active-text: #7a4e4e;
+  --border-warm: rgba(120, 90, 80, 0.08);
+  --shadow-warm: 0 4px 20px rgba(120, 90, 80, 0.08);
+  --shadow-warm-hover: 0 8px 28px rgba(120, 90, 80, 0.12);
 
-  --background: var(--blush-cream);
+  /* Legacy token names → new palette (keeps existing classnames working) */
+  --blush-cream: var(--surface-page);
+  --blush-medium: var(--rose-light);
+  --blush-dust: #dcc8c4;
+  --blush-sheet: var(--surface-panel);
+  --copper: var(--rose);
+  --background: var(--surface-page);
   --foreground: var(--ink);
 
-  --glass-bg: rgba(255, 252, 251, 0.72);
-  --glass-ring: rgba(255, 255, 255, 0.55);
-  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-bg: rgba(251, 248, 244, 0.88);
+  --glass-ring: rgba(120, 90, 80, 0.06);
+  --glass-highlight: rgba(255, 255, 255, 0.4);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-ink: #3d2b1f;
-  --color-blush-cream: #fdf5f2;
-  --color-blush-medium: #f9e7e0;
-  --color-blush-dust: #e8d2c9;
-  --color-blush-sheet: #fffcfb;
-  --color-copper: #b87a6b;
+  --color-ink: #2b2b2b;
+  --color-ink-secondary: #7a6f6a;
+  --color-ink-muted: #a89c96;
+  --color-surface-page: #f6f2ec;
+  --color-surface-panel: #fbf8f4;
+  --color-surface-sidebar: #efeae4;
+  --color-rose-light: #e8d6d6;
+  --color-blush-cream: #f6f2ec;
+  --color-blush-medium: #e8d6d6;
+  --color-blush-dust: #dcc8c4;
+  --color-blush-sheet: #fbf8f4;
+  --color-copper: #c58f8f;
+  --color-rose-deep: #a86e6e;
+  --color-highlight: #f1e0e0;
 
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial,
-    "Apple Color Emoji", "Segoe UI Emoji";
-  --font-display: ui-serif, "New York", "Iowan Old Style", "Palatino Linotype",
-    "Book Antiqua", Palatino, Georgia, "Times New Roman", serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
+  --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--surface-page);
+  color: var(--ink);
   font-family: var(--font-sans);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -52,39 +72,48 @@ body {
 
 @layer utilities {
   .font-display {
-    font-family: var(--font-display);
+    font-family: var(--font-playfair, "Playfair Display"), ui-serif, Georgia, serif;
+    letter-spacing: -0.02em;
   }
 
-  /* Soft top “wave” + creamy field (editorial app reference) */
   .bg-taraform {
-    background-color: var(--blush-cream);
+    background-color: var(--surface-page);
     background-image:
-      radial-gradient(120% 55% at 50% -15%, rgba(232, 210, 201, 0.55), transparent 52%),
-      radial-gradient(90% 45% at 100% 0%, rgba(249, 231, 224, 0.9), transparent 45%),
-      radial-gradient(70% 40% at 0% 30%, rgba(255, 252, 251, 0.95), transparent 50%),
-      linear-gradient(180deg, #f9e7e0 0%, #fdf5f2 28%, #fdf5f2 100%);
+      radial-gradient(100% 50% at 50% -10%, rgba(232, 214, 214, 0.35), transparent 50%),
+      linear-gradient(180deg, #f3ede6 0%, var(--surface-page) 38%, var(--surface-page) 100%);
     background-attachment: fixed;
   }
 
-  /* Liquid glass on light: frosted white + blush edge */
+  .border-warm {
+    border-color: var(--border-warm);
+  }
+
+  .shadow-warm {
+    box-shadow: var(--shadow-warm);
+  }
+
+  .shadow-warm-hover {
+    box-shadow: var(--shadow-warm-hover);
+  }
+
   .glass {
     background: var(--glass-bg);
-    border: 1px solid rgba(255, 255, 255, 0.65);
+    border: 1px solid var(--border-warm);
     box-shadow:
       inset 0 1px 0 0 var(--glass-highlight),
-      0 18px 50px rgba(61, 43, 31, 0.06),
-      0 0 0 1px rgba(232, 210, 201, 0.35);
-    backdrop-filter: blur(22px) saturate(1.08);
+      var(--shadow-warm);
+    backdrop-filter: blur(20px) saturate(1.06);
   }
 
   .glass-soft {
-    background: rgba(255, 252, 251, 0.82);
-    border: 1px solid rgba(255, 255, 255, 0.7);
-    box-shadow:
-      inset 0 1px 0 0 rgba(255, 255, 255, 0.95),
-      0 14px 40px rgba(61, 43, 31, 0.05),
-      0 0 0 1px rgba(232, 210, 201, 0.28);
-    backdrop-filter: blur(18px) saturate(1.05);
+    background: rgba(251, 248, 244, 0.9);
+    border: 1px solid var(--border-warm);
+    box-shadow: var(--shadow-warm);
+    backdrop-filter: blur(16px) saturate(1.04);
   }
 
+  .transition-editorial {
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
 }

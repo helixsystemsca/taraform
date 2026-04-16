@@ -31,14 +31,14 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
   }, []);
 
   return (
-    <GlassCard className="mb-5 px-5 py-5 sm:px-7 sm:py-6">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <GlassCard className="mb-8 px-6 py-6 sm:px-8 sm:py-7">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <TaraformLogo variant="header" />
-          <h1 className="font-display mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl">
+          <h1 className="font-display mt-3 text-2xl font-medium tracking-[-0.03em] text-ink sm:text-3xl">
             {greeting}
           </h1>
-          <p className="mt-2 max-w-xl text-sm leading-relaxed text-ink/55">
+          <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-secondary">
             Calm, grounded study for nursing grad school — one section at a time.
           </p>
         </div>
@@ -57,7 +57,7 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
             <Upload className="h-4 w-4" />
             Import backup
           </Button>
-          <div className="hidden items-center gap-1 rounded-full border border-stone-200/60 bg-blush-medium/50 px-2.5 py-1 text-xs text-ink/50 sm:flex">
+          <div className="hidden items-center gap-1.5 rounded-full border border-[rgba(120,90,80,0.1)] bg-rose-light/40 px-3 py-1.5 text-xs font-medium text-ink-secondary sm:flex">
             <BookMarked className="h-3.5 w-3.5 text-copper" />
             {uploadBusy ? "Processing upload…" : "Local only — your data stays on this device"}
           </div>
