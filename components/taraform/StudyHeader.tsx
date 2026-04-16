@@ -34,7 +34,15 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
     <GlassCard className="mb-5 px-5 py-5 sm:px-7 sm:py-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <Image src="/taraform.png" alt="Taraform" width={160} height={40} className="h-9 w-auto" priority />
+          <Image
+            src="/taraform.png"
+            alt="Taraform"
+            width={800}
+            height={200}
+            className="mb-1 h-auto w-48 max-w-full object-contain object-left sm:mb-0 sm:w-64 md:w-80"
+            sizes="(max-width: 640px) 192px, (max-width: 768px) 256px, 320px"
+            priority
+          />
           <h1 className="font-display mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl">
             {greeting}
           </h1>

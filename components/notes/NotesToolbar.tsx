@@ -113,7 +113,7 @@ export function NotesToolbar({
           )}
           aria-label="Color and stroke"
         >
-          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+          <div className={cn("flex h-10 flex-nowrap items-center", "gap-2")}>
             {pastelColors.map((c) => (
               <button
                 key={c}
