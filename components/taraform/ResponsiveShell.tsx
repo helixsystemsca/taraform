@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, BookOpen, Home, NotebookPen, PanelLeft, Sparkles, Library, UploadCloud } from "lucide-react";
+import { BarChart3, BookOpen, Home, NotebookPen, PanelLeft, Sparkles, Library, UploadCloud, ListChecks } from "lucide-react";
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
@@ -16,6 +16,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { href: "/home", label: "Home", icon: Home },
+  { href: "/plan", label: "Study Plan", icon: ListChecks },
   { href: "/upload", label: "Upload Notes", icon: UploadCloud },
   { href: "/study", label: "Study", icon: BookOpen },
   { href: "/notes", label: "Notes", icon: NotebookPen },

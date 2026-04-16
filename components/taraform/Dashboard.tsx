@@ -7,6 +7,7 @@ import { BookOpen, Loader2, Sparkles, UploadCloud } from "lucide-react";
 import { extractTextbookFromImage } from "@/app/actions/extractTextbookFromImage";
 import { GlassCard } from "@/components/glass/GlassCard";
 import { GlassFAB } from "@/components/glass/GlassFAB";
+import { StudyPlanPanel } from "@/components/taraform/StudyPlanPanel";
 import { VoiceEncouragementButton } from "@/components/taraform/VoiceEncouragementButton";
 import { Button } from "@/components/ui/button";
 import { mapExtractionToSections } from "@/lib/mapExtractionToSections";
@@ -105,6 +106,8 @@ export function Dashboard() {
           <p className="mt-1 text-sm text-red-800/90">{error}</p>
         </GlassCard>
       ) : null}
+
+      {sections.length > 0 ? <StudyPlanPanel /> : null}
 
       {sections.length === 0 && !uploadBusy ? (
         <GlassCard className="flex flex-col items-center justify-center gap-4 px-6 py-16 text-center">

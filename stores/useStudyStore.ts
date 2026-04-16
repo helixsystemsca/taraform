@@ -4,6 +4,8 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 import type { QuizObject } from "@/lib/ai/schemas";
+import type { StudyPlanItem } from "@/lib/studyPlan";
+import { generateStudyPlan } from "@/lib/studyPlan";
 
 export type QuizQuestionWithId = QuizObject["questions"][number] & { id: string };
 
@@ -40,6 +42,11 @@ export type TaraformExportV1 = {
   quizzes: Record<string, QuizQuestionWithId[]>;
   quizResults: Record<string, QuizResult[]>;
   quizAttempts: Record<string, QuizAttempt[]>;
+  studyPlan: {
+    generatedAt: number;
+    items: StudyPlanItem[];
+    completed: Record<string, boolean>;
+  };
   timeSpent: Record<string, number>;
   selectedSectionId: string | null;
 };
@@ -59,6 +66,11 @@ type StudyStore = {
   quizResults: Record<string, QuizResult[]>;
   quizAttempts: Record<string, QuizAttempt[]>;
   timeSpent: Record<string, number>;
+  studyPlan: {
+    generatedAt: number;
+    items: StudyPlanItem[];
+    completed: Record<string, boolean>;
+  };
 
   addSections: (newSections: StudySection[]) => void;
   selectSection: (id: string | null) => void;
@@ -67,6 +79,9 @@ type StudyStore = {
   setQuizForSection: (sectionId: string, questions: QuizQuestionWithId[]) => void;
   addQuizResult: (sectionId: string, result: QuizResult) => void;
   addQuizAttempt: (sectionId: string, attempt: QuizAttempt) => void;
+  regenerateStudyPlan: () => void;
+  completeStudyPlanItem: (sectionId: string) => void;
+  resetStudyPlanSession: () => void;
   updateTimeSpent: (sectionId: string, seconds: number) => void;
   resetStore: () => void;
   exportSnapshot: () => string;
@@ -82,6 +97,7 @@ const emptyState = {
   quizResults: {} as Record<string, QuizResult[]>,
   quizAttempts: {} as Record<string, QuizAttempt[]>,
   timeSpent: {} as Record<string, number>,
+  studyPlan: { generatedAt: 0, items: [] as StudyPlanItem[], completed: {} as Record<string, boolean> },
 };
 
 export const useStudyStore = create<StudyStore>()(
@@ -131,6 +147,32 @@ export const useStudyStore = create<StudyStore>()(
           },
         })),
 
+      regenerateStudyPlan: () =>
+        set((s) => ({
+          studyPlan: {
+            generatedAt: Date.now(),
+            items: generateStudyPlan({
+              sections: s.sections,
+              quizAttempts: s.quizAttempts,
+              timeSpent: s.timeSpent,
+            }),
+            completed: {},
+          },
+        })),
+
+      completeStudyPlanItem: (sectionId) =>
+        set((s) => ({
+          studyPlan: {
+            ...s.studyPlan,
+            completed: { ...s.studyPlan.completed, [sectionId]: true },
+          },
+        })),
+
+      resetStudyPlanSession: () =>
+        set((s) => ({
+          studyPlan: { ...s.studyPlan, completed: {} },
+        })),
+
       updateTimeSpent: (sectionId, seconds) =>
         set((s) => ({
           timeSpent: {
@@ -152,6 +194,7 @@ export const useStudyStore = create<StudyStore>()(
           quizzes: s.quizzes,
           quizResults: s.quizResults,
           quizAttempts: s.quizAttempts,
+          studyPlan: s.studyPlan,
           timeSpent: s.timeSpent,
           selectedSectionId: s.selectedSectionId,
         };
@@ -174,6 +217,10 @@ export const useStudyStore = create<StudyStore>()(
             parsed.quizResults && typeof parsed.quizResults === "object" ? parsed.quizResults : {},
           quizAttempts:
             parsed.quizAttempts && typeof parsed.quizAttempts === "object" ? parsed.quizAttempts : {},
+          studyPlan:
+            parsed.studyPlan && typeof parsed.studyPlan === "object"
+              ? (parsed.studyPlan as TaraformExportV1["studyPlan"])
+              : { generatedAt: 0, items: [], completed: {} },
           timeSpent: parsed.timeSpent && typeof parsed.timeSpent === "object" ? parsed.timeSpent : {},
           selectedSectionId:
             typeof parsed.selectedSectionId === "string" || parsed.selectedSectionId === null
@@ -194,6 +241,7 @@ export const useStudyStore = create<StudyStore>()(
         quizzes: s.quizzes,
         quizResults: s.quizResults,
         quizAttempts: s.quizAttempts,
+        studyPlan: s.studyPlan,
         timeSpent: s.timeSpent,
       }),
     },
