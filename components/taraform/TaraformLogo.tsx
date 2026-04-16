@@ -15,21 +15,21 @@ export type TaraformLogoVariant = "sidebar" | "header" | "compact" | "dialog";
  */
 export function TaraformLogo({ variant, className }: { variant: TaraformLogoVariant; className?: string }) {
   const box = {
-    /** Desktop sidebar strip — full width, modest height */
-    sidebar: "h-12 w-full sm:h-14",
-    /** Study home hero card */
-    header: "mb-1 h-14 w-48 sm:mb-0 sm:h-16 sm:w-64 md:h-[4.5rem] md:w-80",
+    /** Sidebar: short clip so the rail header stays compact; scale does the “bigger” work. */
+    sidebar: "h-9 w-full sm:h-10",
+    /** Home hero: tighter block so greeting isn’t pushed down; image is zoomed inside clip. */
+    header: "mb-0.5 h-10 w-52 sm:mb-0 sm:h-11 sm:w-64 md:h-12 md:w-72",
     /** Notes focus top bar */
-    compact: "h-9 w-[10.5rem] sm:h-10 sm:w-48",
+    compact: "h-8 w-[11rem] sm:h-9 sm:w-52",
     /** Mobile nav dialog header (right side) */
-    dialog: "h-9 w-40 sm:h-10 sm:w-52",
+    dialog: "h-8 w-44 sm:h-9 sm:w-52",
   }[variant];
 
   const zoom = {
-    sidebar: "scale-[1.48]",
-    header: "scale-[1.38]",
-    compact: "scale-[1.42]",
-    dialog: "scale-[1.4]",
+    sidebar: "scale-[1.62]",
+    header: "scale-[1.52]",
+    compact: "scale-[1.5]",
+    dialog: "scale-[1.48]",
   }[variant];
 
   const sizes = {

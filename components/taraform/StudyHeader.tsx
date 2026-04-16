@@ -35,7 +35,7 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <TaraformLogo variant="header" />
-          <h1 className="font-display mt-3 text-2xl font-medium tracking-[-0.03em] text-ink sm:text-3xl">
+          <h1 className="font-display mt-2 text-2xl font-medium tracking-[-0.03em] text-ink sm:text-3xl">
             {greeting}
           </h1>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-secondary">
