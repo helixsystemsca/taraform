@@ -44,7 +44,7 @@ function drawStroke(ctx: CanvasRenderingContext2D, stroke: NoteStroke) {
     thinning: 0.6,
     smoothing: 0.65,
     streamline: 0.55,
-    easing: (t) => t,
+    easing: (t) => t * t * (3 - 2 * t),
     start: { taper: baseSize * 0.7 },
     end: { taper: baseSize * 0.9 },
     simulatePressure: false,
@@ -52,7 +52,7 @@ function drawStroke(ctx: CanvasRenderingContext2D, stroke: NoteStroke) {
 
   const path = new Path2D(svgPathFromStroke(outline));
   ctx.save();
-  ctx.globalAlpha = isHighlighter ? 0.26 : 0.92;
+  ctx.globalAlpha = isHighlighter ? 0.32 : 0.92;
   ctx.fillStyle = color;
   ctx.fill(path);
   ctx.restore();
@@ -120,6 +120,7 @@ export function useCanvasDrawing({
 }) {
   const canvasRef = React.useRef<HTMLCanvasElement | null>(null);
   const baseBitmapRef = React.useRef<HTMLCanvasElement | null>(null);
+  const strokesRef = React.useRef<NoteStroke[]>(strokes);
 
   const inProgressRef = React.useRef<NoteStroke | null>(null);
   const drawingPointerIdRef = React.useRef<number | null>(null);
@@ -129,26 +130,58 @@ export function useCanvasDrawing({
 
   const paperPaddingPx = renderOptions?.paperPaddingPx ?? 34;
 
+  React.useEffect(() => {
+    strokesRef.current = strokes;
+  }, [strokes]);
+
+  const ensureBaseBitmap = React.useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return null;
+    const offscreen = baseBitmapRef.current ?? document.createElement("canvas");
+    baseBitmapRef.current = offscreen;
+    if (offscreen.width !== canvas.width) offscreen.width = canvas.width;
+    if (offscreen.height !== canvas.height) offscreen.height = canvas.height;
+    const bctx = offscreen.getContext("2d", { alpha: true });
+    if (!bctx) return null;
+    return { offscreen, bctx };
+  }, []);
+
   const rebuildBase = React.useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const { ctx } = createHiDpiCanvas(canvas);
 
-    const offscreen = baseBitmapRef.current ?? document.createElement("canvas");
-    baseBitmapRef.current = offscreen;
-    offscreen.width = canvas.width;
-    offscreen.height = canvas.height;
-    const bctx = offscreen.getContext("2d", { alpha: true });
-    if (!bctx) return;
+    const ensured = ensureBaseBitmap();
+    if (!ensured) return;
+    const { offscreen, bctx } = ensured;
 
     bctx.clearRect(0, 0, offscreen.width, offscreen.height);
-    for (const s of strokes) drawStroke(bctx, s);
+    for (const s of strokesRef.current) drawStroke(bctx, s);
 
     needsRebuildBaseRef.current = false;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(offscreen, 0, 0);
-  }, [strokes]);
+  }, [ensureBaseBitmap]);
+
+  const commitStrokeToBase = React.useCallback(
+    (stroke: NoteStroke) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      createHiDpiCanvas(canvas);
+
+      const ensured = ensureBaseBitmap();
+      if (!ensured) return;
+      const { offscreen, bctx } = ensured;
+      drawStroke(bctx, stroke);
+
+      const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
+      if (!ctx) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(offscreen, 0, 0);
+    },
+    [ensureBaseBitmap],
+  );
 
   const render = React.useCallback(() => {
     const canvas = canvasRef.current;
@@ -265,14 +298,19 @@ export function useCanvasDrawing({
       if (stroke.tool === "eraser") {
         const radius = Math.max(12, stroke.size * 1.35);
         onChangeStrokes((prev) => eraseStrokes(prev, stroke.points, radius));
+        needsRebuildBaseRef.current = true;
+        scheduleRender();
+        return;
       } else {
+        // Commit immediately to the base bitmap so the final stroke isn't "one behind".
+        commitStrokeToBase(stroke);
         onChangeStrokes((prev) => [...prev, stroke]);
+        needsRebuildBaseRef.current = false;
+        scheduleRender();
+        return;
       }
-
-      needsRebuildBaseRef.current = true;
-      scheduleRender();
     },
-    [onChangeStrokes, scheduleRender],
+    [commitStrokeToBase, onChangeStrokes, scheduleRender],
   );
 
   const cancelStroke = React.useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
