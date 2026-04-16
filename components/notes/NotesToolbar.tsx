@@ -20,6 +20,10 @@ export const pastelColors = [
 
 type PaperStyle = "blank" | "lined";
 
+/** Shared control height (40px) — buttons, segmented control shell, slider rows. */
+const CONTROL_H = "h-10 min-h-10";
+const SECTION_GAP = "gap-3 sm:gap-4";
+
 export function NotesToolbar({
   tool,
   onToolChange,
@@ -73,114 +77,185 @@ export function NotesToolbar({
   return (
     <div
       className={cn(
-        "pointer-events-auto",
-        "flex flex-wrap items-center gap-2 rounded-full border border-stone-200/70 bg-white/70 px-3 py-2 shadow-sm shadow-stone-900/10 backdrop-blur-xl",
+        "pointer-events-auto w-full min-w-0 max-w-full rounded-xl border border-stone-200/70",
+        "bg-white/80 px-3 py-2.5 shadow-md shadow-stone-900/10 backdrop-blur-xl sm:px-4",
+        "overflow-x-auto [scrollbar-width:thin]",
       )}
     >
-      <ToolButton active={tool === "pen"} label="Pen" onClick={() => onToolChange("pen")}>
-        <Paintbrush2 className="h-4 w-4" />
-      </ToolButton>
-      <ToolButton
-        active={tool === "highlighter"}
-        label="Highlighter"
-        onClick={() => onToolChange("highlighter")}
+      <div
+        className={cn(
+          "flex w-max min-w-full flex-nowrap items-center justify-between",
+          SECTION_GAP,
+        )}
       >
-        <Highlighter className="h-4 w-4" />
-      </ToolButton>
-      <ToolButton active={tool === "eraser"} label="Eraser" onClick={() => onToolChange("eraser")}>
-        <Eraser className="h-4 w-4" />
-      </ToolButton>
+        {/* LEFT — drawing tools */}
+        <div className={cn("flex shrink-0 items-center", SECTION_GAP)} aria-label="Drawing tools">
+          <ToolButton active={tool === "pen"} label="Pen" onClick={() => onToolChange("pen")}>
+            <Paintbrush2 className="h-4 w-4 shrink-0" />
+          </ToolButton>
+          <ToolButton
+            active={tool === "highlighter"}
+            label="Highlighter"
+            onClick={() => onToolChange("highlighter")}
+          >
+            <Highlighter className="h-4 w-4 shrink-0" />
+          </ToolButton>
+          <ToolButton active={tool === "eraser"} label="Eraser" onClick={() => onToolChange("eraser")}>
+            <Eraser className="h-4 w-4 shrink-0" />
+          </ToolButton>
+        </div>
 
-      <div className="mx-1 h-6 w-px bg-stone-200/80" />
+        {/* CENTER — color + stroke size */}
+        <div
+          className={cn(
+            "flex min-w-0 flex-1 flex-nowrap items-center justify-center",
+            SECTION_GAP,
+          )}
+          aria-label="Color and stroke"
+        >
+          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+            {pastelColors.map((c) => (
+              <button
+                key={c}
+                type="button"
+                className={cn(
+                  "size-[22px] shrink-0 rounded-full border border-stone-300/70 shadow-sm shadow-stone-900/5 transition",
+                  c === color ? "ring-2 ring-copper/40 ring-offset-2 ring-offset-white/90" : "hover:scale-[1.04]",
+                )}
+                style={{ background: c }}
+                aria-label={`Set color ${c}`}
+                onClick={() => onColorChange(c)}
+              />
+            ))}
+            <input
+              type="color"
+              value={color}
+              onChange={(e) => onColorChange(e.target.value)}
+              className={cn(
+                "size-[22px] shrink-0 cursor-pointer rounded-full border border-stone-200/70 bg-transparent p-0",
+                "self-center",
+              )}
+              aria-label="Pick custom color"
+            />
+          </div>
 
-      <div className="flex items-center gap-1.5">
-        {pastelColors.map((c) => (
-          <button
-            key={c}
-            type="button"
+          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+            <span className="hidden shrink-0 text-xs font-medium text-ink/50 sm:inline">Size</span>
+            <div className={cn("flex shrink-0 items-center", CONTROL_H)}>
+              <input
+                type="range"
+                min={2}
+                max={26}
+                step={1}
+                value={size}
+                onChange={(e) => onSizeChange(Number(e.target.value))}
+                className="h-4 w-[128px] cursor-pointer accent-copper sm:w-[152px]"
+                aria-label="Stroke size"
+              />
+            </div>
+            <span
+              className={cn(
+                CONTROL_H,
+                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink/60",
+              )}
+            >
+              {size}px
+            </span>
+          </div>
+        </div>
+
+        {/* RIGHT — paper, opacity, actions */}
+        <div
+          className={cn("flex shrink-0 flex-nowrap items-center", SECTION_GAP)}
+          aria-label="Paper and actions"
+        >
+          <div
             className={cn(
-              "h-6 w-6 rounded-full border border-stone-300/70 shadow-sm shadow-stone-900/5 transition",
-              c === color ? "ring-2 ring-copper/40 ring-offset-2 ring-offset-white/40" : "hover:scale-[1.03]",
+              "flex shrink-0 items-stretch rounded-lg border border-stone-200/70 bg-stone-100/50 p-1",
+              CONTROL_H,
             )}
-            style={{ background: c }}
-            aria-label={`Set color ${c}`}
-            onClick={() => onColorChange(c)}
-          />
-        ))}
-        <input
-          type="color"
-          value={color}
-          onChange={(e) => onColorChange(e.target.value)}
-          className="h-7 w-7 cursor-pointer rounded-full border border-stone-200/70 bg-transparent p-0"
-          aria-label="Pick custom color"
-        />
-      </div>
+            role="group"
+            aria-label="Paper style"
+          >
+            <button
+              type="button"
+              onClick={() => setPaper({ style: "blank" })}
+              className={cn(
+                "inline-flex min-w-[2.25rem] flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition sm:min-w-0",
+                style === "blank" ? "bg-white text-ink shadow-sm shadow-stone-900/8" : "text-ink/60 hover:text-ink",
+              )}
+              aria-pressed={style === "blank"}
+            >
+              <span className="size-3 shrink-0 rounded-sm border border-stone-300/80 bg-white/90" aria-hidden />
+              <span className="hidden sm:inline">Blank</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setPaper({ style: "lined" })}
+              className={cn(
+                "inline-flex min-w-[2.25rem] flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition sm:min-w-0",
+                style === "lined" ? "bg-white text-ink shadow-sm shadow-stone-900/8" : "text-ink/60 hover:text-ink",
+              )}
+              aria-pressed={style === "lined"}
+            >
+              <span
+                className="flex size-3 shrink-0 items-center justify-center rounded-sm border border-stone-300/80 bg-white/90"
+                aria-hidden
+              >
+                <span className="h-px w-2 bg-ink/40" />
+              </span>
+              <span className="hidden sm:inline">Lined</span>
+            </button>
+          </div>
 
-      <div className="mx-1 h-6 w-px bg-stone-200/80" />
+          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+            <span className="hidden shrink-0 text-xs font-medium text-ink/50 lg:inline">Paper</span>
+            <div className={cn("flex shrink-0 items-center", CONTROL_H)}>
+              <input
+                type="range"
+                min={0}
+                max={0.3}
+                step={0.01}
+                value={opacity}
+                onChange={(e) => setPaper({ opacity: Number(e.target.value) })}
+                className="h-4 w-[120px] shrink-0 cursor-pointer accent-copper sm:w-[136px]"
+                aria-label="Paper opacity"
+              />
+            </div>
+            <span
+              className={cn(
+                CONTROL_H,
+                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink/60",
+              )}
+            >
+              {(opacity * 100).toFixed(0)}%
+            </span>
+          </div>
 
-      <div className="flex items-center gap-2">
-        <input
-          type="range"
-          min={2}
-          max={26}
-          step={1}
-          value={size}
-          onChange={(e) => onSizeChange(Number(e.target.value))}
-          className="w-28 accent-copper"
-          aria-label="Stroke size"
-        />
-        <div className="min-w-9 text-right text-xs font-medium tabular-nums text-ink/60">{size}px</div>
-      </div>
+          <span className="hidden h-6 w-px shrink-0 self-center bg-stone-200/80 sm:block" aria-hidden />
 
-      <div className="mx-1 h-6 w-px bg-stone-200/80" />
+          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+            <ToolButton label="Undo" disabled={!canUndo} onClick={onUndo}>
+              <Undo2 className="h-4 w-4 shrink-0" />
+            </ToolButton>
+            <ToolButton label="Redo" disabled={!canRedo} onClick={onRedo}>
+              <Redo2 className="h-4 w-4 shrink-0" />
+            </ToolButton>
+            <ToolButton label="Clear" onClick={onClear}>
+              <Trash2 className="h-4 w-4 shrink-0" />
+            </ToolButton>
+          </div>
 
-      <div className="flex items-center gap-1">
-        <ToolButton active={style === "blank"} label="Blank" onClick={() => setPaper({ style: "blank" })}>
-          <span className="h-3 w-3 rounded-sm border border-stone-300/80 bg-white/70" />
-        </ToolButton>
-        <ToolButton active={style === "lined"} label="Lined" onClick={() => setPaper({ style: "lined" })}>
-          <span className="relative h-3 w-3 rounded-sm border border-stone-300/80 bg-white/70">
-            <span className="absolute left-0.5 right-0.5 top-1/2 h-px -translate-y-1/2 bg-ink/35" />
-          </span>
-        </ToolButton>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <input
-          type="range"
-          min={0}
-          max={0.3}
-          step={0.01}
-          value={opacity}
-          onChange={(e) => setPaper({ opacity: Number(e.target.value) })}
-          className="w-24 accent-copper"
-          aria-label="Paper opacity"
-        />
-        <div className="min-w-9 text-right text-xs font-medium tabular-nums text-ink/60">
-          {(opacity * 100).toFixed(0)}%
+          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+            <ToolButton label="Export PNG" onClick={onExportPng}>
+              <Download className="h-4 w-4 shrink-0" />
+            </ToolButton>
+            <ToolButton label="Save" onClick={onSave}>
+              <Save className="h-4 w-4 shrink-0" />
+            </ToolButton>
+          </div>
         </div>
       </div>
-
-      <div className="mx-1 h-6 w-px bg-stone-200/80" />
-
-      <ToolButton label="Undo" disabled={!canUndo} onClick={onUndo}>
-        <Undo2 className="h-4 w-4" />
-      </ToolButton>
-      <ToolButton label="Redo" disabled={!canRedo} onClick={onRedo}>
-        <Redo2 className="h-4 w-4" />
-      </ToolButton>
-      <ToolButton label="Clear" onClick={onClear}>
-        <Trash2 className="h-4 w-4" />
-      </ToolButton>
-
-      <div className="mx-1 h-6 w-px bg-stone-200/80" />
-
-      <ToolButton label="Export PNG" onClick={onExportPng}>
-        <Download className="h-4 w-4" />
-      </ToolButton>
-      <ToolButton label="Save" onClick={onSave}>
-        <Save className="h-4 w-4" />
-      </ToolButton>
     </div>
   );
 }
@@ -203,11 +278,15 @@ function ToolButton({
       type="button"
       disabled={disabled}
       aria-label={label}
+      aria-pressed={active === undefined ? undefined : active}
       onClick={onClick}
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition",
-        "border border-transparent hover:bg-blush-medium/50 disabled:opacity-40 disabled:hover:bg-transparent",
-        active ? "border-blush-dust/45 bg-blush-sheet/80 text-ink" : "text-ink/70",
+        "inline-flex h-10 min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg px-3 text-sm font-medium leading-none transition",
+        "border border-transparent",
+        "disabled:pointer-events-none disabled:opacity-40",
+        active
+          ? "border-copper/35 bg-blush-sheet/95 text-ink shadow-sm shadow-stone-900/8"
+          : "text-ink/75 hover:bg-stone-100/85 hover:text-ink",
       )}
     >
       {children}
@@ -215,4 +294,3 @@ function ToolButton({
     </button>
   );
 }
-

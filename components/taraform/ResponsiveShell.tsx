@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BarChart3, BookOpen, Home, NotebookPen, PanelLeft, Sparkles, Library, UploadCloud, ListChecks } from "lucide-react";
@@ -83,7 +84,7 @@ function BottomNav({ pathname }: { pathname: string }) {
 
 function FocusTopBar({ pathname }: { pathname: string }) {
   return (
-    <div className="sticky top-0 z-30 border-b border-stone-200/70 bg-blush-sheet/85 backdrop-blur-xl">
+    <div className="sticky top-0 z-30 border-b border-stone-200/70 bg-[#fdfaf6]/95 backdrop-blur-xl">
       <div className="mx-auto flex max-w-[1180px] items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <div className="flex items-center gap-2">
           <Dialog>
@@ -97,13 +98,16 @@ function FocusTopBar({ pathname }: { pathname: string }) {
               </button>
             </DialogTrigger>
             <DialogContent className="p-0">
-              <DialogHeader className="border-b border-stone-200/70 bg-blush-medium/45 px-5 py-4">
-                <DialogTitle className="text-base">Navigate</DialogTitle>
+              <DialogHeader className="border-b border-stone-200/70 bg-[#fdfaf6] px-5 py-4">
+                <div className="flex items-center justify-between gap-3">
+                  <DialogTitle className="text-base">Navigate</DialogTitle>
+                  <Image src="/taraform.png" alt="Taraform" width={120} height={32} className="h-8 w-auto" priority />
+                </div>
               </DialogHeader>
               <SidebarNav pathname={pathname} />
             </DialogContent>
           </Dialog>
-          <div className="text-sm font-semibold tracking-[-0.02em] text-ink">Notes</div>
+          <Image src="/taraform.png" alt="Taraform" width={132} height={34} className="h-8 w-auto" priority />
         </div>
         <div className="text-xs text-ink/45">Focus mode</div>
       </div>
@@ -130,8 +134,8 @@ export function ResponsiveShell({ children }: { children: React.ReactNode }) {
         <div className="flex gap-5">
           <aside className="hidden w-[260px] shrink-0 lg:block">
             <div className="glass overflow-hidden rounded-[1.75rem]">
-              <div className="flex items-center gap-2 border-b border-stone-200/70 bg-blush-medium/45 px-5 py-4">
-                <div className="font-display text-base font-semibold text-ink">Taraform</div>
+              <div className="flex items-center justify-between gap-3 border-b border-stone-200/70 bg-[#fdfaf6] px-5 py-4">
+                <Image src="/taraform.png" alt="Taraform" width={150} height={38} className="h-9 w-auto" priority />
               </div>
               <SidebarNav pathname={pathname} />
             </div>

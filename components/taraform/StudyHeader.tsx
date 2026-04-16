@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
 import { BookMarked, Download, Home, Upload } from "lucide-react";
 
 import { GlassCard } from "@/components/glass/GlassCard";
@@ -33,9 +34,7 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
     <GlassCard className="mb-5 px-5 py-5 sm:px-7 sm:py-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <div className="text-xs font-medium uppercase tracking-[0.14em] text-copper">
-            Taraform
-          </div>
+          <Image src="/taraform.png" alt="Taraform" width={160} height={40} className="h-9 w-auto" priority />
           <h1 className="font-display mt-2 text-2xl font-semibold tracking-[-0.03em] text-ink sm:text-3xl">
             {greeting}
           </h1>

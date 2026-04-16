@@ -196,9 +196,10 @@ export function NotesModal({
           )}
         >
           <header className="sticky top-3 z-30 mb-3 sm:mb-4">
-            <div className="grid grid-cols-[1fr_auto_1fr] items-start gap-3">
-              <div className="pointer-events-none" />
-              <div className="pointer-events-none flex justify-center">
+            <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,56rem)_minmax(0,1fr)] lg:items-center">
+              <div className="pointer-events-none hidden lg:block" />
+              <div className="pointer-events-none min-w-0 flex justify-center px-0 sm:px-1">
+                <div className="pointer-events-auto w-full max-w-full min-w-0">
                 <NotesToolbar
                   tool={tool}
                   onToolChange={setTool}
@@ -218,6 +219,7 @@ export function NotesModal({
                     downloadDataUrl(dataUrl, `taraform-note-${new Date().toISOString().slice(0, 10)}.png`);
                   }}
                 />
+                </div>
               </div>
               <div className="flex items-center justify-end gap-2">
                 <div className="pointer-events-none hidden lg:block">
