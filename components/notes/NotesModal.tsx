@@ -218,7 +218,7 @@ export function NotesModal({
           </div>
 
           <div className="absolute inset-0 grid grid-cols-1 gap-4 pt-[92px] sm:pt-[100px] lg:grid-cols-[280px_1fr] lg:gap-5">
-            <aside className="glass pointer-events-auto hidden overflow-hidden rounded-[22px] border border-stone-200/70 bg-white/45 shadow-sm shadow-stone-900/5 backdrop-blur-xl lg:block">
+            <aside className="glass pointer-events-auto hidden overflow-hidden rounded-[22px] border border-stone-200/70 bg-white/45 pt-2 shadow-sm shadow-stone-900/5 backdrop-blur-xl lg:block">
               <div className="flex items-center justify-between gap-2 border-b border-stone-200/70 bg-blush-medium/40 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-copper" />
@@ -300,7 +300,7 @@ export function NotesModal({
               </div>
             </aside>
 
-            <div className="relative h-[calc(100dvh-96px)] lg:h-[calc(100dvh-104px)]">
+            <div className="relative h-[calc(100dvh-96px)] pt-2 lg:h-[calc(100dvh-104px)]">
               <NotesCanvas
                 strokes={strokes}
                 onChangeStrokes={setStrokes}
