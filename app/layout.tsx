@@ -3,6 +3,7 @@ import { Playfair_Display } from "next/font/google";
 
 import { StoreHydration } from "@/components/taraform/StoreHydration";
 import { brandPublicUrl } from "@/lib/branding";
+import { resolveMetadataBaseUrl } from "@/lib/siteUrl";
 
 import "./globals.css";
 
@@ -12,14 +13,12 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined);
+const metadataBase = resolveMetadataBaseUrl();
 
 const faviconHref = brandPublicUrl("/favicon.png");
 
 export const metadata: Metadata = {
-  ...(siteUrl ? { metadataBase: new URL(siteUrl) } : {}),
+  ...(metadataBase ? { metadataBase } : {}),
   title: "Taraform",
   description:
     "Taraform is a beautiful, Apple-inspired study companion for nursing grad school — upload textbook pages, take handwritten notes, run grounded NCLEX-style quizzes, and track confidence over time.",
