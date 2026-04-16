@@ -11,10 +11,39 @@ type ToolState = {
 
 type RenderOptions = {
   paperPaddingPx?: number;
+  paperStyle?: "blank" | "lined";
+  paperOpacity?: number;
 };
 
 function clamp(n: number, min: number, max: number) {
   return Math.max(min, Math.min(max, n));
+}
+
+function drawPaper(
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  dpr: number,
+  style: RenderOptions["paperStyle"],
+  opacity: RenderOptions["paperOpacity"],
+) {
+  if (style !== "lined") return;
+
+  ctx.save();
+  ctx.globalAlpha = opacity ?? 0.15;
+  ctx.strokeStyle = "#8e8e8e";
+  ctx.lineWidth = 1;
+
+  const spacing = 24 * dpr;
+
+  for (let y = spacing; y < height; y += spacing) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(width, y);
+    ctx.stroke();
+  }
+
+  ctx.restore();
 }
 
 function strokeToFreehandPoints(points: NotePoint[]) {
@@ -107,6 +136,31 @@ function createHiDpiCanvas(canvas: HTMLCanvasElement) {
   return { ctx, dpr };
 }
 
+function drawCursor(
+  ctx: CanvasRenderingContext2D,
+  toolState: ToolState,
+  cursor: { x: number; y: number } | null,
+) {
+  if (!cursor) return;
+
+  ctx.save();
+
+  ctx.beginPath();
+
+  if (toolState.tool === "eraser") {
+    ctx.strokeStyle = "rgba(0,0,0,0.6)";
+    ctx.lineWidth = 2;
+    ctx.arc(cursor.x, cursor.y, toolState.size * 1.2, 0, Math.PI * 2);
+  } else {
+    ctx.strokeStyle = "rgba(0,0,0,0.7)";
+    ctx.lineWidth = 1.5;
+    ctx.arc(cursor.x, cursor.y, toolState.size * 0.6, 0, Math.PI * 2);
+  }
+
+  ctx.stroke();
+  ctx.restore();
+}
+
 export function useCanvasDrawing({
   strokes,
   onChangeStrokes,
@@ -127,6 +181,7 @@ export function useCanvasDrawing({
   const isDrawingRef = React.useRef(false);
   const needsRebuildBaseRef = React.useRef(true);
   const rafRef = React.useRef<number | null>(null);
+  const cursorRef = React.useRef({ x: 0, y: 0 });
 
   const paperPaddingPx = renderOptions?.paperPaddingPx ?? 34;
 
@@ -186,17 +241,26 @@ export function useCanvasDrawing({
   const render = React.useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const { ctx } = createHiDpiCanvas(canvas);
+    const { ctx, dpr } = createHiDpiCanvas(canvas);
 
     if (needsRebuildBaseRef.current) rebuildBase();
     const offscreen = baseBitmapRef.current;
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    drawPaper(
+      ctx,
+      canvas.width,
+      canvas.height,
+      dpr,
+      renderOptions?.paperStyle,
+      renderOptions?.paperOpacity,
+    );
     if (offscreen) ctx.drawImage(offscreen, 0, 0);
 
     const inProgress = inProgressRef.current;
     if (inProgress) drawStroke(ctx, inProgress);
-  }, [rebuildBase]);
+    drawCursor(ctx, toolState, cursorRef.current);
+  }, [rebuildBase, renderOptions?.paperOpacity, renderOptions?.paperStyle, toolState]);
 
   const scheduleRender = React.useCallback(() => {
     if (rafRef.current != null) return;
@@ -233,13 +297,14 @@ export function useCanvasDrawing({
       drawingPointerIdRef.current = e.pointerId;
       isDrawingRef.current = true;
       canvas.setPointerCapture(e.pointerId);
-      document.body.style.cursor = "none";
+      canvas.style.cursor = "none";
 
       const p = canvasPoint(canvas, e.nativeEvent);
       const { dpr } = createHiDpiCanvas(canvas);
       const pad = paperPaddingPx * dpr;
       const x = clamp(p.x, pad, canvas.width - pad);
       const y = clamp(p.y, pad, canvas.height - pad);
+      cursorRef.current = { x, y };
 
       const pressure = clamp(isPen ? e.pressure || 0.5 : e.pressure || 0.5, 0.08, 1);
 
@@ -267,6 +332,7 @@ export function useCanvasDrawing({
       const pad = paperPaddingPx * dpr;
       const x = clamp(p.x, pad, canvas.width - pad);
       const y = clamp(p.y, pad, canvas.height - pad);
+      cursorRef.current = { x, y };
 
       const isPen = e.pointerType === "pen";
       const pressure = clamp(isPen ? e.pressure || 0.5 : e.pressure || 0.5, 0.08, 1);
@@ -289,8 +355,10 @@ export function useCanvasDrawing({
       drawingPointerIdRef.current = null;
       isDrawingRef.current = false;
       inProgressRef.current = null;
-      document.body.style.cursor = "";
-      if (canvas) canvas.releasePointerCapture(e.pointerId);
+      if (canvas) {
+        canvas.style.cursor = "";
+        canvas.releasePointerCapture(e.pointerId);
+      }
 
       if (!stroke) return;
       if (stroke.points.length < 1) return;
@@ -305,7 +373,15 @@ export function useCanvasDrawing({
         // Commit immediately to the base bitmap so the final stroke isn't "one behind".
         commitStrokeToBase(stroke);
         onChangeStrokes((prev) => [...prev, stroke]);
-        needsRebuildBaseRef.current = false;
+        // Force immediate visual sync
+        const canvas = canvasRef.current;
+        if (canvas) {
+          const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true });
+          if (ctx && baseBitmapRef.current) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.drawImage(baseBitmapRef.current, 0, 0);
+          }
+        }
         scheduleRender();
         return;
       }
@@ -318,7 +394,8 @@ export function useCanvasDrawing({
     drawingPointerIdRef.current = null;
     isDrawingRef.current = false;
     inProgressRef.current = null;
-    document.body.style.cursor = "";
+    const canvas = canvasRef.current;
+    if (canvas) canvas.style.cursor = "";
     scheduleRender();
   }, [scheduleRender]);
 

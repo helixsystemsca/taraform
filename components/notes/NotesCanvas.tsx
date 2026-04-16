@@ -6,7 +6,7 @@ import type { NoteStroke, NotesTool } from "@/components/notes/types";
 import { useCanvasDrawing } from "@/hooks/useCanvasDrawing";
 import { cn } from "@/lib/utils";
 
-type PaperStyle = "blank" | "lined" | "dots";
+type PaperStyle = "blank" | "lined";
 
 export function NotesCanvas({
   strokes,
@@ -36,7 +36,7 @@ export function NotesCanvas({
     renderOptions: { paperPaddingPx: 36 },
   });
 
-  const [paperStyle, setPaperStyle] = React.useState<PaperStyle>(paperStyleProp ?? "dots");
+  const [paperStyle, setPaperStyle] = React.useState<PaperStyle>(paperStyleProp ?? "blank");
   const [paperOpacity, setPaperOpacity] = React.useState<number>(paperOpacityProp ?? 0.18);
 
   React.useEffect(() => {
@@ -114,23 +114,10 @@ export function NotesCanvas({
   return (
     <div
       className={cn(
-        "relative h-full w-full overflow-hidden rounded-[22px] border border-stone-200/70 bg-[#fdfaf6] shadow-[0_12px_38px_rgba(15,23,42,0.12)]",
-        "mt-10 sm:mt-12",
+        "canvas-wrapper relative h-full w-full overflow-hidden rounded-[22px] border border-stone-200/70 bg-[#fdfaf6] shadow-[0_12px_38px_rgba(15,23,42,0.12)]",
         className,
       )}
     >
-      {paperStyle === "dots" ? (
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            opacity: paperOpacity,
-            backgroundImage: "radial-gradient(rgba(17,24,39,0.42) 0.65px, transparent 0.75px)",
-            backgroundSize: "20px 20px",
-            backgroundPosition: "0 0",
-            filter: "blur(0.1px)",
-          }}
-        />
-      ) : null}
       {paperStyle === "lined" ? (
         <div
           className="pointer-events-none absolute inset-0"

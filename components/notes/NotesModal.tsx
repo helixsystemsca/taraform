@@ -195,7 +195,7 @@ export function NotesModal({
             open ? "scale-100 opacity-100" : "scale-[0.985] opacity-0",
           )}
         >
-          <div className="pointer-events-none absolute left-0 right-0 top-0 z-30 flex justify-center pt-2 sm:pt-4">
+          <div className="pointer-events-none absolute left-0 right-0 top-0 z-30 flex justify-center pt-3 sm:pt-4">
             <NotesToolbar
               tool={tool}
               onToolChange={setTool}
@@ -217,7 +217,7 @@ export function NotesModal({
             />
           </div>
 
-          <div className="absolute inset-0 grid grid-cols-1 gap-4 pt-16 sm:pt-20 lg:grid-cols-[280px_1fr] lg:gap-5">
+          <div className="absolute inset-0 grid grid-cols-1 gap-4 pt-[92px] sm:pt-[100px] lg:grid-cols-[280px_1fr] lg:gap-5">
             <aside className="glass pointer-events-auto hidden overflow-hidden rounded-[22px] border border-stone-200/70 bg-white/45 shadow-sm shadow-stone-900/5 backdrop-blur-xl lg:block">
               <div className="flex items-center justify-between gap-2 border-b border-stone-200/70 bg-blush-medium/40 px-4 py-3">
                 <div className="flex items-center gap-2">

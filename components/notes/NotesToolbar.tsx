@@ -6,19 +6,19 @@ import { Eraser, Highlighter, Paintbrush2, Redo2, Trash2, Undo2, Download, Save 
 import type { NotesTool } from "@/components/notes/types";
 import { cn } from "@/lib/utils";
 
-const PASTEL_COLORS = [
-  "#CDB4DB", // lavender
-  "#FFC8DD", // blush pink
-  "#BDE0FE", // soft blue
-  "#A2D2FF", // sky blue
-  "#CDEAC0", // soft green
-  "#FFD6A5", // peach
-  "#FDFFB6", // soft yellow
-  "#E2F0CB", // pale lime
-  "#F1C0E8", // light purple pink
+export const pastelColors = [
+  "#CDB4DB",
+  "#FFC8DD",
+  "#BDE0FE",
+  "#A2D2FF",
+  "#CDEAC0",
+  "#FFD6A5",
+  "#FDFFB6",
+  "#E2F0CB",
+  "#F1C0E8",
 ];
 
-type PaperStyle = "blank" | "lined" | "dots";
+type PaperStyle = "blank" | "lined";
 
 export function NotesToolbar({
   tool,
@@ -57,7 +57,7 @@ export function NotesToolbar({
   onSave: () => void;
   onExportPng: () => void;
 }) {
-  const style = paperStyle ?? "dots";
+  const style = paperStyle ?? "blank";
   const opacity = paperOpacity ?? 0.18;
 
   function setPaper(next: { style?: PaperStyle; opacity?: number }) {
@@ -94,7 +94,7 @@ export function NotesToolbar({
       <div className="mx-1 h-6 w-px bg-stone-200/80" />
 
       <div className="flex items-center gap-1.5">
-        {PASTEL_COLORS.map((c) => (
+        {pastelColors.map((c) => (
           <button
             key={c}
             type="button"
@@ -141,11 +141,6 @@ export function NotesToolbar({
         <ToolButton active={style === "lined"} label="Lined" onClick={() => setPaper({ style: "lined" })}>
           <span className="relative h-3 w-3 rounded-sm border border-stone-300/80 bg-white/70">
             <span className="absolute left-0.5 right-0.5 top-1/2 h-px -translate-y-1/2 bg-ink/35" />
-          </span>
-        </ToolButton>
-        <ToolButton active={style === "dots"} label="Dots" onClick={() => setPaper({ style: "dots" })}>
-          <span className="relative h-3 w-3 rounded-sm border border-stone-300/80 bg-white/70">
-            <span className="absolute left-1/2 top-1/2 h-1 w-1 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink/35" />
           </span>
         </ToolButton>
       </div>
