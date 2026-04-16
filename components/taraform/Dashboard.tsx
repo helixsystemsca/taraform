@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
 import { BookOpen, Loader2, Sparkles, UploadCloud } from "lucide-react";
 
 import { extractTextbookFromImage } from "@/app/actions/extractTextbookFromImage";
@@ -13,6 +14,7 @@ import { cn } from "@/lib/utils";
 import { useStudyStore } from "@/stores/useStudyStore";
 
 export function Dashboard() {
+  const router = useRouter();
   const sections = useStudyStore((s) => s.sections);
   const addSections = useStudyStore((s) => s.addSections);
   const selectSection = useStudyStore((s) => s.selectSection);
@@ -130,7 +132,10 @@ export function Dashboard() {
               <button
                 key={s.id}
                 type="button"
-                onClick={() => selectSection(s.id)}
+                onClick={() => {
+                  selectSection(s.id);
+                  router.push("/study");
+                }}
                 className={cn(
                   "glass text-left text-ink transition active:scale-[0.99]",
                   "rounded-[1.75rem] p-5 hover:border-blush-dust/50 hover:bg-blush-sheet/90",
