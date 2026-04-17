@@ -32,7 +32,7 @@ NEXT_PUBLIC_STUDY_API_URL=http://127.0.0.1:8000
 |----------|---------|
 | `OPENAI_API_KEY` | Required for `/api/ai/coach` and `/api/ai/improve`. |
 | `DATABASE_URL` | Optional. If unset, uses SQLite at `./data/study.db`. On Render, use a PostgreSQL URL (asyncpg). |
-| `CORS_ORIGINS` | Comma-separated browser origins. Default `http://localhost:3000`. Add your production Next.js origin. |
+| `CORS_ORIGINS` | Comma-separated browser origins (no spaces required). If unset, defaults to `http://localhost:3000` only. **No `*`.** Include production and Vercel preview URLs, e.g. `https://taraform.helixsystems.ca,https://taraform-xxx.vercel.app`. |
 | `UPLOAD_ROOT` | Directory for uploaded PDFs (default `./uploads`). |
 
 ## Deploy on Render
@@ -40,7 +40,7 @@ NEXT_PUBLIC_STUDY_API_URL=http://127.0.0.1:8000
 1. Create a **Web Service**, root directory `backend`, runtime **Python 3.12+**.
 2. **Build command:** `pip install -r requirements.txt`
 3. **Start command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-4. Set `OPENAI_API_KEY`, `CORS_ORIGINS` (e.g. `https://taraform.helixsystems.ca`), and `DATABASE_URL` (managed PostgreSQL recommended so data survives deploys).
+4. Set `OPENAI_API_KEY`, `CORS_ORIGINS` (comma-separated production + any Vercel preview hosts you use), and `DATABASE_URL` (managed PostgreSQL recommended so data survives deploys).
 5. Copy the service URL into Vercel as `NEXT_PUBLIC_STUDY_API_URL` (no trailing slash).
 
 SQLite on Render’s ephemeral disk is fine for demos; production should use PostgreSQL.

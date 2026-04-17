@@ -8,11 +8,11 @@ from app.db.database import init_db
 from app.routers import ai, summaries, units
 
 
-def _cors_origins() -> list[str]:
-    raw = os.getenv("CORS_ORIGINS", "http://localhost:3000").strip()
-    if not raw:
-        return ["http://localhost:3000"]
-    return [o.strip() for o in raw.split(",") if o.strip()]
+def get_cors_origins():
+    cors = os.getenv("CORS_ORIGINS")
+    if cors:
+        return [origin.strip() for origin in cors.split(",") if origin.strip()]
+    return ["http://localhost:3000"]
 
 
 @asynccontextmanager
@@ -25,9 +25,12 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Taraform Study API", version="0.1.0", lifespan=lifespan)
 
+origins = get_cors_origins()
+print("CORS ORIGINS:", origins)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_cors_origins(),
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
