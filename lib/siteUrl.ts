@@ -1,3 +1,5 @@
+import { PRODUCTION_APP_ORIGIN } from "@/lib/auth/authCallbackUrl";
+
 /**
  * `new URL()` requires a protocol. Vercel / env often stores only the host
  * (e.g. `taraform.helixsystems.ca`) — normalize to a valid absolute URL.
@@ -10,6 +12,13 @@ export function resolveMetadataBaseUrl(): URL | undefined {
       return new URL(withProtocol);
     } catch {
       return undefined;
+    }
+  }
+  if (process.env.NODE_ENV === "production") {
+    try {
+      return new URL(PRODUCTION_APP_ORIGIN);
+    } catch {
+      /* fall through */
     }
   }
   const vercel = process.env.VERCEL_URL?.trim();

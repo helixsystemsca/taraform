@@ -13,6 +13,7 @@ import {
   Library,
   UploadCloud,
   ListChecks,
+  LayoutPanelLeft,
   Plus,
 } from "lucide-react";
 
@@ -29,6 +30,7 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { href: "/home", label: "Home", icon: Home },
+  { href: "/workspace", label: "Workspace", icon: LayoutPanelLeft },
   { href: "/plan", label: "Study Plan", icon: ListChecks },
   { href: "/upload", label: "Upload Notes", icon: UploadCloud },
   { href: "/study", label: "Study", icon: BookOpen },
@@ -69,7 +71,7 @@ function SidebarNav({ pathname }: { pathname: string }) {
 }
 
 function BottomNav({ pathname }: { pathname: string }) {
-  const shortNav = NAV.slice(0, 4);
+  const shortNav = [NAV[0]!, NAV[1]!, NAV[4]!, NAV[5]!];
   return (
     <div
       className={cn(
@@ -141,6 +143,7 @@ function FocusTopBar({ pathname }: { pathname: string }) {
 export function ResponsiveShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname() || "/";
   const isNotes = isActive(pathname, "/notes");
+  const isWorkspace = isActive(pathname, "/workspace");
 
   if (isNotes) {
     return (
@@ -185,7 +188,14 @@ export function ResponsiveShell({ children }: { children: React.ReactNode }) {
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
         <AppTopBar />
-        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6 lg:px-10 lg:py-8">{children}</div>
+        <div
+          className={cn(
+            "flex-1 overflow-y-auto",
+            isWorkspace ? "px-0 py-0 sm:px-2 sm:py-2 lg:px-4 lg:py-4" : "px-4 py-6 sm:px-6 lg:px-10 lg:py-8",
+          )}
+        >
+          {children}
+        </div>
       </div>
 
       <BottomNav pathname={pathname} />

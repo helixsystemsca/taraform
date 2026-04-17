@@ -4,6 +4,7 @@ import { createServerClient } from "@supabase/ssr";
 import type { User } from "@supabase/supabase-js";
 
 import { isAllowedEmail } from "@/lib/auth/allowlist";
+import { buildAbsoluteUrl, withAppBasePath } from "@/lib/auth/authCallbackUrl";
 import { DEV_USER, isDevAuthBypass } from "@/lib/auth/devUser";
 
 function getSupabaseEnvFromRequest() {
@@ -33,7 +34,8 @@ function isProtectedPath(pathname: string) {
     pathname.startsWith("/review") ||
     pathname.startsWith("/concepts") ||
     pathname.startsWith("/analytics") ||
-    pathname.startsWith("/session")
+    pathname.startsWith("/session") ||
+    pathname.startsWith("/workspace")
   );
 }
 
@@ -71,28 +73,37 @@ export async function middleware(request: NextRequest) {
 
   if (user && !isAllowedEmail(user.email)) {
     await supabase.auth.signOut();
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("error", "access_not_allowed");
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(buildAbsoluteUrl(request, "/login", { error: "access_not_allowed" }));
   }
 
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
+  const base = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
+  const callbackPath = withAppBasePath("/auth/callback");
+
+  // Supabase "Site URL" is often the site root, so email links open `/?code=…` instead of `/auth/callback?code=…`.
+  // `/` is protected below; without this, unauthenticated users get sent to /login and the code is lost.
+  const hasAuthReturn = !!(searchParams.get("code") || searchParams.get("error"));
+  if (hasAuthReturn && !pathname.startsWith(callbackPath)) {
+    const isSiteRoot =
+      pathname === "/" || pathname === "" || (base !== "" && (pathname === base || pathname === `${base}/`));
+    if (isSiteRoot) {
+      const url = buildAbsoluteUrl(request, "/auth/callback");
+      searchParams.forEach((value, key) => {
+        url.searchParams.set(key, value);
+      });
+      return NextResponse.redirect(url);
+    }
+  }
 
   if (isPublicPath(pathname)) {
     if (user && (pathname === "/login" || pathname === "/signup")) {
-      const url = request.nextUrl.clone();
-      url.pathname = "/home";
-      return NextResponse.redirect(url);
+      return NextResponse.redirect(buildAbsoluteUrl(request, "/home"));
     }
     return response;
   }
 
   if (isProtectedPath(pathname) && !user) {
-    const url = request.nextUrl.clone();
-    url.pathname = "/login";
-    url.searchParams.set("next", pathname);
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(buildAbsoluteUrl(request, "/login", { next: pathname }));
   }
 
   return response;

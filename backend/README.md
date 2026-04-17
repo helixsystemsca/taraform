@@ -1,0 +1,55 @@
+# Taraform Study API (FastAPI)
+
+Full-stack study workflow: **units** (PDF files), **summaries** (user-written + source excerpt), **AI coach** (structured feedback, cached on the summary row), **improve** (optional rewrite from feedback). Flashcards and quiz routes are stubs for now.
+
+## Run locally
+
+From this directory:
+
+```bash
+py -m venv .venv
+.venv\Scripts\activate   # Windows
+# source .venv/bin/activate  # macOS/Linux
+pip install -r requirements.txt
+set OPENAI_API_KEY=sk-...   # Windows
+export OPENAI_API_KEY=sk-...  # macOS/Linux
+py -m uvicorn app.main:app --reload --port 8000
+```
+
+- API: `http://127.0.0.1:8000`
+- Docs: `http://127.0.0.1:8000/docs`
+- Health: `GET /health`
+
+Point the Next.js app at the API:
+
+```bash
+NEXT_PUBLIC_STUDY_API_URL=http://127.0.0.1:8000
+```
+
+## Environment
+
+| Variable | Purpose |
+|----------|---------|
+| `OPENAI_API_KEY` | Required for `/api/ai/coach` and `/api/ai/improve`. |
+| `DATABASE_URL` | Optional. If unset, uses SQLite at `./data/study.db`. On Render, use a PostgreSQL URL (asyncpg). |
+| `CORS_ORIGINS` | Comma-separated browser origins. Default `http://localhost:3000`. Add your production Next.js origin. |
+| `UPLOAD_ROOT` | Directory for uploaded PDFs (default `./uploads`). |
+
+## Deploy on Render
+
+1. Create a **Web Service**, root directory `backend`, runtime **Python 3.12+**.
+2. **Build command:** `pip install -r requirements.txt`
+3. **Start command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+4. Set `OPENAI_API_KEY`, `CORS_ORIGINS` (e.g. `https://taraform.helixsystems.ca`), and `DATABASE_URL` (managed PostgreSQL recommended so data survives deploys).
+5. Copy the service URL into Vercel as `NEXT_PUBLIC_STUDY_API_URL` (no trailing slash).
+
+SQLite on Render’s ephemeral disk is fine for demos; production should use PostgreSQL.
+
+## Endpoints
+
+- `POST /api/units/` — multipart `file` (+ optional `title`); stores PDF and returns `text_preview` (first pages only).
+- `POST /api/summaries/` — create or update summary (`id` optional for updates).
+- `GET /api/summaries/{id}` — fetch summary including cached `ai_feedback`.
+- `POST /api/ai/coach` — coach JSON; uses cache when `summary_id` points at a row with `ai_feedback`.
+- `POST /api/ai/improve` — returns `improved_summary`.
+- `POST /api/ai/flashcards`, `POST /api/ai/quiz` — stubs.

@@ -1,5 +1,11 @@
 import type { NextRequest } from "next/server";
 
+/**
+ * Production site — used for magic links, email confirmation, and server redirects when
+ * `NEXT_PUBLIC_SITE_URL` / `AUTH_REDIRECT_ORIGIN` are not set (avoids localhost / *.vercel.app in emails).
+ */
+export const PRODUCTION_APP_ORIGIN = "https://taraform.helixsystems.ca";
+
 /** Prefix pathname with `NEXT_PUBLIC_BASE_PATH` when the app is deployed under a subpath. */
 export function withAppBasePath(path: string): string {
   const base = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
@@ -34,19 +40,39 @@ function normalizeEnvOrigin(raw: string, fallbackOrigin: string): string {
 }
 
 /**
- * Origin used in `emailRedirectTo` for magic link / signup confirmation.
- * Must match an entry in Supabase Dashboard → Authentication → URL Configuration → Redirect URLs.
+ * Public origin for auth emails and absolute redirects.
  *
  * Priority:
- * 1. `AUTH_REDIRECT_ORIGIN` (canonical origin; may omit `https://` — we fix that here)
+ * 1. `AUTH_REDIRECT_ORIGIN`
  * 2. `NEXT_PUBLIC_SITE_URL`
- * 3. Request URL origin (correct for local ports and most Vercel deployments)
+ * 3. **Production:** `https://taraform.helixsystems.ca` (never infer from request — avoids wrong hosts in emails)
+ * 4. **Development:** request origin (or localhost fallback)
  */
 export function getAuthRedirectOrigin(req: NextRequest): string {
-  const fallback = req.nextUrl.origin || "http://localhost:3000";
+  const requestFallback = req.nextUrl.origin || "http://localhost:3000";
   const raw = [process.env.AUTH_REDIRECT_ORIGIN, process.env.NEXT_PUBLIC_SITE_URL].map((s) => s?.trim() ?? "").find(Boolean) ?? "";
-  if (!raw) return fallback;
-  return normalizeEnvOrigin(raw, fallback);
+  if (raw) return normalizeEnvOrigin(raw, requestFallback);
+
+  if (process.env.NODE_ENV === "production") {
+    return PRODUCTION_APP_ORIGIN;
+  }
+
+  return requestFallback;
+}
+
+/**
+ * Absolute URL on the public site (login, home, callback, etc.).
+ */
+export function buildAbsoluteUrl(req: NextRequest, pathname: string, query?: Record<string, string | undefined>): URL {
+  const origin = getAuthRedirectOrigin(req);
+  const path = pathname.startsWith("/") ? pathname : `/${pathname}`;
+  const u = new URL(withAppBasePath(path), origin);
+  if (query) {
+    for (const [k, v] of Object.entries(query)) {
+      if (v !== undefined) u.searchParams.set(k, v);
+    }
+  }
+  return u;
 }
 
 /**
@@ -63,7 +89,7 @@ export function buildAuthEmailRedirectUrl(req: NextRequest, nextPath: string | u
   try {
     url = new URL(pathname, origin);
   } catch {
-    url = new URL(pathname, req.nextUrl.origin || "http://localhost:3000");
+    url = new URL(pathname, PRODUCTION_APP_ORIGIN);
   }
 
   const n = (nextPath?.trim() || "/home").replace(/^\/+/, "/");

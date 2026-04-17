@@ -1,16 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { redirectWithSupabaseCookies, supabaseRouteClient } from "@/app/api/auth/_shared";
-import { withAppBasePath } from "@/lib/auth/authCallbackUrl";
+import { buildAbsoluteUrl } from "@/lib/auth/authCallbackUrl";
 import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 function loginWithError(req: NextRequest, next: string, errorCode: string) {
-  const url = req.nextUrl.clone();
-  url.pathname = withAppBasePath("/login");
-  url.search = "";
-  url.searchParams.set("next", next.startsWith("/") ? next : `/${next}`);
-  url.searchParams.set("error", errorCode);
-  return NextResponse.redirect(url);
+  const nextPath = next.startsWith("/") ? next : `/${next}`;
+  return NextResponse.redirect(
+    buildAbsoluteUrl(req, "/login", { next: nextPath, error: errorCode }),
+  );
 }
 
 export async function GET(req: NextRequest) {
@@ -52,11 +50,10 @@ export async function GET(req: NextRequest) {
       msg.includes("otp") || msg.includes("expired") || msg.includes("flow_state") || msg.includes("pkce")
         ? "otp_expired"
         : "auth_callback_failed";
-    const url = req.nextUrl.clone();
-    url.pathname = withAppBasePath("/login");
-    url.search = "";
-    url.searchParams.set("next", next.startsWith("/") ? next : `/${next}`);
-    url.searchParams.set("error", errParam);
+    const url = buildAbsoluteUrl(req, "/login", {
+      next: next.startsWith("/") ? next : `/${next}`,
+      error: errParam,
+    });
     return redirectWithSupabaseCookies(getResponse(), url);
   }
 
@@ -65,17 +62,15 @@ export async function GET(req: NextRequest) {
 
   if (!isAllowedEmail(data.user?.email ?? null)) {
     await supabase.auth.signOut();
-    const url = req.nextUrl.clone();
-    url.pathname = withAppBasePath("/login");
-    url.search = "";
-    url.searchParams.set("error", "access_not_allowed");
-    url.searchParams.set("next", next.startsWith("/") ? next : `/${next}`);
+    const url = buildAbsoluteUrl(req, "/login", {
+      error: "access_not_allowed",
+      next: next.startsWith("/") ? next : `/${next}`,
+    });
     return redirectWithSupabaseCookies(getResponse(), url);
   }
 
-  const url = req.nextUrl.clone();
-  url.pathname = withAppBasePath(next.startsWith("/") ? next : `/${next}`);
-  url.search = "";
+  const nextPath = next.startsWith("/") ? next : `/${next}`;
+  const url = buildAbsoluteUrl(req, nextPath);
   console.log("[auth/callback] redirecting to app", { pathname: url.pathname });
   return redirectWithSupabaseCookies(getResponse(), url);
 }
