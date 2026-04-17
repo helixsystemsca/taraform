@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const SRC = brandPublicUrl("/taraform.png");
 
-export type TaraformLogoVariant = "sidebar" | "header" | "compact" | "dialog";
+export type TaraformLogoVariant = "sidebar" | "compact" | "dialog";
 
 /**
  * Renders the Taraform wordmark with outer transparent padding visually cropped:
@@ -15,10 +15,8 @@ export type TaraformLogoVariant = "sidebar" | "header" | "compact" | "dialog";
  */
 export function TaraformLogo({ variant, className }: { variant: TaraformLogoVariant; className?: string }) {
   const box = {
-    /** Sidebar: short clip so the rail header stays compact; scale does the “bigger” work. */
-    sidebar: "h-9 w-full sm:h-10",
-    /** Home hero: tighter block so greeting isn’t pushed down; image is zoomed inside clip. */
-    header: "mb-0.5 h-10 w-52 sm:mb-0 sm:h-11 sm:w-64 md:h-12 md:w-72",
+    /** Sidebar: ~2× prior rail height for a prominent wordmark. */
+    sidebar: "h-18 w-full sm:h-20",
     /** Notes focus top bar */
     compact: "h-8 w-[11rem] sm:h-9 sm:w-52",
     /** Mobile nav dialog header (right side) */
@@ -26,15 +24,13 @@ export function TaraformLogo({ variant, className }: { variant: TaraformLogoVari
   }[variant];
 
   const zoom = {
-    sidebar: "scale-[1.62]",
-    header: "scale-[1.52]",
+    sidebar: "scale-[1.38]",
     compact: "scale-[1.5]",
     dialog: "scale-[1.48]",
   }[variant];
 
   const sizes = {
-    sidebar: "220px",
-    header: "(max-width: 640px) 192px, (max-width: 768px) 256px, 320px",
+    sidebar: "248px",
     compact: "(max-width: 640px) 192px, 224px",
     dialog: "208px",
   }[variant];

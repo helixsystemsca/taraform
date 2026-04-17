@@ -5,7 +5,6 @@ import { BookMarked, Download, Home, Upload } from "lucide-react";
 
 import { GlassCard } from "@/components/glass/GlassCard";
 import { Button } from "@/components/ui/button";
-import { TaraformLogo } from "@/components/taraform/TaraformLogo";
 import { useStudyStore } from "@/stores/useStudyStore";
 
 function greetingForTara() {
@@ -34,8 +33,7 @@ export function StudyHeader(props: { onImportClick: () => void; onExport: () => 
     <GlassCard className="mb-8 px-6 py-6 sm:px-8 sm:py-7">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <TaraformLogo variant="header" />
-          <h1 className="font-display mt-2 text-2xl font-medium tracking-[-0.03em] text-ink sm:text-3xl">
+          <h1 className="font-display text-2xl font-medium tracking-[-0.03em] text-ink sm:text-3xl">
             {greeting}
           </h1>
           <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-ink-secondary">

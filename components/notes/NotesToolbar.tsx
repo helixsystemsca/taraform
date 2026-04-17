@@ -77,8 +77,8 @@ export function NotesToolbar({
   return (
     <div
       className={cn(
-        "pointer-events-auto w-full min-w-0 max-w-full rounded-xl border border-stone-200/70",
-        "bg-white/80 px-3 py-2.5 shadow-md shadow-stone-900/10 backdrop-blur-xl sm:px-4",
+        "pointer-events-auto w-full min-w-0 max-w-full rounded-xl border border-[rgba(120,90,80,0.1)]",
+        "bg-surface-panel/95 px-3 py-2.5 shadow-warm backdrop-blur-xl sm:px-4",
         "overflow-x-auto [scrollbar-width:thin]",
       )}
     >
@@ -119,8 +119,8 @@ export function NotesToolbar({
                 key={c}
                 type="button"
                 className={cn(
-                  "size-[22px] shrink-0 rounded-full border border-stone-300/70 shadow-sm shadow-stone-900/5 transition",
-                  c === color ? "ring-2 ring-copper/40 ring-offset-2 ring-offset-white/90" : "hover:scale-[1.04]",
+                  "size-[22px] shrink-0 rounded-full border border-[rgba(120,90,80,0.15)] shadow-sm transition-editorial",
+                  c === color ? "ring-2 ring-copper/40 ring-offset-2 ring-offset-surface-panel" : "hover:scale-[1.04]",
                 )}
                 style={{ background: c }}
                 aria-label={`Set color ${c}`}
@@ -132,7 +132,7 @@ export function NotesToolbar({
               value={color}
               onChange={(e) => onColorChange(e.target.value)}
               className={cn(
-                "size-[22px] shrink-0 cursor-pointer rounded-full border border-stone-200/70 bg-transparent p-0",
+                "size-[22px] shrink-0 cursor-pointer rounded-full border border-[rgba(120,90,80,0.15)] bg-transparent p-0",
                 "self-center",
               )}
               aria-label="Pick custom color"
@@ -140,7 +140,7 @@ export function NotesToolbar({
           </div>
 
           <div className={cn("flex flex-nowrap items-center", "gap-2")}>
-            <span className="hidden shrink-0 text-xs font-medium text-ink/50 sm:inline">Size</span>
+            <span className="hidden shrink-0 text-xs font-medium text-ink-muted sm:inline">Size</span>
             <div className={cn("flex shrink-0 items-center", CONTROL_H)}>
               <input
                 type="range"
@@ -156,7 +156,7 @@ export function NotesToolbar({
             <span
               className={cn(
                 CONTROL_H,
-                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink/60",
+                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink-secondary",
               )}
             >
               {size}px
@@ -171,7 +171,7 @@ export function NotesToolbar({
         >
           <div
             className={cn(
-              "flex shrink-0 items-stretch rounded-lg border border-stone-200/70 bg-stone-100/50 p-1",
+              "flex shrink-0 items-stretch rounded-lg border border-[rgba(120,90,80,0.12)] bg-surface-page/90 p-1",
               CONTROL_H,
             )}
             role="group"
@@ -182,11 +182,11 @@ export function NotesToolbar({
               onClick={() => setPaper({ style: "blank" })}
               className={cn(
                 "inline-flex min-w-[2.25rem] flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition sm:min-w-0",
-                style === "blank" ? "bg-white text-ink shadow-sm shadow-stone-900/8" : "text-ink/60 hover:text-ink",
+                style === "blank" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
               )}
               aria-pressed={style === "blank"}
             >
-              <span className="size-3 shrink-0 rounded-sm border border-stone-300/80 bg-white/90" aria-hidden />
+              <span className="size-3 shrink-0 rounded-sm border border-[rgba(120,90,80,0.15)] bg-surface-panel" aria-hidden />
               <span className="hidden sm:inline">Blank</span>
             </button>
             <button
@@ -194,12 +194,12 @@ export function NotesToolbar({
               onClick={() => setPaper({ style: "lined" })}
               className={cn(
                 "inline-flex min-w-[2.25rem] flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition sm:min-w-0",
-                style === "lined" ? "bg-white text-ink shadow-sm shadow-stone-900/8" : "text-ink/60 hover:text-ink",
+                style === "lined" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
               )}
               aria-pressed={style === "lined"}
             >
               <span
-                className="flex size-3 shrink-0 items-center justify-center rounded-sm border border-stone-300/80 bg-white/90"
+                className="flex size-3 shrink-0 items-center justify-center rounded-sm border border-[rgba(120,90,80,0.15)] bg-surface-panel"
                 aria-hidden
               >
                 <span className="h-px w-2 bg-ink/40" />
@@ -209,7 +209,7 @@ export function NotesToolbar({
           </div>
 
           <div className={cn("flex flex-nowrap items-center", "gap-2")}>
-            <span className="hidden shrink-0 text-xs font-medium text-ink/50 lg:inline">Paper</span>
+            <span className="hidden shrink-0 text-xs font-medium text-ink-muted lg:inline">Paper</span>
             <div className={cn("flex shrink-0 items-center", CONTROL_H)}>
               <input
                 type="range"
@@ -225,14 +225,14 @@ export function NotesToolbar({
             <span
               className={cn(
                 CONTROL_H,
-                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink/60",
+                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink-secondary",
               )}
             >
               {(opacity * 100).toFixed(0)}%
             </span>
           </div>
 
-          <span className="hidden h-6 w-px shrink-0 self-center bg-stone-200/80 sm:block" aria-hidden />
+          <span className="hidden h-6 w-px shrink-0 self-center bg-[rgba(120,90,80,0.12)] sm:block" aria-hidden />
 
           <div className={cn("flex flex-nowrap items-center", "gap-2")}>
             <ToolButton label="Undo" disabled={!canUndo} onClick={onUndo}>
@@ -281,12 +281,12 @@ function ToolButton({
       aria-pressed={active === undefined ? undefined : active}
       onClick={onClick}
       className={cn(
-        "inline-flex h-10 min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg px-3 text-sm font-medium leading-none transition",
+        "inline-flex h-10 min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg px-3 text-sm font-medium leading-none transition-editorial",
         "border border-transparent",
         "disabled:pointer-events-none disabled:opacity-40",
         active
-          ? "border-copper/35 bg-blush-sheet/95 text-ink shadow-sm shadow-stone-900/8"
-          : "text-ink/75 hover:bg-stone-100/85 hover:text-ink",
+          ? "border-copper/30 bg-rose-light/60 text-ink shadow-sm"
+          : "text-ink-secondary hover:bg-black/[0.04] hover:text-ink",
       )}
     >
       {children}

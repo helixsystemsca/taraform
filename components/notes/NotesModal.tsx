@@ -38,7 +38,7 @@ export function NotesModal({
   const [title, setTitle] = React.useState<string>("");
 
   const [tool, setTool] = React.useState<NotesTool>("pen");
-  const [color, setColor] = React.useState("#1f2937");
+  const [color, setColor] = React.useState("#2b2b2b");
   const [size, setSize] = React.useState(10);
 
   const { present: strokes, set: setStrokes, undo, redo, canUndo, canRedo, reset } = useUndoRedo<NoteStroke>([]);
@@ -181,7 +181,7 @@ export function NotesModal({
     <div className={cn("fixed inset-0 z-50", open ? "pointer-events-auto" : "pointer-events-none")}>
       <div
         className={cn(
-          "absolute inset-0 bg-stone-950/35 backdrop-blur-[10px] transition-opacity duration-200",
+          "absolute inset-0 bg-[rgba(61,43,31,0.28)] backdrop-blur-[12px] transition-opacity duration-200",
           open ? "opacity-100" : "opacity-0",
         )}
         onClick={close}
@@ -223,7 +223,7 @@ export function NotesModal({
               </div>
               <div className="flex items-center justify-end gap-2">
                 <div className="pointer-events-none hidden lg:block">
-                  <div className="rounded-full border border-stone-200/70 bg-white/65 px-3 py-1.5 text-xs font-medium text-ink/60 shadow-sm shadow-stone-900/5 backdrop-blur-xl">
+                  <div className="rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 px-3 py-1.5 text-xs font-medium text-ink-secondary shadow-warm backdrop-blur-xl">
                     {saveBadge.dirty
                       ? "Saving…"
                       : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
@@ -232,7 +232,7 @@ export function NotesModal({
                 <button
                   type="button"
                   onClick={close}
-                  className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-stone-200/70 bg-white/70 text-ink/70 shadow-sm shadow-stone-900/10 backdrop-blur-xl hover:bg-white/85"
+                  className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 text-ink-secondary shadow-warm backdrop-blur-xl transition-editorial hover:border-copper/25 hover:bg-rose-light/40 hover:text-ink"
                   aria-label="Close notes"
                 >
                   <X className="h-5 w-5" />
@@ -242,29 +242,29 @@ export function NotesModal({
           </header>
 
           <div className="flex min-h-0 flex-1 items-start gap-3 sm:gap-4 lg:gap-5">
-            <aside className="glass pointer-events-auto hidden w-[280px] shrink-0 overflow-hidden rounded-[22px] border border-stone-200/70 bg-white/45 shadow-sm shadow-stone-900/5 backdrop-blur-xl lg:block">
-              <div className="flex items-center justify-between gap-2 border-b border-stone-200/70 bg-blush-medium/40 px-4 py-3">
+            <aside className="pointer-events-auto hidden w-[280px] shrink-0 overflow-hidden rounded-xl border border-[rgba(120,90,80,0.1)] bg-surface-panel shadow-warm backdrop-blur-xl lg:block">
+              <div className="flex items-center justify-between gap-2 border-b border-[rgba(120,90,80,0.08)] bg-rose-light/35 px-4 py-3">
                 <div className="flex items-center gap-2">
-                  <FileText className="h-4 w-4 text-copper" />
-                  <div className="text-sm font-semibold text-ink">Notebook</div>
+                  <FileText className="h-4 w-4 text-copper" strokeWidth={1.5} />
+                  <div className="font-display text-sm font-medium text-ink">Notebook</div>
                 </div>
                 <button
                   type="button"
                   onClick={() => void createNewNote(chapterId)}
-                  className="inline-flex items-center gap-2 rounded-full border border-stone-200/70 bg-white/60 px-3 py-1.5 text-xs font-medium text-ink/80 hover:bg-white/80"
+                  className="inline-flex items-center gap-2 rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-page/90 px-3 py-1.5 text-xs font-medium text-ink-secondary shadow-sm transition-editorial hover:border-copper/22 hover:bg-rose-light/45 hover:text-ink"
                 >
-                  <Plus className="h-4 w-4 text-copper" />
+                  <Plus className="h-4 w-4 text-copper" strokeWidth={1.5} />
                   New
                 </button>
               </div>
 
               <div className="space-y-3 p-4">
                 <div className="space-y-1.5">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink/45">Chapter</div>
+                  <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted">Chapter</div>
                   <select
                     value={chapterId ?? ""}
                     onChange={(e) => setChapterId(e.target.value || null)}
-                    className="w-full rounded-xl border border-stone-200/70 bg-white/65 px-3 py-2 text-sm text-ink/80 shadow-sm shadow-stone-900/5 outline-none focus:ring-2 focus:ring-copper/25"
+                    className="w-full rounded-lg border border-[rgba(120,90,80,0.12)] bg-surface-page/95 px-3 py-2 text-sm text-ink shadow-sm outline-none transition-editorial focus:border-copper/25 focus:ring-2 focus:ring-copper/15"
                   >
                     <option value="">Unlinked</option>
                     {chapters.map((c) => (
@@ -276,17 +276,17 @@ export function NotesModal({
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink/45">Title</div>
+                  <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted">Title</div>
                   <input
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="Untitled note…"
-                    className="w-full rounded-xl border border-stone-200/70 bg-white/65 px-3 py-2 text-sm text-ink/80 shadow-sm shadow-stone-900/5 outline-none focus:ring-2 focus:ring-copper/25"
+                    className="w-full rounded-lg border border-[rgba(120,90,80,0.12)] bg-surface-page/95 px-3 py-2 text-sm text-ink placeholder:text-ink-muted/70 shadow-sm outline-none transition-editorial focus:border-copper/25 focus:ring-2 focus:ring-copper/15"
                   />
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-ink/45">Notes</div>
+                  <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted">Notes</div>
                   <div className="max-h-[calc(100dvh-320px)] space-y-1 overflow-auto pr-1">
                     {notesIndex.map((n) => {
                       const active = n.id === activeNoteId;
@@ -297,14 +297,14 @@ export function NotesModal({
                           type="button"
                           onClick={() => setActiveNoteId(n.id)}
                           className={cn(
-                            "w-full rounded-xl border px-3 py-2 text-left text-sm transition",
+                            "w-full rounded-lg border px-3 py-2 text-left text-sm transition-editorial",
                             active
-                              ? "border-blush-dust/50 bg-white/80 text-ink shadow-sm shadow-stone-900/5"
-                              : "border-stone-200/70 bg-white/55 text-ink/70 hover:bg-white/70",
+                              ? "border-[rgba(120,90,80,0.12)] bg-rose-light/50 text-ink shadow-[inset_3px_0_0_0_#c58f8f] shadow-warm"
+                              : "border-[rgba(120,90,80,0.08)] bg-surface-page/80 text-ink-secondary hover:border-[rgba(120,90,80,0.12)] hover:bg-rose-light/25 hover:text-ink",
                           )}
                         >
                           <div className="truncate font-medium">{label}</div>
-                          <div className="mt-0.5 text-[11px] text-ink/45">
+                          <div className="mt-0.5 text-[11px] text-ink-muted">
                             Updated {new Date(n.updated_at).toLocaleString()}
                           </div>
                         </button>
@@ -316,7 +316,7 @@ export function NotesModal({
                 <button
                   type="button"
                   onClick={() => void deleteActive()}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-stone-200/70 bg-white/55 px-3 py-2 text-sm font-medium text-ink/70 hover:bg-red-50 hover:text-red-700"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-[rgba(120,90,80,0.12)] bg-surface-page/90 px-3 py-2 text-sm font-medium text-ink-secondary transition-editorial hover:border-red-200/80 hover:bg-[rgba(254,242,242,0.85)] hover:text-red-800"
                 >
                   <Trash2 className="h-4 w-4" />
                   Delete note

@@ -79,9 +79,9 @@ export function NotesCanvas({
       el.style.height = `${px}px`;
       el.style.borderRadius = last.type === "highlighter" ? "10px" : "9999px";
       el.style.opacity = cursorVisibleRef.current ? "1" : "0";
-      el.style.background = last.type === "eraser" ? "rgba(17,24,39,0.08)" : "transparent";
-      el.style.border = last.type === "eraser" ? "1px solid rgba(17,24,39,0.28)" : "1px solid rgba(17,24,39,0.55)";
-      el.style.boxShadow = "0 4px 16px rgba(15,23,42,0.12)";
+      el.style.background = last.type === "eraser" ? "rgba(120,90,80,0.08)" : "transparent";
+      el.style.border = last.type === "eraser" ? "1px solid rgba(120,90,80,0.22)" : "1px solid rgba(120,90,80,0.45)";
+      el.style.boxShadow = "0 4px 16px rgba(120,90,80,0.12)";
     });
   }
 
@@ -108,13 +108,13 @@ export function NotesCanvas({
   }
 
   React.useEffect(() => {
-    onExportPngReady?.(() => exportPng({ background: "#fdfaf6" }));
+    onExportPngReady?.(() => exportPng({ background: "#fbf8f4" }));
   }, [exportPng, onExportPngReady]);
 
   return (
     <div
       className={cn(
-        "canvas-wrapper relative h-full w-full overflow-hidden rounded-[22px] border border-stone-200/70 bg-[#fdfaf6] shadow-[0_12px_38px_rgba(15,23,42,0.12)]",
+        "canvas-wrapper relative h-full w-full overflow-hidden rounded-xl border border-[rgba(120,90,80,0.1)] bg-surface-page shadow-warm",
         className,
       )}
     >
@@ -123,7 +123,7 @@ export function NotesCanvas({
           className="pointer-events-none absolute inset-0"
           style={{
             opacity: paperOpacity,
-            backgroundImage: "linear-gradient(0deg, rgba(17,24,39,0.42) 1px, transparent 1px)",
+            backgroundImage: "linear-gradient(0deg, rgba(120,90,80,0.28) 1px, transparent 1px)",
             backgroundSize: "100% 24px",
           }}
         />
@@ -132,7 +132,7 @@ export function NotesCanvas({
         className="pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 800px at 50% 10%, rgba(255,255,255,0.85), rgba(255,255,255,0.35) 45%, rgba(0,0,0,0) 70%)",
+            "radial-gradient(1200px 800px at 50% 10%, rgba(251,248,244,0.9), rgba(246,242,236,0.45) 45%, rgba(0,0,0,0) 70%)",
           mixBlendMode: "soft-light",
         }}
       />

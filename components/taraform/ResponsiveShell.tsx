@@ -154,9 +154,9 @@ export function ResponsiveShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-dvh bg-taraform pb-24 lg:pb-0">
       <aside className="hidden w-[248px] shrink-0 flex-col border-r border-[rgba(120,90,80,0.08)] bg-surface-sidebar lg:flex">
-        <div className="border-b border-[rgba(120,90,80,0.08)] px-4 py-2.5">
+        <div className="border-b border-[rgba(120,90,80,0.08)] px-4 py-3">
           <TaraformLogo variant="sidebar" />
-          <p className="mt-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-muted">Nursing · local-first</p>
+          <p className="mt-2 text-[10px] font-medium uppercase tracking-[0.18em] text-ink-muted">Study sanctuary</p>
         </div>
         <div className="flex-1 overflow-y-auto">
           <SidebarNav pathname={pathname} />
