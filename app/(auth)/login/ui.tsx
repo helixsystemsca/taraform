@@ -49,7 +49,7 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
     <div className="mx-auto w-full max-w-md">
       <div className="mb-6 text-center">
         <div className="font-display text-2xl font-semibold tracking-[-0.02em] text-ink">Welcome back</div>
-        <p className="mt-2 text-sm text-ink/60">Sign in to continue your study sanctuary.</p>
+        <p className="mt-2 text-sm text-ink/60">This app is private.</p>
       </div>
 
       <GlassCard className="p-6">

@@ -23,9 +23,16 @@ export function SignupClient({ nextPath }: { nextPath: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, next: nextPath }),
       });
-      const json = (await res.json()) as { error?: string; message?: string; redirectTo?: string; needsEmailConfirm?: boolean };
+      // Never assume the response is JSON (Next.js/Supabase can return empty/HTML on unexpected failures).
+      const contentType = res.headers.get("content-type") || "";
+      const raw = await res.text();
+      const json =
+        contentType.includes("application/json") && raw
+          ? (JSON.parse(raw) as { error?: string; message?: string; redirectTo?: string; needsEmailConfirm?: boolean })
+          : ({} as { error?: string; message?: string; redirectTo?: string; needsEmailConfirm?: boolean });
+
       if (!res.ok) {
-        setStatus({ kind: "err", message: json.error || "Sign up failed." });
+        setStatus({ kind: "err", message: json.error || raw || "Sign up failed." });
         return;
       }
       if (json.needsEmailConfirm) {
@@ -45,7 +52,7 @@ export function SignupClient({ nextPath }: { nextPath: string }) {
     <div className="mx-auto w-full max-w-md">
       <div className="mb-6 text-center">
         <div className="font-display text-2xl font-semibold tracking-[-0.02em] text-ink">Create your account</div>
-        <p className="mt-2 text-sm text-ink/60">Sync settings and encouragement audio across devices.</p>
+        <p className="mt-2 text-sm text-ink/60">This app is private.</p>
       </div>
 
       <GlassCard className="p-6">
