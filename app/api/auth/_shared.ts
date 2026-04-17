@@ -11,23 +11,48 @@ function getEnv() {
 }
 
 /**
+ * Copies cookies from the intermediate Supabase response onto the final handler response.
+ * Never pass `from.headers` into `NextResponse.json` / `redirect` — multiple `Set-Cookie`
+ * values are not preserved correctly that way and can break PKCE / magic-link flows.
+ */
+export function copySupabaseCookiesOnto(from: NextResponse, onto: NextResponse) {
+  for (const cookie of from.cookies.getAll()) {
+    onto.cookies.set(cookie);
+  }
+}
+
+/**
  * Creates a Supabase server client for Route Handlers that can set auth cookies on the response.
- * This is why login/signup are implemented as API routes instead of calling Supabase Auth directly in the browser.
+ * Uses the same getAll/setAll pattern as Supabase's Next.js middleware docs so PKCE cookies
+ * from signInWithOtp / exchangeCodeForSession are written reliably.
  */
 export function supabaseRouteClient(req: NextRequest) {
   const { url, anon } = getEnv();
-  const res = NextResponse.next();
+  let res = NextResponse.next({ request: req });
 
   const supabase = createServerClient(url, anon, {
     cookies: {
-      get(name: string) {
-        return req.cookies.get(name)?.value;
+      getAll() {
+        return req.cookies.getAll();
       },
-      set(name: string, value: string, options: CookieOptions) {
-        res.cookies.set({ name, value, ...options });
-      },
-      remove(name: string, options: CookieOptions) {
-        res.cookies.set({ name, value: "", ...options, maxAge: 0 });
+      setAll(cookiesToSet, responseHeaders) {
+        cookiesToSet.forEach(({ name, value }) => {
+          if (value) req.cookies.set(name, value);
+          else req.cookies.delete(name);
+        });
+        res = NextResponse.next({ request: req });
+        cookiesToSet.forEach(({ name, value, options }) => {
+          if (value) {
+            res.cookies.set(name, value, options as CookieOptions | undefined);
+          } else {
+            res.cookies.set({ name, value: "", ...(options as CookieOptions | undefined), maxAge: 0 });
+          }
+        });
+        if (responseHeaders && typeof responseHeaders === "object") {
+          for (const [key, value] of Object.entries(responseHeaders)) {
+            if (typeof value === "string") res.headers.set(key, value);
+          }
+        }
       },
     },
   });
@@ -35,3 +60,14 @@ export function supabaseRouteClient(req: NextRequest) {
   return { supabase, getResponse: () => res };
 }
 
+export function jsonWithSupabaseCookies(from: NextResponse, body: unknown, init?: ResponseInit) {
+  const out = NextResponse.json(body, init);
+  copySupabaseCookiesOnto(from, out);
+  return out;
+}
+
+export function redirectWithSupabaseCookies(from: NextResponse, url: URL | string) {
+  const out = NextResponse.redirect(url);
+  copySupabaseCookiesOnto(from, out);
+  return out;
+}

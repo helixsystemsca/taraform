@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import { supabaseRouteClient } from "@/app/api/auth/_shared";
+import { redirectWithSupabaseCookies, supabaseRouteClient } from "@/app/api/auth/_shared";
 import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 export async function GET(req: NextRequest) {
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     url.pathname = "/login";
     url.searchParams.set("next", next);
     url.searchParams.set("error", "auth_callback_failed");
-    return NextResponse.redirect(url);
+    return redirectWithSupabaseCookies(getResponse(), url);
   }
 
   const { data } = await supabase.auth.getUser();
@@ -30,13 +30,12 @@ export async function GET(req: NextRequest) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     url.searchParams.set("error", "access_not_allowed");
-    return NextResponse.redirect(url, { headers: getResponse().headers });
+    return redirectWithSupabaseCookies(getResponse(), url);
   }
 
-  const res = getResponse();
   const url = req.nextUrl.clone();
   url.pathname = next;
   url.search = "";
-  return NextResponse.redirect(url, { headers: res.headers });
+  return redirectWithSupabaseCookies(getResponse(), url);
 }
 

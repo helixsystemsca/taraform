@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
-import { supabaseRouteClient } from "@/app/api/auth/_shared";
+import { jsonWithSupabaseCookies, supabaseRouteClient } from "@/app/api/auth/_shared";
 import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 const BodySchema = z.object({
@@ -27,11 +27,9 @@ export async function POST(req: NextRequest) {
   if (!isAllowedEmail(authedEmail)) {
     // Immediately clear cookies/session so unauthorized users can't access API routes.
     await supabase.auth.signOut();
-    const res = getResponse();
-    return NextResponse.json({ error: "Access not allowed. This app is private." }, { status: 403, headers: res.headers });
+    return jsonWithSupabaseCookies(getResponse(), { error: "Access not allowed. This app is private." }, { status: 403 });
   }
 
-  const res = getResponse();
-  return NextResponse.json({ ok: true, redirectTo: next || "/home" }, { headers: res.headers });
+  return jsonWithSupabaseCookies(getResponse(), { ok: true, redirectTo: next || "/home" });
 }
 
