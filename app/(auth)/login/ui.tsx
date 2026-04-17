@@ -26,9 +26,15 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, next: nextPath }),
       });
-      const json = (await res.json()) as { error?: string; ok?: boolean; message?: string; redirectTo?: string };
+      // Never assume the response is JSON (Next.js/Supabase can return empty/HTML on unexpected failures).
+      const contentType = res.headers.get("content-type") || "";
+      const raw = await res.text();
+      const json =
+        contentType.includes("application/json") && raw
+          ? (JSON.parse(raw) as { error?: string; ok?: boolean; message?: string; redirectTo?: string })
+          : ({} as { error?: string; ok?: boolean; message?: string; redirectTo?: string });
       if (!res.ok) {
-        setStatus({ kind: "err", message: json.error || "Login failed." });
+        setStatus({ kind: "err", message: json.error || raw || "Login failed." });
         return;
       }
       if (mode === "magic") {
