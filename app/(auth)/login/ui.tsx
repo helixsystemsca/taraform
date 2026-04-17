@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 
 import { GlassCard } from "@/components/glass/GlassCard";
+import { TaraformLogo } from "@/components/taraform/TaraformLogo";
 import { Button } from "@/components/ui/button";
 import { formatAuthError } from "@/lib/auth/formatAuthError";
 import { cn } from "@/lib/utils";
@@ -70,6 +71,9 @@ export function LoginClient({
 
   return (
     <div className="mx-auto w-full max-w-md">
+      <div className="mb-8 flex justify-center">
+        <TaraformLogo variant="auth" />
+      </div>
       <div className="mb-6 text-center">
         <div className="font-display text-2xl font-semibold tracking-[-0.02em] text-ink">Welcome back</div>
         <p className="mt-2 text-sm text-ink/60">This app is private.</p>
