@@ -21,22 +21,22 @@ export function TaraformLogo({ variant, className }: { variant: TaraformLogoVari
     compact: "h-8 w-[11rem] sm:h-9 sm:w-52",
     /** Mobile nav dialog header (right side) */
     dialog: "h-8 w-44 sm:h-9 sm:w-52",
-    /** Login / signup hero */
-    auth: "mx-auto h-14 w-64 sm:h-16 sm:w-72",
+    /** Login / signup hero — ~3× prior `h-14` / `h-16` footprint; width follows card (`max-w-md`). */
+    auth: "mx-auto h-[10.5rem] w-full min-w-0 max-w-full sm:h-[12rem]",
   }[variant];
 
   const zoom = {
     sidebar: "scale-[1.38]",
     compact: "scale-[1.5]",
     dialog: "scale-[1.48]",
-    auth: "scale-[1.36]",
+    auth: "scale-[1.12]",
   }[variant];
 
   const sizes = {
     sidebar: "248px",
     compact: "(max-width: 640px) 192px, 224px",
     dialog: "208px",
-    auth: "(max-width: 640px) 256px, 288px",
+    auth: "(max-width: 768px) 100vw, 28rem",
   }[variant];
 
   return (
