@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { createServerClient } from "@supabase/ssr";
-import { getAllowedEmail } from "@/lib/auth/allowlist";
+import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 function getSupabaseEnvFromRequest() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -63,8 +63,7 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const allowed = getAllowedEmail();
-  if (allowed && user?.email?.trim().toLowerCase() !== allowed) {
+  if (user && !isAllowedEmail(user.email)) {
     // Clear any session cookies and force the user back to login.
     await supabase.auth.signOut();
     const url = request.nextUrl.clone();

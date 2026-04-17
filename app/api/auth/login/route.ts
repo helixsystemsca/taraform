@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
 import { supabaseRouteClient } from "@/app/api/auth/_shared";
-import { getAllowedEmail } from "@/lib/auth/allowlist";
+import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 const BodySchema = z.object({
   email: z.string().email(),
@@ -23,9 +23,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: error?.message || "Invalid credentials." }, { status: 401 });
   }
 
-  const allowed = getAllowedEmail();
-  const authedEmail = data.user?.email?.trim().toLowerCase() ?? "";
-  if (allowed && authedEmail !== allowed) {
+  const authedEmail = data.user?.email ?? null;
+  if (!isAllowedEmail(authedEmail)) {
     // Immediately clear cookies/session so unauthorized users can't access API routes.
     await supabase.auth.signOut();
     const res = getResponse();

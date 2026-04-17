@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
 import { supabaseRouteClient } from "@/app/api/auth/_shared";
-import { getAllowedEmail } from "@/lib/auth/allowlist";
+import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 const BodySchema = z.object({
   email: z.string().email(),
@@ -19,8 +19,7 @@ export async function POST(req: NextRequest) {
     const { supabase, getResponse } = supabaseRouteClient(req);
     const { email, password, next } = parsed.data;
 
-    const allowed = getAllowedEmail();
-    if (allowed && email.trim().toLowerCase() !== allowed) {
+    if (!isAllowedEmail(email)) {
       return NextResponse.json({ error: "Access not allowed. This app is private." }, { status: 403 });
     }
 
