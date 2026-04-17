@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { supabaseServer } from "@/lib/supabase";
+import { supabaseServer } from "@/lib/supabase/server";
 
 const BodySchema = z.object({
   device_id: z.string().min(6),
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
   if (!parsed.success) return NextResponse.json({ error: "Invalid body." }, { status: 400 });
 
   const { device_id, concept_id, correct } = parsed.data;
-  const supabase = supabaseServer();
+  const supabase = await supabaseServer();
 
   const { data: row, error: fetchErr } = await supabase
     .from("concepts")

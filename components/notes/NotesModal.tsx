@@ -187,62 +187,61 @@ export function NotesModal({
         onClick={close}
       />
 
-      <div className="absolute inset-0 p-3 sm:p-6">
+      {/* Full viewport shell so canvas + chrome use 100dvh (phones/tablets) with safe-area insets. */}
+      <div
+        className={cn(
+          "absolute inset-0 box-border flex h-full min-h-0 flex-col",
+          "pt-[max(0.5rem,env(safe-area-inset-top))] pr-[max(0.5rem,env(safe-area-inset-right))] pb-[max(0.5rem,env(safe-area-inset-bottom))] pl-[max(0.5rem,env(safe-area-inset-left))]",
+        )}
+      >
         <div
           className={cn(
-            "relative mx-auto flex h-full w-full max-w-[1180px] flex-col",
+            "relative flex min-h-0 w-full min-w-0 flex-1 flex-col",
             "transition duration-200 will-change-transform",
             open ? "scale-100 opacity-100" : "scale-[0.985] opacity-0",
           )}
         >
-          <header className="sticky top-3 z-30 mb-3 sm:mb-4">
-            <div className="grid grid-cols-1 items-start gap-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,56rem)_minmax(0,1fr)] lg:items-center">
-              <div className="pointer-events-none hidden lg:block" />
-              <div className="pointer-events-none min-w-0 flex justify-center px-0 sm:px-1">
-                <div className="pointer-events-auto w-full max-w-full min-w-0">
-                <NotesToolbar
-                  tool={tool}
-                  onToolChange={setTool}
-                  color={color}
-                  onColorChange={setColor}
-                  size={size}
-                  onSizeChange={setSize}
-                  canUndo={canUndo}
-                  canRedo={canRedo}
-                  onUndo={undo}
-                  onRedo={redo}
-                  onClear={() => setStrokes([], { replace: false })}
-                  onSave={() => void saveNow()}
-                  onExportPng={() => {
-                    const dataUrl = exportPngRef.current?.();
-                    if (!dataUrl) return;
-                    downloadDataUrl(dataUrl, `taraform-note-${new Date().toISOString().slice(0, 10)}.png`);
-                  }}
-                />
-                </div>
+          <header className="z-30 mb-2 flex shrink-0 items-start gap-2 sm:mb-3 sm:gap-3">
+            <div className="min-w-0 flex-1">
+              <NotesToolbar
+                tool={tool}
+                onToolChange={setTool}
+                color={color}
+                onColorChange={setColor}
+                size={size}
+                onSizeChange={setSize}
+                canUndo={canUndo}
+                canRedo={canRedo}
+                onUndo={undo}
+                onRedo={redo}
+                onClear={() => setStrokes([], { replace: false })}
+                onSave={() => void saveNow()}
+                onExportPng={() => {
+                  const dataUrl = exportPngRef.current?.();
+                  if (!dataUrl) return;
+                  downloadDataUrl(dataUrl, `taraform-note-${new Date().toISOString().slice(0, 10)}.png`);
+                }}
+              />
+            </div>
+            <div className="flex shrink-0 flex-col items-end gap-2 pt-0.5 sm:flex-row sm:items-start sm:pt-1">
+              <div className="rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 px-2.5 py-1.5 text-[11px] font-medium leading-tight text-ink-secondary shadow-warm backdrop-blur-xl sm:px-3 sm:text-xs">
+                {saveBadge.dirty
+                  ? "Saving…"
+                  : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
               </div>
-              <div className="flex items-center justify-end gap-2">
-                <div className="pointer-events-none hidden lg:block">
-                  <div className="rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 px-3 py-1.5 text-xs font-medium text-ink-secondary shadow-warm backdrop-blur-xl">
-                    {saveBadge.dirty
-                      ? "Saving…"
-                      : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  onClick={close}
-                  className="pointer-events-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 text-ink-secondary shadow-warm backdrop-blur-xl transition-editorial hover:border-copper/25 hover:bg-rose-light/40 hover:text-ink"
-                  aria-label="Close notes"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={close}
+                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 text-ink-secondary shadow-warm backdrop-blur-xl transition-editorial hover:border-copper/25 hover:bg-rose-light/40 hover:text-ink"
+                aria-label="Close notes"
+              >
+                <X className="h-5 w-5" />
+              </button>
             </div>
           </header>
 
-          <div className="flex min-h-0 flex-1 items-start gap-3 sm:gap-4 lg:gap-5">
-            <aside className="pointer-events-auto hidden w-[280px] shrink-0 overflow-hidden rounded-xl border border-[rgba(120,90,80,0.1)] bg-surface-panel shadow-warm backdrop-blur-xl lg:block">
+          <div className="flex min-h-0 flex-1 items-stretch gap-2 sm:gap-3 md:gap-4">
+            <aside className="pointer-events-auto hidden h-full min-h-0 w-[min(280px,32vw)] shrink-0 overflow-hidden rounded-xl border border-[rgba(120,90,80,0.1)] bg-surface-panel shadow-warm backdrop-blur-xl md:flex md:flex-col">
               <div className="flex items-center justify-between gap-2 border-b border-[rgba(120,90,80,0.08)] bg-rose-light/35 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <FileText className="h-4 w-4 text-copper" strokeWidth={1.5} />
@@ -258,7 +257,7 @@ export function NotesModal({
                 </button>
               </div>
 
-              <div className="space-y-3 p-4">
+              <div className="flex min-h-0 flex-1 flex-col space-y-3 overflow-hidden p-4">
                 <div className="space-y-1.5">
                   <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted">Chapter</div>
                   <select
@@ -285,9 +284,9 @@ export function NotesModal({
                   />
                 </div>
 
-                <div className="space-y-1.5">
+                <div className="flex min-h-0 flex-1 flex-col space-y-1.5 overflow-hidden">
                   <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-ink-muted">Notes</div>
-                  <div className="max-h-[calc(100dvh-320px)] space-y-1 overflow-auto pr-1">
+                  <div className="min-h-0 flex-1 space-y-1 overflow-y-auto overflow-x-hidden pr-1">
                     {notesIndex.map((n) => {
                       const active = n.id === activeNoteId;
                       const label = n.title || new Date(n.created_at).toLocaleDateString();
@@ -324,7 +323,7 @@ export function NotesModal({
               </div>
             </aside>
 
-            <div className="relative min-w-0 flex-1 self-stretch">
+            <div className="relative min-h-0 min-w-0 flex-1 self-stretch">
               <NotesCanvas
                 strokes={strokes}
                 onChangeStrokes={setStrokes}

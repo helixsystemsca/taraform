@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { getDeviceId } from "@/lib/srs/device";
 import type { ConceptRow, SrsQuestion } from "@/lib/srs/types";
 import { supabaseBrowser } from "@/lib/supabase";
+import { useEncouragementAudio } from "@/hooks/useEncouragementAudio";
 import { useStudyStore } from "@/stores/useStudyStore";
 
 type Phase = "loading" | "recall" | "mcq" | "feedback" | "done";
@@ -17,6 +18,7 @@ export default function SessionPage() {
   const sections = useStudyStore((s) => s.sections);
   const deviceId = React.useMemo(() => getDeviceId(), []);
   const supabase = React.useMemo(() => supabaseBrowser(), []);
+  const encouragement = useEncouragementAudio();
 
   const [phase, setPhase] = React.useState<Phase>("loading");
   const [queue, setQueue] = React.useState<ConceptRow[]>([]);
@@ -52,6 +54,24 @@ export default function SessionPage() {
         setPhase(list.length ? "recall" : "done");
       });
   }, [deviceId, supabase]);
+
+  // Play "before" encouragement once when a session actually starts.
+  const playedBeforeRef = React.useRef(false);
+  React.useEffect(() => {
+    if (playedBeforeRef.current) return;
+    if (phase !== "recall") return;
+    playedBeforeRef.current = true;
+    void encouragement.playBefore();
+  }, [encouragement, phase]);
+
+  // Play "after" encouragement once when the session completes.
+  const playedAfterRef = React.useRef(false);
+  React.useEffect(() => {
+    if (playedAfterRef.current) return;
+    if (phase !== "done") return;
+    playedAfterRef.current = true;
+    void encouragement.playAfter();
+  }, [encouragement, phase]);
 
   if (!supabase) {
     return (

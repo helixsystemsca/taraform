@@ -9,7 +9,6 @@ import { GlassCard } from "@/components/glass/GlassCard";
 import { Button } from "@/components/ui/button";
 import { chunkText } from "@/lib/chunk";
 import { extractPdfTextFromArrayBuffer } from "@/lib/extractPdfText";
-import { mergeStructureChunks } from "@/lib/mergeSections";
 import type { StructureResult } from "@/lib/openai";
 import { withQuestionIds } from "@/lib/quizWithIds";
 import { cn } from "@/lib/utils";
@@ -20,22 +19,13 @@ function normTitle(t: string) {
   return t.trim().toLowerCase();
 }
 
-function buildExtractedTextForSection(
-  s: StructureResult["sections"][number],
-  contentByTitle: Map<string, string>,
-) {
-  const fromChunks = contentByTitle.get(normTitle(s.title))?.trim();
-  if (fromChunks) return fromChunks;
-  const concepts = (s.concepts ?? []).map((c) => `- ${c}`).join("\n");
-  return [s.summary ? `Summary:\n${s.summary}` : null, concepts ? `Concepts:\n${concepts}` : null].filter(Boolean).join("\n\n");
-}
-
 export default function UploadPage() {
   const router = useRouter();
   const sections = useStudyStore((s) => s.sections);
   const addSections = useStudyStore((s) => s.addSections);
   const selectSection = useStudyStore((s) => s.selectSection);
   const setQuizForSection = useStudyStore((s) => s.setQuizForSection);
+  const setPdfChunksForFile = useStudyStore((s) => s.setPdfChunksForFile);
 
   const [phase, setPhase] = React.useState<"idle" | "pdf" | "chunks" | "done" | "error">("idle");
   const [status, setStatus] = React.useState<string>("");
@@ -43,6 +33,7 @@ export default function UploadPage() {
   const [error, setError] = React.useState<string | null>(null);
 
   const [preview, setPreview] = React.useState<StructureResult["sections"]>([]);
+  const [legalPreview, setLegalPreview] = React.useState<{ definitions: string[]; rules: string[]; processes: string[] } | null>(null);
   const [sectionIdsByTitle, setSectionIdsByTitle] = React.useState<Record<string, string>>({});
   const [quizBusy, setQuizBusy] = React.useState<Record<string, boolean>>({});
 
@@ -55,6 +46,7 @@ export default function UploadPage() {
 
     setError(null);
     setPreview([]);
+    setLegalPreview(null);
     setSectionIdsByTitle({});
     setQuizBusy({});
     setPhase("pdf");
@@ -70,51 +62,59 @@ export default function UploadPage() {
         return;
       }
 
-      const chunks = chunkText(text, 2000);
+      const chunks = chunkText(text, 1600);
       setPhase("chunks");
-      setStatus("Generating sections…");
-      setProgress({ i: 0, n: chunks.length });
+      setStatus("Mapping document (cheap)…");
 
-      const perChunk: StructureResult[] = [];
-      const contentByTitle = new Map<string, string>();
+      // File hash: used for cross-refresh caching (server will cache per user+file_hash).
+      const digest = await crypto.subtle.digest("SHA-256", buf);
+      const fileHash = Array.from(new Uint8Array(digest))
+        .map((b) => b.toString(16).padStart(2, "0"))
+        .join("");
 
-      for (let c = 0; c < chunks.length; c++) {
-        setProgress({ i: c + 1, n: chunks.length });
-        const res = await fetch("/api/generate-structure", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ content: chunks[c] }),
-        });
-        const json = (await res.json()) as unknown;
-        if (!res.ok || (json && typeof json === "object" && "error" in json)) {
-          const err =
-            json && typeof json === "object" && "error" in json && typeof (json as { error?: string }).error === "string"
-              ? (json as { error: string }).error
-              : `HTTP ${res.status}`;
-          throw new Error(err);
-        }
-        const structure = json as StructureResult;
-        perChunk.push(structure);
+      // Cache all chunks locally so we can deep-process only what the user opens later.
+      setPdfChunksForFile(fileHash, chunks);
 
-        for (const s of structure.sections ?? []) {
-          const key = normTitle(s.title);
-          if (!key) continue;
-          const prev = contentByTitle.get(key);
-          const next = prev ? `${prev}\n\n${chunks[c]}` : chunks[c];
-          contentByTitle.set(key, next);
-        }
+      // Stage 1: sample 10–20% (cap) for the doc map call.
+      const sampleCount = Math.max(4, Math.min(chunks.length, Math.ceil(chunks.length * 0.15)));
+      const sampleText = chunks.slice(0, sampleCount).join("\n\n");
+
+      setProgress({ i: 0, n: 1 });
+      const res = await fetch("/api/document-map", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ file_hash: fileHash, sample_text: sampleText }),
+      });
+      const json = (await res.json()) as unknown;
+      if (!res.ok || (json && typeof json === "object" && "error" in json)) {
+        const err =
+          json && typeof json === "object" && "error" in json && typeof (json as { error?: string }).error === "string"
+            ? (json as { error: string }).error
+            : `HTTP ${res.status}`;
+        throw new Error(err);
       }
 
-      const merged = mergeStructureChunks(perChunk);
-      const mergedSections = merged.sections;
-      setPreview(mergedSections);
+      const payload = json as {
+        file_id: string;
+        document_type: string;
+        document_map: { sections: Array<{ id: string; title: string; description: string; keywords: string[] }> };
+      };
+
+      setLegalPreview(null);
+      setPreview(
+        payload.document_map.sections.map((s) => ({
+          title: s.title,
+          summary: s.description,
+          concepts: s.keywords ?? [],
+        })),
+      );
 
       const chapterTitle = file.name.replace(/\.pdf$/i, "");
       const existingKeys = new Set(sections.map((s) => `${s.chapterTitle}::${normTitle(s.title)}`));
       const toAdd: StudySection[] = [];
       const titleToId: Record<string, string> = {};
 
-      for (const s of mergedSections) {
+      for (const s of payload.document_map.sections) {
         const key = `${chapterTitle}::${normTitle(s.title)}`;
         if (existingKeys.has(key)) continue;
         const id = crypto.randomUUID();
@@ -124,8 +124,11 @@ export default function UploadPage() {
           chapterNumber: 1,
           chapterTitle,
           title: s.title,
-          extractedText: buildExtractedTextForSection(s, contentByTitle),
-          keyConcepts: (s.concepts ?? []).map((c) => c.trim()).filter(Boolean),
+          extractedText: s.description ?? "",
+          keyConcepts: (s.keywords ?? []).map((c) => c.trim()).filter(Boolean),
+          sourceFileId: payload.file_id,
+          sourceFileHash: fileHash,
+          needsDeepProcessing: true,
         });
       }
 
@@ -158,6 +161,7 @@ export default function UploadPage() {
     setQuizBusy((b) => ({ ...b, [title]: true }));
     try {
       const result = await generateQuizForSection({
+        sectionId,
         sectionTitle: section.title,
         extractedText: section.extractedText,
         keyConcepts: section.keyConcepts ?? [],
@@ -215,7 +219,46 @@ export default function UploadPage() {
         </div>
       </GlassCard>
 
-      {preview.length ? (
+      {legalPreview ? (
+        <div className="space-y-3">
+          <div className="flex items-center justify-between px-1">
+            <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-ink/40">Key legal concepts</h2>
+            <span className="text-xs text-ink/45">Definitions · Rules · Processes</span>
+          </div>
+          <div className="grid gap-3 lg:grid-cols-3">
+            <GlassCard className="p-5">
+              <div className="text-sm font-semibold text-ink">Definitions</div>
+              <div className="mt-3 space-y-2 text-sm text-ink/70">
+                {legalPreview.definitions.length ? (
+                  legalPreview.definitions.map((d) => <div key={d}>- {d}</div>)
+                ) : (
+                  <div className="text-ink/50">None found.</div>
+                )}
+              </div>
+            </GlassCard>
+            <GlassCard className="p-5">
+              <div className="text-sm font-semibold text-ink">Rules</div>
+              <div className="mt-3 space-y-2 text-sm text-ink/70">
+                {legalPreview.rules.length ? (
+                  legalPreview.rules.map((r) => <div key={r}>- {r}</div>)
+                ) : (
+                  <div className="text-ink/50">None found.</div>
+                )}
+              </div>
+            </GlassCard>
+            <GlassCard className="p-5">
+              <div className="text-sm font-semibold text-ink">Processes</div>
+              <div className="mt-3 space-y-2 text-sm text-ink/70">
+                {legalPreview.processes.length ? (
+                  legalPreview.processes.map((p) => <div key={p}>- {p}</div>)
+                ) : (
+                  <div className="text-ink/50">None found.</div>
+                )}
+              </div>
+            </GlassCard>
+          </div>
+        </div>
+      ) : preview.length ? (
         <div className="space-y-3">
           <div className="flex items-center justify-between px-1">
             <h2 className="text-sm font-semibold uppercase tracking-[0.12em] text-ink/40">Imported sections</h2>

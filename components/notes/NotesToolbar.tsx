@@ -22,7 +22,6 @@ type PaperStyle = "blank" | "lined";
 
 /** Shared control height (40px) — buttons, segmented control shell, slider rows. */
 const CONTROL_H = "h-10 min-h-10";
-const SECTION_GAP = "gap-3 sm:gap-4";
 
 export function NotesToolbar({
   tool,
@@ -78,18 +77,18 @@ export function NotesToolbar({
     <div
       className={cn(
         "pointer-events-auto w-full min-w-0 max-w-full rounded-xl border border-[rgba(120,90,80,0.1)]",
-        "bg-surface-panel/95 px-3 py-2.5 shadow-warm backdrop-blur-xl sm:px-4",
-        "overflow-x-auto [scrollbar-width:thin]",
+        "bg-surface-panel/95 px-2 py-2 shadow-warm backdrop-blur-xl sm:px-3 sm:py-2.5",
+        // No horizontal scroll: wrap onto extra rows on narrow / tablet widths instead of overflow-x.
+        "overflow-x-hidden overflow-y-visible",
       )}
     >
       <div
         className={cn(
-          "flex w-max min-w-full flex-nowrap items-center justify-between",
-          SECTION_GAP,
+          "flex w-full flex-wrap items-center justify-center gap-x-2 gap-y-2 sm:gap-x-3 sm:gap-y-2 lg:justify-between",
         )}
       >
         {/* LEFT — drawing tools */}
-        <div className={cn("flex shrink-0 items-center", SECTION_GAP)} aria-label="Drawing tools">
+        <div className={cn("flex shrink-0 items-center gap-2 sm:gap-3")} aria-label="Drawing tools">
           <ToolButton active={tool === "pen"} label="Pen" onClick={() => onToolChange("pen")}>
             <Paintbrush2 className="h-4 w-4 shrink-0" />
           </ToolButton>
@@ -108,18 +107,17 @@ export function NotesToolbar({
         {/* CENTER — color + stroke size */}
         <div
           className={cn(
-            "flex min-w-0 flex-1 flex-nowrap items-center justify-center",
-            SECTION_GAP,
+            "flex min-w-0 flex-[1_1_220px] flex-wrap items-center justify-center gap-2 sm:gap-3 lg:flex-nowrap lg:flex-1",
           )}
           aria-label="Color and stroke"
         >
-          <div className={cn("flex h-10 flex-nowrap items-center", "gap-2")}>
+          <div className={cn("flex h-10 flex-wrap items-center justify-center", "gap-1.5 sm:gap-2")}>
             {pastelColors.map((c) => (
               <button
                 key={c}
                 type="button"
                 className={cn(
-                  "size-[22px] shrink-0 rounded-full border border-[rgba(120,90,80,0.15)] shadow-sm transition-editorial",
+                  "size-[20px] shrink-0 rounded-full border border-[rgba(120,90,80,0.15)] shadow-sm transition-editorial sm:size-[22px]",
                   c === color ? "ring-2 ring-copper/40 ring-offset-2 ring-offset-surface-panel" : "hover:scale-[1.04]",
                 )}
                 style={{ background: c }}
@@ -132,14 +130,14 @@ export function NotesToolbar({
               value={color}
               onChange={(e) => onColorChange(e.target.value)}
               className={cn(
-                "size-[22px] shrink-0 cursor-pointer rounded-full border border-[rgba(120,90,80,0.15)] bg-transparent p-0",
+                "size-[20px] shrink-0 cursor-pointer rounded-full border border-[rgba(120,90,80,0.15)] bg-transparent p-0 sm:size-[22px]",
                 "self-center",
               )}
               aria-label="Pick custom color"
             />
           </div>
 
-          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+          <div className={cn("flex flex-wrap items-center justify-center", "gap-1.5 sm:gap-2")}>
             <span className="hidden shrink-0 text-xs font-medium text-ink-muted sm:inline">Size</span>
             <div className={cn("flex shrink-0 items-center", CONTROL_H)}>
               <input
@@ -149,7 +147,7 @@ export function NotesToolbar({
                 step={1}
                 value={size}
                 onChange={(e) => onSizeChange(Number(e.target.value))}
-                className="h-4 w-[128px] cursor-pointer accent-copper sm:w-[152px]"
+                className="h-4 w-[min(152px,calc(100vw-12rem))] max-w-[152px] cursor-pointer accent-copper"
                 aria-label="Stroke size"
               />
             </div>
@@ -166,7 +164,7 @@ export function NotesToolbar({
 
         {/* RIGHT — paper, opacity, actions */}
         <div
-          className={cn("flex shrink-0 flex-nowrap items-center", SECTION_GAP)}
+          className={cn("flex shrink-0 flex-wrap items-center justify-center gap-2 sm:gap-3 lg:justify-end")}
           aria-label="Paper and actions"
         >
           <div
@@ -218,7 +216,7 @@ export function NotesToolbar({
                 step={0.01}
                 value={opacity}
                 onChange={(e) => setPaper({ opacity: Number(e.target.value) })}
-                className="h-4 w-[120px] shrink-0 cursor-pointer accent-copper sm:w-[136px]"
+                className="h-4 w-[min(136px,calc(100vw-14rem))] max-w-[136px] shrink-0 cursor-pointer accent-copper"
                 aria-label="Paper opacity"
               />
             </div>

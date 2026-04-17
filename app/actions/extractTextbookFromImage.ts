@@ -2,7 +2,7 @@
 
 import { generateObject, generateText } from "ai";
 
-import { taraformModel } from "@/lib/ai/openai";
+import { taraformVisionModel } from "@/lib/ai/openai";
 import { TextbookExtractionSchema } from "@/lib/ai/schemas";
 
 const SYSTEM_GUARDRAILS = [
@@ -55,9 +55,10 @@ export async function extractTextbookFromImage(formData: FormData) {
 
   // Pass 1: ultra-conservative raw transcription for grounding.
   const raw = await generateText({
-    model: taraformModel(),
+    model: taraformVisionModel(),
     temperature: 0,
     topP: 0.1,
+    maxOutputTokens: 300,
     system: SYSTEM_GUARDRAILS,
     messages: [
       {
@@ -72,9 +73,10 @@ export async function extractTextbookFromImage(formData: FormData) {
 
   // Pass 2: structured extraction constrained to the raw transcription.
   const { object } = await generateObject({
-    model: taraformModel(),
+    model: taraformVisionModel(),
     temperature: 0,
     topP: 0.1,
+    maxOutputTokens: 300,
     // The AI SDK uses structured outputs when supported; schema enforces the exact shape.
     schema: TextbookExtractionSchema,
     system: SYSTEM_GUARDRAILS,

@@ -8,6 +8,10 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: Request) {
+  // Match other AI routes: missing key is a config error (400), not an uncaught 500.
+  if (!process.env.OPENAI_API_KEY) {
+    return NextResponse.json({ error: "Missing OPENAI_API_KEY." }, { status: 400 });
+  }
   try {
     const json = await req.json().catch(() => null);
     const parsed = BodySchema.safeParse(json);

@@ -51,6 +51,7 @@ export default function PlanPage() {
     setBusyQuiz(true);
     try {
       const result = await generateQuizForSection({
+        sectionId: current.id,
         sectionTitle: current.title,
         extractedText: current.extractedText,
         keyConcepts: current.keyConcepts ?? [],

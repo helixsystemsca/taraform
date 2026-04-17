@@ -1,4 +1,13 @@
+import "server-only";
+
+/**
+ * Raw OpenAI HTTP calls and env access live here only on the server.
+ * `server-only` prevents accidental imports from Client Components (would fail the build).
+ * The browser must call Route Handlers under `app/api/*` instead.
+ */
 const OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
+const MODEL = "gpt-4.1-mini";
+const DEFAULT_MAX_TOKENS = 300;
 
 export type OpenAIChatCompletionResponse = {
   id?: string;
@@ -27,9 +36,11 @@ function getApiKey(): string {
 export async function callOpenAI({
   systemPrompt,
   userPrompt,
+  maxTokens,
 }: {
   systemPrompt: string;
   userPrompt: string;
+  maxTokens?: number;
 }): Promise<OpenAIChatCompletionResponse> {
   const apiKey = getApiKey();
 
@@ -42,13 +53,14 @@ export async function callOpenAI({
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "gpt-4.1",
+        model: MODEL,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt },
         ],
         response_format: { type: "json_object" },
         temperature: 0.2,
+        max_tokens: Math.max(1, Math.min(600, maxTokens ?? DEFAULT_MAX_TOKENS)),
       }),
     });
   } catch (e) {
@@ -97,19 +109,124 @@ export type StructureResult = {
   }>;
 };
 
-const STRUCTURE_SYSTEM = `You are a study assistant. Break the user's content into clear sections and extract key concepts per section.
-Return ONLY valid JSON matching this shape:
-{"sections":[{"title":"string","summary":"string (optional)","concepts":["string", ...]}]}
-Rules:
-- 2–8 sections when possible
-- 3–12 concepts per section when possible
-- Concepts must be short phrases grounded in the content
-- No markdown, no prose outside JSON`;
+export type DocumentType = "textbook" | "lecture_notes" | "legal" | "other";
+
+const DOC_TYPE_SYSTEM =
+  'Return ONLY valid JSON: {"document_type":"textbook|lecture_notes|legal|other"}.\n' +
+  "Choose the single best label based on the text.";
+
+export async function classifyDocumentType(sampleText: string): Promise<DocumentType> {
+  const data = await callOpenAI({
+    systemPrompt: DOC_TYPE_SYSTEM,
+    userPrompt:
+      "Classify this document as: textbook, lecture notes, legal, or other.\n\nTEXT SAMPLE:\n" +
+      sampleText.slice(0, 6000),
+    maxTokens: 50,
+  });
+  const raw = extractAssistantJsonString(data);
+  try {
+    const parsed = JSON.parse(raw) as { document_type?: DocumentType };
+    const t = parsed.document_type;
+    if (t === "textbook" || t === "lecture_notes" || t === "legal" || t === "other") return t;
+  } catch {
+    // fall through
+  }
+  return "other";
+}
+
+export type LegalExtract = {
+  definitions: string[];
+  rules: string[];
+  processes: string[];
+};
+
+const LEGAL_SYSTEM =
+  'Return ONLY valid JSON: {"definitions":["string"],"rules":["string"],"processes":["string"]}.\n' +
+  "Extract only the most important items. Keep each item short (<= 16 words).";
+
+export async function extractLegalConcepts(text: string): Promise<LegalExtract> {
+  const data = await callOpenAI({
+    systemPrompt: LEGAL_SYSTEM,
+    userPrompt:
+      "Extract only the most important concepts from this legal text:\n" +
+      "- definitions\n" +
+      "- rules\n" +
+      "- responsibilities / processes\n" +
+      "Ignore procedural or repetitive language.\n" +
+      "Limit total items across all lists to 10–20.\n\nTEXT:\n" +
+      text.slice(0, 8000),
+    maxTokens: 260,
+  });
+  const raw = extractAssistantJsonString(data);
+  try {
+    const parsed = JSON.parse(raw) as Partial<LegalExtract>;
+    return {
+      definitions: Array.isArray(parsed.definitions) ? parsed.definitions.filter((x) => typeof x === "string").slice(0, 10) : [],
+      rules: Array.isArray(parsed.rules) ? parsed.rules.filter((x) => typeof x === "string").slice(0, 10) : [],
+      processes: Array.isArray(parsed.processes) ? parsed.processes.filter((x) => typeof x === "string").slice(0, 10) : [],
+    };
+  } catch (e) {
+    console.error("[openai] extractLegalConcepts parse error", e, raw);
+    throw new Error("Could not parse legal JSON from OpenAI.");
+  }
+}
+
+export type DocumentMap = {
+  sections: Array<{
+    id: string;
+    title: string;
+    description: string;
+    keywords: string[];
+  }>;
+};
+
+const DOC_MAP_SYSTEM =
+  'Return ONLY valid JSON: {"sections":[{"id":"string","title":"string","description":"string","keywords":["string"]}]}.\n' +
+  "Create 5–10 main sections. Keep each description <= 2 sentences. 3–8 keywords each.";
+
+export async function generateDocumentMap(sampleText: string): Promise<DocumentMap> {
+  const data = await callOpenAI({
+    systemPrompt: DOC_MAP_SYSTEM,
+    userPrompt:
+      "Analyze this document sample and return main topics/chapters with a brief description of each.\n\nSAMPLE:\n" +
+      sampleText.slice(0, 8000),
+    maxTokens: 260,
+  });
+  const raw = extractAssistantJsonString(data);
+  try {
+    const parsed = JSON.parse(raw) as DocumentMap;
+    const cleaned = {
+      sections: Array.isArray(parsed.sections)
+        ? parsed.sections
+            .filter((s) => s && typeof s === "object")
+            .slice(0, 10)
+            .map((s) => {
+              const any = s as { id?: unknown; title?: unknown; description?: unknown; keywords?: unknown };
+              const title = typeof any.title === "string" ? any.title.trim() : "Untitled";
+              const id = typeof any.id === "string" && any.id.trim() ? any.id.trim() : title.toLowerCase().replace(/\s+/g, "_").slice(0, 40);
+              const description = typeof any.description === "string" ? any.description.trim() : "";
+              const keywords = Array.isArray(any.keywords) ? any.keywords.filter((k) => typeof k === "string").map((k) => k.trim()).filter(Boolean).slice(0, 8) : [];
+              return { id, title, description, keywords };
+            })
+        : [],
+    };
+    return cleaned;
+  } catch (e) {
+    console.error("[openai] generateDocumentMap parse error", e, raw);
+    throw new Error("Could not parse document map JSON from OpenAI.");
+  }
+}
+
+const STRUCTURE_SYSTEM =
+  'Return ONLY valid JSON: {"sections":[{"title":"string","summary":"string","concepts":["string"]}]}.\n' +
+  "Summarize into 3 bullet points and 1 key takeaway per section (keep short).";
 
 export async function generateStructure(content: string): Promise<StructureResult> {
   const data = await callOpenAI({
     systemPrompt: STRUCTURE_SYSTEM,
-    userPrompt: `Content to structure:\n\n${content}`,
+    userPrompt:
+      "Summarize this text into:\n- 3 bullet points\n- 1 key takeaway\nKeep it concise.\n\nTEXT:\n" +
+      content.slice(0, 8000),
   });
   const raw = extractAssistantJsonString(data);
   try {
@@ -131,19 +248,15 @@ export type QuizResult = {
   questions: QuizQuestion[];
 };
 
-const QUIZ_SYSTEM = `You create study quizzes. Return ONLY valid JSON.
-Shape: {"questions":[{"question":"string","choices":["A","B","C","D"],"correctIndex":0,"explanation":"string"}]}
-Rules:
-- Exactly 5 questions
-- Each question has exactly 4 choices
-- correctIndex is 0-based (0–3)
-- Explanations must justify the correct answer using the provided content only
-- No markdown outside JSON`;
+const QUIZ_SYSTEM =
+  'Return ONLY valid JSON: {"questions":[{"question":"string","choices":["A","B","C","D"],"correctIndex":0,"explanation":"string"}]}.\n' +
+  "Keep questions concise. Use only the source text.";
 
 export async function generateQuiz(content: string): Promise<QuizResult> {
   const data = await callOpenAI({
     systemPrompt: QUIZ_SYSTEM,
-    userPrompt: `Source content for the quiz:\n\n${content}`,
+    userPrompt:
+      "Create 5 multiple-choice questions (4 choices) from the source.\n\nSOURCE:\n" + content.slice(0, 8000),
   });
   const raw = extractAssistantJsonString(data);
   try {

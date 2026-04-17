@@ -2,9 +2,9 @@ import { generateObject } from "ai";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { taraformModel } from "@/lib/ai/openai";
+import { taraformTextModel } from "@/lib/ai/openai";
 import { GenerateConceptsSchema } from "@/lib/srs/schemas";
-import { supabaseServer } from "@/lib/supabase";
+import { supabaseServer } from "@/lib/supabase/server";
 
 const BodySchema = z.object({
   device_id: z.string().min(6),
@@ -28,27 +28,35 @@ export async function POST(req: Request) {
   if (!parsed.success) return NextResponse.json({ error: "Invalid body." }, { status: 400 });
 
   const input = parsed.data;
-  const { object } = await generateObject({
-    model: taraformModel(),
-    temperature: 0,
-    topP: 0.1,
-    schema: GenerateConceptsSchema,
-    system: SYSTEM,
-    messages: [
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text:
-              `Extract 6–14 key concepts for spaced repetition from the source below.\n` +
-              `SECTION: ${input.section_title}\n\n` +
-              `SOURCE START\n${input.extracted_text}\nSOURCE END\n`,
-          },
-        ],
-      },
-    ],
-  });
+  let object: z.infer<typeof GenerateConceptsSchema>;
+  try {
+    const result = await generateObject({
+      model: taraformTextModel(),
+      temperature: 0,
+      topP: 0.1,
+      maxOutputTokens: 300,
+      schema: GenerateConceptsSchema,
+      system: SYSTEM,
+      messages: [
+        {
+          role: "user",
+          content: [
+            {
+              type: "text",
+              text:
+                `Extract 6–14 key concepts for spaced repetition from the source below.\n` +
+                `SECTION: ${input.section_title}\n\n` +
+                `SOURCE START\n${input.extracted_text}\nSOURCE END\n`,
+            },
+          ],
+        },
+      ],
+    });
+    object = result.object;
+  } catch (e) {
+    const message = e instanceof Error ? e.message : "OpenAI request failed";
+    return NextResponse.json({ error: message }, { status: 502 });
+  }
 
   const nowIso = new Date().toISOString();
   const rows = object.concepts.slice(0, 20).map((c) => ({
@@ -61,7 +69,7 @@ export async function POST(req: Request) {
     next_review: nowIso,
   }));
 
-  const supabase = supabaseServer();
+  const supabase = await supabaseServer();
   const { data, error } = await supabase
     .from("concepts")
     .upsert(rows, { onConflict: "device_id,section_id,concept" })

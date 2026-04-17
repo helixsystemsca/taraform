@@ -17,6 +17,11 @@ export interface StudySection {
   extractedText: string;
   keyConcepts: string[];
   pageNumber?: number;
+  /** 2-stage PDF pipeline: identifies which uploaded PDF this section came from. */
+  sourceFileId?: string;
+  sourceFileHash?: string;
+  /** If true, this section is only a cheap doc-map stub and needs on-demand deep processing. */
+  needsDeepProcessing?: boolean;
 }
 
 export interface QuizResult {
@@ -72,6 +77,13 @@ type StudyStore = {
     completed: Record<string, boolean>;
   };
 
+  /** PDF chunks cached client-side for on-demand deep processing (keyed by file_hash). */
+  pdfChunksByFileHash: Record<string, string[]>;
+  setPdfChunksForFile: (fileHash: string, chunks: string[]) => void;
+
+  /** Update a section in-place (used after on-demand deep processing). */
+  updateSection: (sectionId: string, patch: Partial<StudySection>) => void;
+
   addSections: (newSections: StudySection[]) => void;
   selectSection: (id: string | null) => void;
   updateTextNotes: (sectionId: string, text: string) => void;
@@ -98,6 +110,7 @@ const emptyState = {
   quizAttempts: {} as Record<string, QuizAttempt[]>,
   timeSpent: {} as Record<string, number>,
   studyPlan: { generatedAt: 0, items: [] as StudyPlanItem[], completed: {} as Record<string, boolean> },
+  pdfChunksByFileHash: {} as Record<string, string[]>,
 };
 
 export const useStudyStore = create<StudyStore>()(
@@ -115,6 +128,16 @@ export const useStudyStore = create<StudyStore>()(
         })),
 
       selectSection: (id) => set({ selectedSectionId: id }),
+
+      setPdfChunksForFile: (fileHash, chunks) =>
+        set((s) => ({
+          pdfChunksByFileHash: { ...s.pdfChunksByFileHash, [fileHash]: chunks },
+        })),
+
+      updateSection: (sectionId, patch) =>
+        set((s) => ({
+          sections: s.sections.map((sec) => (sec.id === sectionId ? { ...sec, ...patch } : sec)),
+        })),
 
       updateTextNotes: (sectionId, text) =>
         set((s) => ({

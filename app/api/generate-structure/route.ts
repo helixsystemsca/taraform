@@ -8,6 +8,10 @@ const BodySchema = z.object({
 });
 
 export async function POST(req: Request) {
+  // Fail fast with 400 (same as other AI routes) instead of 500 from deep `getApiKey()` throws.
+  if (!process.env.OPENAI_API_KEY) {
+    return NextResponse.json({ error: "Missing OPENAI_API_KEY." }, { status: 400 });
+  }
   try {
     const json = await req.json().catch(() => null);
     const parsed = BodySchema.safeParse(json);

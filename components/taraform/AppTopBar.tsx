@@ -1,10 +1,33 @@
 "use client";
 
+import * as React from "react";
+import Link from "next/link";
 import { Bell, Search, Settings, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 export function AppTopBar() {
+  const [open, setOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    function onDoc(e: MouseEvent) {
+      const target = e.target as HTMLElement | null;
+      if (!target) return;
+      if (target.closest("[data-user-menu-root]")) return;
+      setOpen(false);
+    }
+    if (open) document.addEventListener("click", onDoc);
+    return () => document.removeEventListener("click", onDoc);
+  }, [open]);
+
+  async function logout() {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } finally {
+      window.location.href = "/login";
+    }
+  }
+
   return (
     <header
       className={cn(
@@ -42,20 +65,42 @@ export function AppTopBar() {
           >
             <Bell className="h-[18px] w-[18px] stroke-[1.5]" />
           </button>
-          <button
-            type="button"
+          <Link
+            href="/settings"
             className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink-secondary transition-editorial hover:bg-rose-light/60 hover:text-ink"
             aria-label="Settings"
           >
             <Settings className="h-[18px] w-[18px] stroke-[1.5]" />
-          </button>
-          <button
-            type="button"
-            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgba(120,90,80,0.1)] bg-surface-panel text-ink-secondary transition-editorial hover:border-copper/20 hover:text-ink"
-            aria-label="Profile"
-          >
-            <User className="h-[18px] w-[18px] stroke-[1.5]" />
-          </button>
+          </Link>
+          <div className="relative" data-user-menu-root>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgba(120,90,80,0.1)] bg-surface-panel text-ink-secondary transition-editorial hover:border-copper/20 hover:text-ink"
+              aria-label="Profile"
+              aria-expanded={open}
+            >
+              <User className="h-[18px] w-[18px] stroke-[1.5]" />
+            </button>
+            {open ? (
+              <div className="absolute right-0 mt-2 w-44 overflow-hidden rounded-xl border border-[rgba(120,90,80,0.12)] bg-surface-panel/95 shadow-warm backdrop-blur-xl">
+                <Link
+                  href="/settings"
+                  className="block px-4 py-2.5 text-sm text-ink-secondary transition-editorial hover:bg-rose-light/50 hover:text-ink"
+                  onClick={() => setOpen(false)}
+                >
+                  Settings
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => void logout()}
+                  className="block w-full px-4 py-2.5 text-left text-sm text-ink-secondary transition-editorial hover:bg-rose-light/50 hover:text-ink"
+                >
+                  Log out
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
       </div>
     </header>

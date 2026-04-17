@@ -22,9 +22,14 @@ Apple-inspired study companion for nursing grad school: upload scanned textbook 
 
    ```bash
    OPENAI_API_KEY=sk-...
+   SUPABASE_URL=https://your-project.supabase.co
+   SUPABASE_ANON_KEY=...
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
    ```
 
-   See `.env.example` for the variable name.
+   See `.env.example` for the variable name. The key is read only on the server (`process.env.OPENAI_API_KEY` in Route Handlers and Server Actions). Do not use `NEXT_PUBLIC_OPENAI_API_KEY`. On Vercel, add `OPENAI_API_KEY` under Project → Settings → Environment Variables for Production (and Preview if needed), then redeploy.
+   Supabase is used for auth, settings, and audio storage. Server code reads `SUPABASE_URL` / `SUPABASE_ANON_KEY` and browser code reads the `NEXT_PUBLIC_` equivalents.
 
 3. **Run the dev server**
 
@@ -62,14 +67,20 @@ Apple-inspired study companion for nursing grad school: upload scanned textbook 
 
 ## Data & privacy
 
-All study data stays in the browser (`localStorage`, key `taraform-study-storage`) unless you export it. There is no account system in the MVP.
+Study progress (sections, notes, quiz results) stays in the browser (`localStorage`, key `taraform-study-storage`) unless you export it.
+Accounts are used for **Settings** (notifications toggle) and **Encouragement audio** (uploads stored in Supabase Storage).
 
-## Future: Supabase sync (outline)
+## Supabase auth + settings (required)
 
-1. Add Supabase project + `NEXT_PUBLIC_SUPABASE_URL` / `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
-2. On login, merge local JSON with remote rows (`sections`, `notes`, `quiz_results`, `time_spent`).
-3. Prefer **last-write-wins** per section with a `updated_at` timestamp, or use a small CRDT if you need true offline-first merging.
-4. Keep export/import as an escape hatch for Tara to own her data.
+- **SQL**: run `supabase/sql/auth_settings_audio.sql` in the Supabase SQL editor (creates `profiles`, `user_audio`, and RLS policies; also a trigger to create a profile row at signup).
+- **Storage**: create a private bucket named `audio` (Storage → Buckets).
+- **Redirect URLs** (Supabase Auth → URL Configuration):
+  - Local: `http://localhost:3000/auth/callback`
+  - Vercel: `https://<your-domain>/auth/callback`
+
+## Future: Supabase sync (optional)
+
+If you want to sync study progress across devices later, you can add tables for sections/notes/quiz results and merge the local export JSON with the server rows.
 
 ## Project layout (high level)
 

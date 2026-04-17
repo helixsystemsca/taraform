@@ -50,10 +50,71 @@ export function SectionView(props: { sectionId: string }) {
   const updateSketchPathsJson = useStudyStore((s) => s.updateSketchPathsJson);
   const setQuizForSection = useStudyStore((s) => s.setQuizForSection);
   const updateTimeSpent = useStudyStore((s) => s.updateTimeSpent);
+  const pdfChunksByFileHash = useStudyStore((s) => s.pdfChunksByFileHash);
+  const updateSection = useStudyStore((s) => s.updateSection);
 
   const [tab, setTab] = React.useState("content");
   const [isGenerating, setIsGenerating] = React.useState(false);
+  const [isDeepLoading, setIsDeepLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+
+  function scoreChunk(chunk: string, keywords: string[]) {
+    const hay = chunk.toLowerCase();
+    let score = 0;
+    for (const k of keywords) {
+      const kw = k.toLowerCase();
+      if (!kw) continue;
+      if (hay.includes(kw)) score += 1;
+    }
+    return score;
+  }
+
+  async function loadDeepDetails() {
+    if (!section?.sourceFileHash || !section.sourceFileId) return;
+    const chunks = pdfChunksByFileHash[section.sourceFileHash] ?? [];
+    if (!chunks.length) {
+      setError("Missing PDF text for deep processing. Re-upload the PDF to rebuild local cache.");
+      return;
+    }
+    setError(null);
+    setIsDeepLoading(true);
+    try {
+      const keywords = (section.keyConcepts ?? []).slice(0, 12);
+      // Pick the most relevant chunks (top 6) by keyword hits to keep token usage low.
+      const ranked = chunks
+        .map((c) => ({ c, s: scoreChunk(c, keywords) }))
+        .sort((a, b) => b.s - a.s)
+        .slice(0, 6)
+        .map((x) => x.c);
+
+      const res = await fetch("/api/section-detail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          file_id: section.sourceFileId,
+          file_hash: section.sourceFileHash,
+          section_id: section.id,
+          section_title: section.title,
+          keywords,
+          chunks: ranked.length ? ranked : chunks.slice(0, 4),
+        }),
+      });
+      const json = (await res.json()) as { summary_text?: string; key_concepts?: string[]; error?: string };
+      if (!res.ok || json.error) throw new Error(json.error || `HTTP ${res.status}`);
+
+      const summary = json.summary_text ?? "";
+      const concepts = (json.key_concepts ?? []).filter(Boolean);
+      updateSection(section.id, {
+        extractedText: summary || section.extractedText,
+        keyConcepts: concepts.length ? concepts : section.keyConcepts,
+        needsDeepProcessing: false,
+      });
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Deep processing failed.");
+    } finally {
+      setIsDeepLoading(false);
+    }
+  }
 
   React.useEffect(() => {
     const id = window.setInterval(() => {
@@ -71,6 +132,7 @@ export function SectionView(props: { sectionId: string }) {
     setIsGenerating(true);
     try {
       const result = await generateQuizForSection({
+        sectionId: props.sectionId,
         sectionTitle: section.title,
         extractedText: section.extractedText,
         keyConcepts: section.keyConcepts ?? [],
@@ -117,6 +179,11 @@ export function SectionView(props: { sectionId: string }) {
             </CardHeader>
           </div>
           <div className="flex shrink-0 flex-wrap gap-2">
+            {section.needsDeepProcessing ? (
+              <Button variant="default" size="sm" onClick={() => void loadDeepDetails()} disabled={isDeepLoading}>
+                {isDeepLoading ? "Loading details…" : "Load details"}
+              </Button>
+            ) : null}
             <Button variant="primary" size="sm" onClick={() => void onGenerateQuiz()} disabled={isGenerating}>
               <Sparkles className="h-4 w-4" />
               {isGenerating ? "Generating…" : "Generate quiz"}
