@@ -1,7 +1,10 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { createServerClient } from "@supabase/ssr";
+import type { User } from "@supabase/supabase-js";
+
 import { isAllowedEmail } from "@/lib/auth/allowlist";
+import { DEV_USER, isDevAuthBypass } from "@/lib/auth/devUser";
 
 function getSupabaseEnvFromRequest() {
   const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -40,7 +43,6 @@ export async function middleware(request: NextRequest) {
 
   let response = NextResponse.next({ request });
 
-  // Keep the user's session fresh in middleware, so server code can read it from cookies.
   const supabase = createServerClient(env.url, env.anon, {
     cookies: {
       get(name: string) {
@@ -59,12 +61,15 @@ export async function middleware(request: NextRequest) {
     },
   });
 
-  const {
+  let {
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (!user && isDevAuthBypass()) {
+    user = { id: DEV_USER.id, email: DEV_USER.email } as User;
+  }
+
   if (user && !isAllowedEmail(user.email)) {
-    // Clear any session cookies and force the user back to login.
     await supabase.auth.signOut();
     const url = request.nextUrl.clone();
     url.pathname = "/login";
@@ -75,7 +80,6 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (isPublicPath(pathname)) {
-    // If already authed, don't show login/signup again.
     if (user && (pathname === "/login" || pathname === "/signup")) {
       const url = request.nextUrl.clone();
       url.pathname = "/home";
@@ -96,12 +100,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for:
-     * - static files in /public
-     * - Next.js internals
-     */
     "/((?!_next/static|_next/image|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)",
   ],
 };
-

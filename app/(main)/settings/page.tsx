@@ -1,15 +1,15 @@
 import { redirect } from "next/navigation";
 
 import { SettingsClient } from "@/app/(main)/settings/ui";
-import { supabaseServer } from "@/lib/supabase/server";
+import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 
 export default async function SettingsPage() {
-  const supabase = await supabaseServer();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) redirect("/login?next=/settings");
+  const user = await getCurrentUser();
+  if (!user) redirect("/login?next=/settings");
+  const supabase = await getServerSupabase();
 
   // Fetch profile + latest audio paths for empty states.
-  const userId = data.user.id;
+  const userId = user.id;
 
   const { data: profile } = await supabase
     .from("profiles")

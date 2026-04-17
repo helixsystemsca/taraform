@@ -18,9 +18,12 @@ export function getAllowedEmails() {
 }
 
 export function isAllowedEmail(email: string | null | undefined) {
+  const e = (email ?? "").trim().toLowerCase();
+  // Development-only synthetic user from `lib/auth/devUser.ts` (middleware + getCurrentUser).
+  if (process.env.NODE_ENV === "development" && e === "dev@local.test") return true;
+
   const allowed = getAllowedEmails();
   if (!allowed) return true; // If unset, do not block (safer for dev until configured).
-  const e = (email ?? "").trim().toLowerCase();
   return allowed.includes(e);
 }
 

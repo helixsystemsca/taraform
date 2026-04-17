@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { supabaseServer } from "@/lib/supabase/server";
+import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 
 const UpdateSchema = z.object({
   notifications_enabled: z.boolean(),
 });
 
 async function getUserOr401() {
-  const supabase = await supabaseServer();
-  const { data, error } = await supabase.auth.getUser();
-  if (error || !data.user) return { error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
-  return { supabase, user: data.user } as const;
+  const user = await getCurrentUser();
+  if (!user) return { error: NextResponse.json({ error: "Unauthorized" }, { status: 401 }) };
+  const supabase = await getServerSupabase();
+  return { supabase, user } as const;
 }
 
 export async function GET() {

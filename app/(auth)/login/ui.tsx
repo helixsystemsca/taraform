@@ -10,12 +10,25 @@ import { cn } from "@/lib/utils";
 
 type Mode = "password" | "magic";
 
-export function LoginClient({ nextPath }: { nextPath: string }) {
+export function LoginClient({
+  nextPath,
+  authCallbackError,
+}: {
+  nextPath: string;
+  /** Set when `/auth/callback` redirects back with `?error=` (e.g. expired magic link). */
+  authCallbackError?: string | null;
+}) {
   const [mode, setMode] = React.useState<Mode>("password");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [busy, setBusy] = React.useState(false);
   const [status, setStatus] = React.useState<{ kind: "idle" | "ok" | "err"; message?: string }>({ kind: "idle" });
+
+  React.useEffect(() => {
+    if (authCallbackError) {
+      setStatus({ kind: "err", message: formatAuthError(authCallbackError) });
+    }
+  }, [authCallbackError]);
   /** Blocks overlapping submits (double-clicks / Enter + click in the same moment). */
   const submitLock = React.useRef(false);
 
@@ -31,7 +44,6 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, next: nextPath }),
       });
-      // Never assume the response is JSON (Next.js/Supabase can return empty/HTML on unexpected failures).
       const contentType = res.headers.get("content-type") || "";
       const raw = await res.text();
       const json =
@@ -46,7 +58,6 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
         setStatus({ kind: "ok", message: json.message || "Check your email for a sign-in link." });
         return;
       }
-      // Password mode: cookie session is set by the API route; hard redirect to avoid stale middleware state.
       window.location.href = json.redirectTo || nextPath;
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Login failed.";
@@ -150,4 +161,3 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
     </div>
   );
 }
-

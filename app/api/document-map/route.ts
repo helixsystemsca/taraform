@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { getAiCache, putAiCache } from "@/lib/ai/cache";
 import { sha256Hex } from "@/lib/hash";
-import { supabaseServer } from "@/lib/supabase/server";
+import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 import { classifyDocumentType, generateDocumentMap, type DocumentMap, type DocumentType } from "@/lib/openai";
 
 const BodySchema = z.object({
@@ -14,10 +14,10 @@ const BodySchema = z.object({
 export async function POST(req: Request) {
   if (!process.env.OPENAI_API_KEY) return NextResponse.json({ error: "Missing OPENAI_API_KEY." }, { status: 400 });
 
-  const supabase = await supabaseServer();
-  const { data: authData, error: authErr } = await supabase.auth.getUser();
-  if (authErr || !authData.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  const userId = authData.user.id;
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const supabase = await getServerSupabase();
+  const userId = user.id;
 
   const json = await req.json().catch(() => null);
   const parsed = BodySchema.safeParse(json);

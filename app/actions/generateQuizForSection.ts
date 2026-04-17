@@ -6,7 +6,7 @@ import { taraformTextModel } from "@/lib/ai/openai";
 import { QuizSchema } from "@/lib/ai/schemas";
 import type { QuizObject } from "@/lib/ai/schemas";
 import { estimateTokens } from "@/lib/hash";
-import { supabaseServer } from "@/lib/supabase/server";
+import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 
 const SYSTEM_GUARDRAILS = [
   "You create NCLEX-style questions ONLY from the provided source text.",
@@ -26,9 +26,9 @@ export async function generateQuizForSection(input: {
     throw new Error("Missing OPENAI_API_KEY. Add it to .env.local.");
   }
 
-  const supabase = await supabaseServer();
-  const { data: authData } = await supabase.auth.getUser();
-  const userId = authData.user?.id ?? null;
+  const user = await getCurrentUser();
+  const supabase = await getServerSupabase();
+  const userId = user?.id ?? null;
 
   const source = input.extractedText.trim().slice(0, 8000);
 

@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
-import { supabaseServer } from "@/lib/supabase/server";
+import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 
 type AudioType = "before" | "after";
 
-async function getLatestPath(supabase: Awaited<ReturnType<typeof supabaseServer>>, userId: string, type: AudioType) {
+async function getLatestPath(supabase: SupabaseClient, userId: string, type: AudioType) {
   const { data, error } = await supabase
     .from("user_audio")
     .select("file_url,created_at")
@@ -18,11 +19,10 @@ async function getLatestPath(supabase: Awaited<ReturnType<typeof supabaseServer>
 }
 
 export async function GET() {
-  const supabase = await supabaseServer();
-  const { data: authData, error: authErr } = await supabase.auth.getUser();
-  if (authErr || !authData.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
-  const userId = authData.user.id;
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const supabase = await getServerSupabase();
+  const userId = user.id;
 
   try {
     const beforePath = await getLatestPath(supabase, userId, "before");

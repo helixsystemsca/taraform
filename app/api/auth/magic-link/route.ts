@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
 import { jsonWithSupabaseCookies, supabaseRouteClient } from "@/app/api/auth/_shared";
+import { buildAuthEmailRedirectUrl } from "@/lib/auth/authCallbackUrl";
 import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 const BodySchema = z.object({
@@ -24,18 +25,19 @@ export async function POST(req: NextRequest) {
       return jsonWithSupabaseCookies(getResponse(), { error: "Access not allowed. This app is private." }, { status: 403 });
     }
 
-    const redirectTo = new URL("/auth/callback", req.nextUrl.origin);
-    redirectTo.searchParams.set("next", next || "/home");
+    const emailRedirectTo = buildAuthEmailRedirectUrl(req, next);
+    console.log("[auth] magic-link: sending OTP", { email, emailRedirectTo, nodeEnv: process.env.NODE_ENV });
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: redirectTo.toString() },
+      options: { emailRedirectTo },
     });
 
     if (error) {
       return jsonWithSupabaseCookies(getResponse(), { error: error.message }, { status: 400 });
     }
 
+    console.log("[auth] magic-link: Supabase accepted send", { email });
     return jsonWithSupabaseCookies(getResponse(), { ok: true, message: "Magic link sent. Check your email." });
   } catch (e) {
     const message = e instanceof Error ? e.message : "Magic link failed.";

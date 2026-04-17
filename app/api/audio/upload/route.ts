@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-import { supabaseServer } from "@/lib/supabase/server";
+import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 
 const MAX_BYTES = 10 * 1024 * 1024; // 10MB
 
@@ -20,9 +20,9 @@ export async function POST(req: Request) {
   const parsedQuery = QuerySchema.safeParse({ type: url.searchParams.get("type") });
   if (!parsedQuery.success) return NextResponse.json({ error: "Missing or invalid type." }, { status: 400 });
 
-  const supabase = await supabaseServer();
-  const { data: authData, error: authErr } = await supabase.auth.getUser();
-  if (authErr || !authData.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const supabase = await getServerSupabase();
 
   const form = await req.formData().catch(() => null);
   if (!form) return NextResponse.json({ error: "Invalid form data." }, { status: 400 });
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
   if (file.size > MAX_BYTES) return NextResponse.json({ error: "File too large (max 10MB)." }, { status: 413 });
 
   const type = parsedQuery.data.type;
-  const userId = authData.user.id;
+  const userId = user.id;
   const ts = new Date().toISOString().replace(/[:.]/g, "-");
   const path = `${userId}/${type}/${ts}.mp3`;
 

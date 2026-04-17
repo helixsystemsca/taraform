@@ -19,5 +19,25 @@ export function formatAuthError(message: string | undefined | null): string {
     return "Invalid email or password.";
   }
 
+  if (m === "otp_expired" || m.includes("otp_expired") || m.includes("email link is invalid") || m.includes("link is invalid")) {
+    return "That sign-in link expired or was already used. Request a new magic link from the login page.";
+  }
+
+  if (m === "missing_code" || m.includes("missing_code")) {
+    return "Sign-in link was incomplete. Request a new magic link and open it in this same browser.";
+  }
+
+  if (m === "auth_callback_failed" || m.includes("auth_callback_failed")) {
+    return "Could not complete sign-in. Try a new magic link, or use password sign-in.";
+  }
+
+  if (m === "auth_provider_error" || m.includes("auth_provider_error")) {
+    return "Sign-in was cancelled or failed. Try again.";
+  }
+
+  if (m === "access_denied" || m.includes("access_denied")) {
+    return "Sign-in was denied. Try again.";
+  }
+
   return raw;
 }
