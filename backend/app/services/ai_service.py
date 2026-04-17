@@ -4,7 +4,7 @@ from typing import Any
 
 from openai import AsyncOpenAI
 
-from app.schemas.ai import CoachResponse
+from ..schemas.ai import CoachResponse
 
 SYSTEM_COACH = (
     "You are an expert study coach. Help improve the user's understanding. "

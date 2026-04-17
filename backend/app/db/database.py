@@ -35,8 +35,8 @@ def session_factory() -> async_sessionmaker[AsyncSession]:
 
 
 async def init_db() -> None:
-    from app.models import summary as _summary_model  # noqa: F401
-    from app.models import unit as _unit_model  # noqa: F401
+    from ..models import summary as _summary_model  # noqa: F401
+    from ..models import unit as _unit_model  # noqa: F401
 
     engine = get_engine()
     async with engine.begin() as conn:

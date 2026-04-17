@@ -4,15 +4,15 @@ from typing import Any
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.database import get_db
-from app.schemas.ai import (
+from ..db.database import get_db
+from ..schemas.ai import (
     CoachRequest,
     CoachResponse,
     FlashcardsStubResponse,
     ImproveRequest,
     ImproveResponse,
 )
-from app.services import ai_service, summary_service
+from ..services import ai_service, summary_service
 
 router = APIRouter()
 

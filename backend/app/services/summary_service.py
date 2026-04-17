@@ -6,9 +6,9 @@ from typing import Any
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from app.models.summary import Summary
-from app.models.unit import Unit
-from app.schemas.summary import SummaryRead, SummaryWrite
+from ..models.summary import Summary
+from ..models.unit import Unit
+from ..schemas.summary import SummaryRead, SummaryWrite
 
 
 def utcnow() -> datetime:

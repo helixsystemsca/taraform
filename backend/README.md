@@ -37,11 +37,15 @@ NEXT_PUBLIC_STUDY_API_URL=http://127.0.0.1:8000
 
 ## Deploy on Render
 
-1. Create a **Web Service**, root directory `backend`, runtime **Python 3.12+**.
-2. **Build command:** `pip install -r requirements.txt`
-3. **Start command:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
-4. Set `OPENAI_API_KEY`, `CORS_ORIGINS` (comma-separated production + any Vercel preview hosts you use), and `DATABASE_URL` (managed PostgreSQL recommended so data survives deploys).
-5. Copy the service URL into Vercel as `NEXT_PUBLIC_STUDY_API_URL` (no trailing slash).
+1. Create a **Web Service**, runtime **Python 3.12+** (avoid pre-release 3.14 unless you intend to).
+2. **Root directory:** either **`backend`** (recommended) or the **repo root** (monorepo).
+3. **Build command:** `pip install -r requirements.txt` (from the root directory you set).
+4. **Start command** (pick one to match root directory):
+   - Root **`backend`:** `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+   - Root **repo** (parent of `backend/`): `uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT`  
+   Imports use package-relative paths so both work.
+5. Set `OPENAI_API_KEY`, `CORS_ORIGINS` (comma-separated production + any Vercel preview hosts you use), and `DATABASE_URL` (managed PostgreSQL recommended so data survives deploys).
+6. Copy the service URL into Vercel as `NEXT_PUBLIC_STUDY_API_URL` (no trailing slash).
 
 SQLite on Render’s ephemeral disk is fine for demos; production should use PostgreSQL.
 

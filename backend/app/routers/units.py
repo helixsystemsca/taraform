@@ -5,9 +5,9 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.db.database import get_db
-from app.models.unit import Unit
-from app.schemas.unit import UnitCreateResponse
+from ..db.database import get_db
+from ..models.unit import Unit
+from ..schemas.unit import UnitCreateResponse
 
 router = APIRouter()
 
