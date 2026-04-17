@@ -39,5 +39,9 @@ export function formatAuthError(message: string | undefined | null): string {
     return "Sign-in was denied. Try again.";
   }
 
+  if (m.includes("invalid url")) {
+    return "Magic link redirect URL is misconfigured. Set NEXT_PUBLIC_SITE_URL or AUTH_REDIRECT_ORIGIN to your full site URL (including https://) and add that URL + /auth/callback in Supabase → Authentication → Redirect URLs.";
+  }
+
   return raw;
 }
