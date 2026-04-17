@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import { GlassCard } from "@/components/glass/GlassCard";
 import { Button } from "@/components/ui/button";
+import { formatAuthError } from "@/lib/auth/formatAuthError";
 import { cn } from "@/lib/utils";
 
 type Mode = "password" | "magic";
@@ -15,9 +16,13 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
   const [password, setPassword] = React.useState("");
   const [busy, setBusy] = React.useState(false);
   const [status, setStatus] = React.useState<{ kind: "idle" | "ok" | "err"; message?: string }>({ kind: "idle" });
+  /** Blocks overlapping submits (double-clicks / Enter + click in the same moment). */
+  const submitLock = React.useRef(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (submitLock.current) return;
+    submitLock.current = true;
     setBusy(true);
     setStatus({ kind: "idle" });
     try {
@@ -34,7 +39,7 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
           ? (JSON.parse(raw) as { error?: string; ok?: boolean; message?: string; redirectTo?: string })
           : ({} as { error?: string; ok?: boolean; message?: string; redirectTo?: string });
       if (!res.ok) {
-        setStatus({ kind: "err", message: json.error || raw || "Login failed." });
+        setStatus({ kind: "err", message: formatAuthError(json.error || raw || undefined) });
         return;
       }
       if (mode === "magic") {
@@ -45,8 +50,9 @@ export function LoginClient({ nextPath }: { nextPath: string }) {
       window.location.href = json.redirectTo || nextPath;
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Login failed.";
-      setStatus({ kind: "err", message: msg });
+      setStatus({ kind: "err", message: formatAuthError(msg) });
     } finally {
+      submitLock.current = false;
       setBusy(false);
     }
   }
