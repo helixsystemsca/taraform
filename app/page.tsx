@@ -15,5 +15,5 @@ export default async function Home(props: { searchParams: Promise<Record<string,
     if (ed) q.set("error_description", ed);
     redirect(`/auth/callback?${q.toString()}`);
   }
-  redirect("/home");
+  redirect("/workspace");
 }

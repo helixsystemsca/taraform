@@ -117,13 +117,20 @@ export async function postImprove(body: {
   return parseJson(res);
 }
 
-export type StubResponse = { status: string; message: string };
+export type FlashcardItem = { front: string; back: string };
 
-export async function postFlashcardsStub(): Promise<StubResponse> {
+/** Uses cached `user_summary` + `ai_feedback` on the server; does not re-send source excerpt. */
+export async function postFlashcards(body: { summary_id: string }): Promise<FlashcardItem[]> {
   const b = baseUrl();
-  const res = await fetch(`${b}/api/ai/flashcards`, { method: "POST" });
+  const res = await fetch(`${b}/api/ai/flashcards`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
   return parseJson(res);
 }
+
+export type StubResponse = { status: string; message: string };
 
 export async function postQuizStub(): Promise<StubResponse> {
   const b = baseUrl();

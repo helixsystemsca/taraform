@@ -6,6 +6,9 @@ import type { NextRequest } from "next/server";
  */
 export const PRODUCTION_APP_ORIGIN = "https://taraform.helixsystems.ca";
 
+/** Default in-app path after sign-in (password, magic link `next`, email redirect). */
+export const DEFAULT_POST_LOGIN_PATH = "/workspace";
+
 /** Prefix pathname with `NEXT_PUBLIC_BASE_PATH` when the app is deployed under a subpath. */
 export function withAppBasePath(path: string): string {
   const base = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
@@ -111,7 +114,7 @@ export function buildAuthEmailRedirectUrl(req: NextRequest, nextPath: string | u
     url = new URL(pathname, PRODUCTION_APP_ORIGIN);
   }
 
-  const n = (nextPath?.trim() || "/home").replace(/^\/+/, "/");
+  const n = (nextPath?.trim() || DEFAULT_POST_LOGIN_PATH).replace(/^\/+/, "/");
   url.searchParams.set("next", n.startsWith("/") ? n : `/${n}`);
   return url.toString();
 }

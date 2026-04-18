@@ -24,6 +24,15 @@ class ImproveResponse(BaseModel):
     improved_summary: str
 
 
+class FlashcardsRequest(BaseModel):
+    summary_id: str = Field(min_length=1, max_length=36)
+
+
+class FlashcardItem(BaseModel):
+    front: str = Field(min_length=1, max_length=600)
+    back: str = Field(min_length=1, max_length=900)
+
+
 class FlashcardsStubResponse(BaseModel):
     status: str = "not_implemented"
     message: str = "Flashcard generation will use cached summaries in a future release."

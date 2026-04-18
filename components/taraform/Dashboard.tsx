@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BookOpen, Loader2, Sparkles, UploadCloud } from "lucide-react";
 
@@ -61,6 +62,14 @@ export function Dashboard() {
             <p className="text-[15px] leading-relaxed text-ink-secondary">
               Upload a scanned textbook page. We extract only what’s visible, then you can take notes, build NCLEX-style
               quizzes, and watch your confidence grow.
+            </p>
+            <p className="text-sm text-ink-secondary">
+              <Link
+                href="/workspace"
+                className="font-medium text-rose-deep underline-offset-2 hover:underline"
+              >
+                Open study workspace (PDF units & coach)
+              </Link>
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">

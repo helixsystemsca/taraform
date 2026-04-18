@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { jsonWithSupabaseCookies, supabaseRouteClient } from "@/app/api/auth/_shared";
 import { isAllowedEmail } from "@/lib/auth/allowlist";
+import { DEFAULT_POST_LOGIN_PATH } from "@/lib/auth/authCallbackUrl";
 
 const BodySchema = z.object({
   email: z.string().email(),
@@ -30,6 +31,6 @@ export async function POST(req: NextRequest) {
     return jsonWithSupabaseCookies(getResponse(), { error: "Access not allowed. This app is private." }, { status: 403 });
   }
 
-  return jsonWithSupabaseCookies(getResponse(), { ok: true, redirectTo: next || "/home" });
+  return jsonWithSupabaseCookies(getResponse(), { ok: true, redirectTo: next || DEFAULT_POST_LOGIN_PATH });
 }
 

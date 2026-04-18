@@ -5,14 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
-  BookOpen,
   Home,
   NotebookPen,
   PanelLeft,
   Sparkles,
   Library,
-  UploadCloud,
-  ListChecks,
   LayoutPanelLeft,
   Plus,
 } from "lucide-react";
@@ -28,12 +25,10 @@ type NavItem = {
   icon: React.ComponentType<{ className?: string }>;
 };
 
+/** Primary nav: Workspace is the main study surface. Legacy /upload, /study, /plan remain reachable by URL only. */
 const NAV: NavItem[] = [
   { href: "/home", label: "Home", icon: Home },
-  { href: "/workspace", label: "Workspace", icon: LayoutPanelLeft },
-  { href: "/plan", label: "Study Plan", icon: ListChecks },
-  { href: "/upload", label: "Upload Notes", icon: UploadCloud },
-  { href: "/study", label: "Study", icon: BookOpen },
+  { href: "/workspace", label: "Study", icon: LayoutPanelLeft },
   { href: "/notes", label: "Notes", icon: NotebookPen },
   { href: "/review", label: "Review", icon: Sparkles },
   { href: "/concepts", label: "Concepts", icon: Library },
@@ -71,7 +66,7 @@ function SidebarNav({ pathname }: { pathname: string }) {
 }
 
 function BottomNav({ pathname }: { pathname: string }) {
-  const shortNav = [NAV[0]!, NAV[1]!, NAV[4]!, NAV[5]!];
+  const shortNav = [NAV[0]!, NAV[1]!, NAV[2]!, NAV[3]!];
   return (
     <div
       className={cn(
@@ -166,23 +161,15 @@ export function ResponsiveShell({ children }: { children: React.ReactNode }) {
         </div>
         <div className="border-t border-[rgba(120,90,80,0.08)] p-4">
           <Link
-            href="/upload"
+            href="/workspace"
             className={cn(
               "flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 text-sm font-medium text-[#fbf8f4]",
               "bg-copper shadow-warm transition-editorial hover:bg-rose-deep hover:shadow-warm-hover active:scale-[0.99]",
             )}
           >
             <Plus className="h-4 w-4 stroke-[2]" />
-            New material
+            New unit
           </Link>
-          <div className="mt-3 flex flex-col gap-1 text-center">
-            <Link
-              href="/plan"
-              className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted transition-editorial hover:text-ink-secondary"
-            >
-              Study plan
-            </Link>
-          </div>
         </div>
       </aside>
 

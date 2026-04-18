@@ -97,13 +97,24 @@ export async function middleware(request: NextRequest) {
 
   if (isPublicPath(pathname)) {
     if (user && (pathname === "/login" || pathname === "/signup")) {
-      return NextResponse.redirect(buildAbsoluteUrl(request, "/home"));
+      return NextResponse.redirect(buildAbsoluteUrl(request, "/workspace"));
     }
     return response;
   }
 
   if (isProtectedPath(pathname) && !user) {
     return NextResponse.redirect(buildAbsoluteUrl(request, "/login", { next: pathname }));
+  }
+
+  if (user) {
+    const isAppRoot =
+      pathname === "/home" ||
+      pathname === "/" ||
+      pathname === "" ||
+      (base !== "" && (pathname === base || pathname === `${base}/`));
+    if (isAppRoot && !hasAuthReturn) {
+      return NextResponse.redirect(buildAbsoluteUrl(request, "/workspace"));
+    }
   }
 
   return response;

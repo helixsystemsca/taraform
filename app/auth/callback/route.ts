@@ -1,7 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 import { redirectWithSupabaseCookies, supabaseRouteClient } from "@/app/api/auth/_shared";
-import { buildAbsoluteUrl } from "@/lib/auth/authCallbackUrl";
+import { buildAbsoluteUrl, DEFAULT_POST_LOGIN_PATH } from "@/lib/auth/authCallbackUrl";
 import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 function loginWithError(req: NextRequest, next: string, errorCode: string) {
@@ -12,7 +12,7 @@ function loginWithError(req: NextRequest, next: string, errorCode: string) {
 }
 
 export async function GET(req: NextRequest) {
-  const next = req.nextUrl.searchParams.get("next") || "/home";
+  const next = req.nextUrl.searchParams.get("next") || DEFAULT_POST_LOGIN_PATH;
   const code = req.nextUrl.searchParams.get("code");
   const oauthError = req.nextUrl.searchParams.get("error");
   const errorDescription = req.nextUrl.searchParams.get("error_description");

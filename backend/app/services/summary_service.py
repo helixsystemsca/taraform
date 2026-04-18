@@ -4,7 +4,6 @@ from datetime import datetime, timezone
 from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlmodel import select
 
 from ..models.summary import Summary
 from ..models.unit import Unit

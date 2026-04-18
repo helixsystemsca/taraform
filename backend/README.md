@@ -66,4 +66,5 @@ If you omit `DATABASE_URL` on Render, the API falls back to **SQLite** on disk (
 - `GET /api/summaries/{id}` — fetch summary including cached `ai_feedback`.
 - `POST /api/ai/coach` — coach JSON; uses cache when `summary_id` points at a row with `ai_feedback`.
 - `POST /api/ai/improve` — returns `improved_summary`.
-- `POST /api/ai/flashcards`, `POST /api/ai/quiz` — stubs.
+- `POST /api/ai/flashcards` — body `{"summary_id":"..."}`; uses **cached** `user_summary` + `ai_feedback` only (no `source_text` in the model prompt). Returns JSON array of `{ "front", "back" }` (5–10 cards). Requires coach feedback saved on the summary first.
+- `POST /api/ai/quiz` — stub.

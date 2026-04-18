@@ -145,10 +145,10 @@ export function AnalyticsView() {
                 }}
                 asChild
               >
-                <Link href="/study">Open weakest</Link>
+                <Link href="/workspace">Open weakest</Link>
               </Button>
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/study">Study</Link>
+                <Link href="/workspace">Study</Link>
               </Button>
             </div>
           ) : null}

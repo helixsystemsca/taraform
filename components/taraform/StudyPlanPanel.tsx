@@ -55,7 +55,7 @@ export function StudyPlanPanel() {
             Reset
           </Button>
           <Button asChild variant="primary" size="sm" disabled={items.length === 0}>
-            <Link href="/plan">Start studying</Link>
+            <Link href="/workspace">Start studying</Link>
           </Button>
         </div>
       </div>

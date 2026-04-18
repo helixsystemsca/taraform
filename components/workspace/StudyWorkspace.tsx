@@ -4,24 +4,37 @@ import * as React from "react";
 import { BookMarked, GripVertical, Loader2, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import {
   getSummary,
   postCoach,
-  postFlashcardsStub,
+  postFlashcards,
   postImprove,
   postQuizStub,
   postSummary,
   postUnit,
   studyApiConfigured,
   type CoachResponse,
+  type FlashcardItem,
 } from "@/lib/studyApi";
 import { cn } from "@/lib/utils";
 
 const PANEL_MIN = 280;
 const PANEL_MAX = 560;
 const DEBOUNCE_MS = 900;
+const MAX_SOURCE_CHARS = 50_000;
+/** Poll PDF iframe selection; PDF viewers often don’t bubble events to the parent. */
+const SELECTION_POLL_MS = 320;
 
 function readIframeSelection(iframe: HTMLIFrameElement | null): string {
   if (!iframe?.contentWindow) return "";
@@ -53,10 +66,99 @@ export function StudyWorkspace() {
   const [feedback, setFeedback] = React.useState<CoachResponse | null>(null);
   const [feedbackVisible, setFeedbackVisible] = React.useState(false);
   const [busy, setBusy] = React.useState<string | null>(null);
+  const [flashcardsOpen, setFlashcardsOpen] = React.useState(false);
+  const [flashcards, setFlashcards] = React.useState<FlashcardItem[]>([]);
+
+  /** Last excerpt applied from the PDF (avoids re-running feedback clear on duplicate polls). */
+  const lastPdfExcerptRef = React.useRef("");
+
+  const applyPdfSelection = React.useCallback((raw: string, force = false) => {
+    const t = raw.replace(/\s+/g, " ").trim();
+    if (!t) return;
+    const capped = t.slice(0, MAX_SOURCE_CHARS);
+    if (!force && capped === lastPdfExcerptRef.current) return;
+    lastPdfExcerptRef.current = capped;
+    setSourceText(capped);
+    setPanelActive(true);
+    setFeedback(null);
+    setFeedbackVisible(false);
+  }, []);
 
   React.useEffect(() => {
     return () => {
       if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+    };
+  }, [pdfUrl]);
+
+  /** After pointer/keyboard activity, read selection from the embedded PDF (same-origin blob). */
+  const syncSelectionFromPdf = React.useCallback(() => {
+    const t = readIframeSelection(iframeRef.current);
+    if (t) applyPdfSelection(t, false);
+  }, [applyPdfSelection]);
+
+  React.useEffect(() => {
+    if (!pdfUrl) {
+      lastPdfExcerptRef.current = "";
+      return;
+    }
+
+    const onPointerUpCapture = () => {
+      requestAnimationFrame(() => syncSelectionFromPdf());
+    };
+    let keyTimer: ReturnType<typeof setTimeout> | null = null;
+    const onKeyUpCapture = () => {
+      if (keyTimer) return;
+      keyTimer = setTimeout(() => {
+        keyTimer = null;
+        syncSelectionFromPdf();
+      }, 60);
+    };
+
+    window.addEventListener("pointerup", onPointerUpCapture, true);
+    window.addEventListener("keyup", onKeyUpCapture, true);
+
+    const poll = window.setInterval(() => syncSelectionFromPdf(), SELECTION_POLL_MS);
+
+    return () => {
+      window.removeEventListener("pointerup", onPointerUpCapture, true);
+      window.removeEventListener("keyup", onKeyUpCapture, true);
+      clearInterval(poll);
+      if (keyTimer) clearTimeout(keyTimer);
+    };
+  }, [pdfUrl, syncSelectionFromPdf]);
+
+  const attachIframeDomListeners = React.useCallback((): (() => void) | null => {
+    const iframe = iframeRef.current;
+    const doc = iframe?.contentDocument;
+    if (!doc) return null;
+    const on = () => syncSelectionFromPdf();
+    doc.addEventListener("mouseup", on);
+    doc.addEventListener("selectionchange", on);
+    return () => {
+      doc.removeEventListener("mouseup", on);
+      doc.removeEventListener("selectionchange", on);
+    };
+  }, [syncSelectionFromPdf]);
+
+  const iframeDomDetachRef = React.useRef<(() => void) | null>(null);
+
+  const onPdfIframeLoad = React.useCallback(() => {
+    iframeDomDetachRef.current?.();
+    iframeDomDetachRef.current = null;
+    requestAnimationFrame(() => {
+      const detach = attachIframeDomListeners();
+      if (detach) iframeDomDetachRef.current = detach;
+    });
+  }, [attachIframeDomListeners]);
+
+  React.useEffect(() => {
+    if (!pdfUrl) {
+      iframeDomDetachRef.current?.();
+      iframeDomDetachRef.current = null;
+    }
+    return () => {
+      iframeDomDetachRef.current?.();
+      iframeDomDetachRef.current = null;
     };
   }, [pdfUrl]);
 
@@ -80,15 +182,11 @@ export function StudyWorkspace() {
     window.addEventListener("pointerup", onPointerUp);
   };
 
-  const captureSelection = React.useCallback(() => {
+  /** Fallback when the browser PDF viewer blocks parent selection APIs. */
+  const captureSelectionManual = React.useCallback(() => {
     const t = readIframeSelection(iframeRef.current);
-    if (t) {
-      setSourceText(t);
-      setPanelActive(true);
-      setFeedback(null);
-      setFeedbackVisible(false);
-    }
-  }, []);
+    if (t) applyPdfSelection(t, true);
+  }, [applyPdfSelection]);
 
   const onPickPdf = async (file: File | null) => {
     if (!file || file.type !== "application/pdf") return;
@@ -99,6 +197,7 @@ export function StudyWorkspace() {
     setUnitId(null);
     setSummaryId(null);
     setSourceText("");
+    lastPdfExcerptRef.current = "";
     setUserSummary("");
     setFeedback(null);
     setFeedbackVisible(false);
@@ -224,11 +323,27 @@ export function StudyWorkspace() {
     }
   };
 
-  const onStub = async (kind: "fc" | "quiz") => {
-    if (!studyApiConfigured()) return;
-    setBusy(kind);
+  const onGenerateFlashcards = async () => {
+    if (!studyApiConfigured() || !summaryId) return;
+    setBusy("fc");
+    setSaveError(null);
     try {
-      const res = kind === "fc" ? await postFlashcardsStub() : await postQuizStub();
+      await flushSummary();
+      const cards = await postFlashcards({ summary_id: summaryId });
+      setFlashcards(cards);
+      setFlashcardsOpen(true);
+    } catch (e) {
+      setSaveError(e instanceof Error ? e.message : "Flashcards failed");
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const onQuizStub = async () => {
+    if (!studyApiConfigured()) return;
+    setBusy("quiz");
+    try {
+      const res = await postQuizStub();
       window.alert(`${res.status}: ${res.message}`);
     } catch (e) {
       setSaveError(e instanceof Error ? e.message : "Request failed");
@@ -295,6 +410,7 @@ export function StudyWorkspace() {
               title="PDF"
               src={pdfUrl}
               className="h-full min-h-[42dvh] w-full bg-white"
+              onLoad={onPdfIframeLoad}
             />
           ) : (
             <div className="flex h-full min-h-[42dvh] items-center justify-center text-sm text-ink-muted">
@@ -323,18 +439,24 @@ export function StudyWorkspace() {
                 Study panel
               </div>
               {panelActive ? (
-                <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-emerald-700">Active</span>
+                <span className="text-[10px] font-medium uppercase tracking-[0.12em] text-emerald-700">Excerpt linked</span>
               ) : (
-                <span className="text-[10px] text-ink-muted">Select text in the PDF</span>
+                <span className="text-[10px] text-ink-muted">Highlight the PDF</span>
               )}
             </div>
 
-            <div className="flex flex-wrap gap-2">
-              <Button type="button" variant="default" size="sm" disabled={!pdfUrl} onClick={captureSelection}>
-                Use selection
-              </Button>
-              <span className="self-center text-[11px] text-ink-muted">Highlight in the PDF, then click.</span>
-            </div>
+            <p className="text-[11px] leading-relaxed text-ink-muted">
+              Highlight text in the PDF — the excerpt syncs here automatically. If nothing appears,{" "}
+              <button
+                type="button"
+                className="font-medium text-rose-deep underline decoration-rose-deep/40 underline-offset-2 hover:decoration-rose-deep"
+                disabled={!pdfUrl}
+                onClick={captureSelectionManual}
+              >
+                capture selection manually
+              </button>
+              .
+            </p>
 
             {sourceText ? (
               <div className="rounded-lg border border-[rgba(120,90,80,0.1)] bg-white/60 p-3 text-xs text-ink-secondary">
@@ -394,9 +516,10 @@ export function StudyWorkspace() {
                 type="button"
                 variant="default"
                 size="sm"
-                disabled={!configured || busy !== null || !summaryReady}
-                onClick={() => void onStub("fc")}
+                disabled={!configured || busy !== null || !summaryId}
+                onClick={() => void onGenerateFlashcards()}
               >
+                {busy === "fc" ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
                 Generate flashcards
               </Button>
               <Button
@@ -404,11 +527,14 @@ export function StudyWorkspace() {
                 variant="default"
                 size="sm"
                 disabled={!configured || busy !== null || !summaryReady}
-                onClick={() => void onStub("quiz")}
+                onClick={() => void onQuizStub()}
               >
                 Generate quiz
               </Button>
             </div>
+            <p className="text-[10px] text-ink-muted">
+              Flashcards use your saved summary and coach feedback only — run &quot;Get feedback&quot; first.
+            </p>
           </div>
         </ScrollArea>
       </div>
@@ -418,6 +544,39 @@ export function StudyWorkspace() {
           <Loader2 className="h-8 w-8 animate-spin text-copper" />
         </div>
       ) : null}
+
+      <Dialog open={flashcardsOpen} onOpenChange={setFlashcardsOpen}>
+        <DialogContent className="max-h-[min(90dvh,720px)] w-[min(520px,calc(100%-24px))] overflow-hidden p-0">
+          <DialogHeader className="border-b border-[rgba(120,90,80,0.1)] px-5 py-4">
+            <DialogTitle>Flashcards</DialogTitle>
+            <DialogDescription className="text-left">
+              From your summary and cached coach feedback ({flashcards.length} cards).
+            </DialogDescription>
+          </DialogHeader>
+          <ScrollArea className="max-h-[min(60dvh,480px)] px-5 py-3">
+            <ol className="space-y-4 pb-2">
+              {flashcards.map((c, i) => (
+                <li
+                  key={`${i}-${c.front.slice(0, 24)}`}
+                  className="rounded-xl border border-[rgba(120,90,80,0.1)] bg-white/70 p-4 text-sm shadow-warm"
+                >
+                  <div className="text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-muted">Front</div>
+                  <p className="mt-1 font-medium text-ink">{c.front}</p>
+                  <div className="mt-3 text-[10px] font-semibold uppercase tracking-[0.1em] text-ink-muted">Back</div>
+                  <p className="mt-1 text-ink-secondary leading-relaxed">{c.back}</p>
+                </li>
+              ))}
+            </ol>
+          </ScrollArea>
+          <DialogFooter className="border-t border-[rgba(120,90,80,0.1)] px-5 py-4">
+            <DialogClose asChild>
+              <Button type="button" variant="primary" size="sm">
+                Close
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

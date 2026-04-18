@@ -8,6 +8,8 @@ from ..db.database import get_db
 from ..schemas.ai import (
     CoachRequest,
     CoachResponse,
+    FlashcardItem,
+    FlashcardsRequest,
     FlashcardsStubResponse,
     ImproveRequest,
     ImproveResponse,
@@ -73,9 +75,24 @@ async def improve(body: ImproveRequest) -> ImproveResponse:
     return ImproveResponse(improved_summary=text)
 
 
-@router.post("/flashcards", response_model=FlashcardsStubResponse)
-async def flashcards_stub() -> FlashcardsStubResponse:
-    return FlashcardsStubResponse()
+@router.post("/flashcards", response_model=list[FlashcardItem])
+async def flashcards(body: FlashcardsRequest, session: AsyncSession = Depends(get_db)) -> list[FlashcardItem]:
+    row = await summary_service.get_summary_model(session, body.summary_id)
+    if row is None:
+        raise HTTPException(status_code=404, detail="summary_not_found")
+    cached = _feedback_from_row(row.ai_feedback)
+    if not cached:
+        raise HTTPException(status_code=400, detail="coach_feedback_required")
+    summ = (row.user_summary or "").strip()
+    if not summ:
+        raise HTTPException(status_code=400, detail="summary_empty")
+    try:
+        raw_cards = await ai_service.run_flashcards(summ, cached)
+    except RuntimeError as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+    except Exception as e:  # noqa: BLE001
+        raise HTTPException(status_code=502, detail="ai_provider_error") from e
+    return [FlashcardItem.model_validate(c) for c in raw_cards]
 
 
 @router.post("/quiz", response_model=FlashcardsStubResponse)

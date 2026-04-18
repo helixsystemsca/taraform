@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { z } from "zod";
 
 import { jsonWithSupabaseCookies, supabaseRouteClient } from "@/app/api/auth/_shared";
-import { buildAuthEmailRedirectUrl } from "@/lib/auth/authCallbackUrl";
+import { buildAuthEmailRedirectUrl, DEFAULT_POST_LOGIN_PATH } from "@/lib/auth/authCallbackUrl";
 import { isAllowedEmail } from "@/lib/auth/allowlist";
 
 const BodySchema = z.object({
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
             message: "Check your email to confirm your account.",
             emailRedirectTo,
           }
-        : { ok: true, redirectTo: next || "/home" },
+        : { ok: true, redirectTo: next || DEFAULT_POST_LOGIN_PATH },
     );
   } catch (e) {
     const message = e instanceof Error ? e.message : "Signup failed.";
