@@ -7,7 +7,7 @@ import type { NextRequest } from "next/server";
 export const PRODUCTION_APP_ORIGIN = "https://taraform.helixsystems.ca";
 
 /** Default in-app path after sign-in (password, magic link `next`, email redirect). */
-export const DEFAULT_POST_LOGIN_PATH = "/workspace";
+export const DEFAULT_POST_LOGIN_PATH = "/";
 
 /** Prefix pathname with `NEXT_PUBLIC_BASE_PATH` when the app is deployed under a subpath. */
 export function withAppBasePath(path: string): string {

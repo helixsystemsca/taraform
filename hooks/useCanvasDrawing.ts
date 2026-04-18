@@ -16,6 +16,8 @@ type RenderOptions = {
   paperPaddingPx?: number;
   paperStyle?: "blank" | "lined";
   paperOpacity?: number;
+  /** 0–1 multiplier for ruled line visibility (lined mode only). */
+  paperLineOpacity?: number;
 };
 
 function clamp(n: number, min: number, max: number) {
@@ -28,12 +30,15 @@ function drawPaper(
   height: number,
   dpr: number,
   style: RenderOptions["paperStyle"],
-  opacity: RenderOptions["paperOpacity"],
+  sheetOpacity: RenderOptions["paperOpacity"],
+  lineStrength: RenderOptions["paperLineOpacity"],
 ) {
   if (style !== "lined") return;
 
   ctx.save();
-  ctx.globalAlpha = opacity ?? 0.15;
+  const sheet = sheetOpacity ?? 0.15;
+  const lines = clamp(lineStrength ?? 1, 0, 1);
+  ctx.globalAlpha = sheet * lines;
   ctx.strokeStyle = "#8e8e8e";
   ctx.lineWidth = 1;
 
@@ -265,13 +270,14 @@ export function useCanvasDrawing({
       dpr,
       renderOptions?.paperStyle,
       renderOptions?.paperOpacity,
+      renderOptions?.paperLineOpacity,
     );
     if (offscreen) ctx.drawImage(offscreen, 0, 0);
 
     const inProgress = inProgressRef.current;
     if (inProgress) drawStroke(ctx, inProgress);
     drawCursor(ctx, toolState, cursorRef.current);
-  }, [rebuildBase, renderOptions?.paperOpacity, renderOptions?.paperStyle, toolState]);
+  }, [rebuildBase, renderOptions?.paperLineOpacity, renderOptions?.paperOpacity, renderOptions?.paperStyle, toolState]);
 
   const scheduleRender = React.useCallback(() => {
     if (rafRef.current != null) return;

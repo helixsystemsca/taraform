@@ -1,6 +1,5 @@
-import { HomeView } from "@/components/taraform/pages/HomeView";
+import { redirect } from "next/navigation";
 
-export default function HomePage() {
-  return <HomeView />;
+export default function LegacyHomePage() {
+  redirect("/");
 }
-

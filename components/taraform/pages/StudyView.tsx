@@ -85,7 +85,7 @@ export function StudyView() {
               <div className="font-display text-xl font-medium tracking-[-0.02em] text-ink">Choose a section</div>
               <p className="mt-3 max-w-lg text-sm leading-relaxed text-ink-secondary">
                 Upload a page on{" "}
-                <Link href="/home" className="font-medium text-rose-deep underline-offset-2 hover:underline">
+                <Link href="/" className="font-medium text-rose-deep underline-offset-2 hover:underline">
                   Home
                 </Link>
                 , then open a section from the library — or expand a chapter in the list.

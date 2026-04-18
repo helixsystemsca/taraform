@@ -20,6 +20,7 @@ export function NotesCanvas({
   size,
   paperStyle: paperStyleProp,
   paperOpacity: paperOpacityProp,
+  paperLineOpacity: paperLineOpacityProp,
   className,
   onExportPngReady,
 }: {
@@ -30,6 +31,8 @@ export function NotesCanvas({
   size: number;
   paperStyle?: PaperStyle;
   paperOpacity?: number;
+  /** 0–1 strength of ruled lines (lined mode). */
+  paperLineOpacity?: number;
   className?: string;
   onExportPngReady?: (fn: () => string | null) => void;
 }) {
@@ -37,11 +40,20 @@ export function NotesCanvas({
   const selectedAnnotationId = useAnnotationToolbarStore((s) => s.selectedAnnotationId);
   const clearSelection = useAnnotationToolbarStore((s) => s.clearSelection);
 
+  const [paperStyle, setPaperStyle] = React.useState<PaperStyle>(paperStyleProp ?? "blank");
+  const [paperOpacity, setPaperOpacity] = React.useState<number>(paperOpacityProp ?? 0.18);
+  const [paperLineOpacity, setPaperLineOpacity] = React.useState<number>(paperLineOpacityProp ?? 1);
+
   const { bind, exportPng } = useCanvasDrawing({
     strokes,
     onChangeStrokes,
     toolState: { tool, color, size },
-    renderOptions: { paperPaddingPx: 36 },
+    renderOptions: {
+      paperPaddingPx: 36,
+      paperStyle,
+      paperOpacity,
+      paperLineOpacity,
+    },
   });
 
   const setCanvasRef = React.useCallback(
@@ -53,22 +65,23 @@ export function NotesCanvas({
     [bind.ref],
   );
 
-  const [paperStyle, setPaperStyle] = React.useState<PaperStyle>(paperStyleProp ?? "blank");
-  const [paperOpacity, setPaperOpacity] = React.useState<number>(paperOpacityProp ?? 0.18);
-
   React.useEffect(() => {
     if (paperStyleProp) setPaperStyle(paperStyleProp);
   }, [paperStyleProp]);
   React.useEffect(() => {
     if (paperOpacityProp != null) setPaperOpacity(paperOpacityProp);
   }, [paperOpacityProp]);
+  React.useEffect(() => {
+    if (paperLineOpacityProp != null) setPaperLineOpacity(paperLineOpacityProp);
+  }, [paperLineOpacityProp]);
 
   React.useEffect(() => {
     const onPaper = (e: Event) => {
-      const detail = (e as CustomEvent<{ style?: PaperStyle; opacity?: number }>).detail;
+      const detail = (e as CustomEvent<{ style?: PaperStyle; opacity?: number; lineOpacity?: number }>).detail;
       if (!detail) return;
       if (detail.style) setPaperStyle(detail.style);
       if (detail.opacity != null) setPaperOpacity(detail.opacity);
+      if (detail.lineOpacity != null) setPaperLineOpacity(detail.lineOpacity);
     };
     window.addEventListener("taraform:paper", onPaper as EventListener);
     return () => window.removeEventListener("taraform:paper", onPaper as EventListener);
@@ -183,7 +196,7 @@ export function NotesCanvas({
           className="pointer-events-none absolute inset-0"
           style={{
             opacity: paperOpacity,
-            backgroundImage: "linear-gradient(0deg, rgba(120,90,80,0.28) 1px, transparent 1px)",
+            backgroundImage: `linear-gradient(0deg, rgba(120,90,80,${0.02 + paperLineOpacity * 0.52}) 1px, transparent 1px)`,
             backgroundSize: "100% 24px",
           }}
         />

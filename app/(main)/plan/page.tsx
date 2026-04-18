@@ -81,7 +81,7 @@ export default function PlanPage() {
               Reset
             </Button>
             <Button asChild variant="ghost" size="sm">
-              <Link href="/home">Home</Link>
+              <Link href="/">Home</Link>
             </Button>
           </div>
         </div>

@@ -27,7 +27,7 @@ type NavItem = {
 
 /** Primary nav: Workspace is the main study surface. Legacy /upload, /study, /plan remain reachable by URL only. */
 const NAV: NavItem[] = [
-  { href: "/home", label: "Home", icon: Home },
+  { href: "/", label: "Home", icon: Home },
   { href: "/workspace", label: "Study", icon: LayoutPanelLeft },
   { href: "/notes", label: "Notes", icon: NotebookPen },
   { href: "/review", label: "Review", icon: Sparkles },
@@ -36,7 +36,7 @@ const NAV: NavItem[] = [
 ];
 
 function isActive(pathname: string, href: string) {
-  if (href === "/home") return pathname === "/home" || pathname === "/";
+  if (href === "/") return pathname === "/" || pathname === "/home";
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 

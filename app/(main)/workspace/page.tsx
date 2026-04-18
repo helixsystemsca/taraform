@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { StudyWorkspace } from "@/components/workspace/StudyWorkspace";
 
 export default function WorkspacePage() {
@@ -10,7 +12,9 @@ export default function WorkspacePage() {
           Flashcards and quizzes will plug into saved summaries next.
         </p>
       </div>
-      <StudyWorkspace />
+      <Suspense fallback={<div className="text-sm text-ink-muted">Loading workspace…</div>}>
+        <StudyWorkspace />
+      </Suspense>
     </div>
   );
 }

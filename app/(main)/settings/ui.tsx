@@ -4,6 +4,7 @@ import * as React from "react";
 import { UploadCloud } from "lucide-react";
 
 import { GlassCard } from "@/components/glass/GlassCard";
+import { SupportMessagesSettings } from "@/components/settings/SupportMessagesSettings";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useEncouragementAudio } from "@/hooks/useEncouragementAudio";
@@ -241,6 +242,10 @@ export function SettingsClient({
         </div>
 
         {audio.error ? <div className="mt-3 text-xs text-ink/55">Audio note: {audio.error}</div> : null}
+      </GlassCard>
+
+      <GlassCard className="p-5 sm:p-6">
+        <SupportMessagesSettings />
       </GlassCard>
     </div>
   );

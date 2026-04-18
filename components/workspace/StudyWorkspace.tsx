@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { BookMarked, GripVertical, Loader2, Sparkles } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -29,8 +30,11 @@ import {
   type FlashcardItem,
   type StickyNoteDto,
 } from "@/lib/studyApi";
+import { bumpStudyMinutesToday, loadLastStudy, saveLastStudy, updateLastStudyStickyCount } from "@/lib/lastStudySession";
 import { cn } from "@/lib/utils";
 import { StudyPdfMarkupViewer } from "@/components/workspace/StudyPdfMarkupViewer";
+import { SupportMessageOverlay } from "@/components/workspace/SupportMessageOverlay";
+import { useStudySupportMessages } from "@/hooks/useStudySupportMessages";
 import { useAnnotationToolbarStore } from "@/stores/useAnnotationToolbarStore";
 
 const PANEL_MIN = 280;
@@ -39,7 +43,10 @@ const DEBOUNCE_MS = 900;
 const MAX_SOURCE_CHARS = 50_000;
 
 export function StudyWorkspace() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const resumeHandledRef = React.useRef(false);
 
   const [localFile, setLocalFile] = React.useState<File | null>(null);
   const [unitId, setUnitId] = React.useState<string | null>(null);
@@ -88,6 +95,36 @@ export function StudyWorkspace() {
       .then(setStickyNotes)
       .catch(() => setStickyNotes([]));
   }, [unitId]);
+
+  React.useEffect(() => {
+    if (resumeHandledRef.current) return;
+    if (searchParams.get("resume") !== "1") return;
+    resumeHandledRef.current = true;
+    const snap = loadLastStudy();
+    if (snap?.unitId) setUnitId(snap.unitId);
+    router.replace("/workspace");
+  }, [router, searchParams]);
+
+  React.useEffect(() => {
+    if (unitId && localFile) {
+      saveLastStudy({ unitId, pdfTitle: localFile.name.replace(/\.pdf$/i, "") || localFile.name });
+    }
+  }, [unitId, localFile]);
+
+  React.useEffect(() => {
+    if (unitId) updateLastStudyStickyCount(stickyNotes.length);
+  }, [stickyNotes.length, unitId]);
+
+  React.useEffect(() => {
+    if (!studyApiConfigured()) return;
+    const id = window.setInterval(() => {
+      if (document.hidden) return;
+      bumpStudyMinutesToday(1);
+    }, 180_000);
+    return () => window.clearInterval(id);
+  }, []);
+
+  const { toast: supportToast, dismissToast } = useStudySupportMessages(true);
 
   const appendStickyToSummary = React.useCallback((text: string) => {
     const block = text.trim();
@@ -300,8 +337,23 @@ export function StudyWorkspace() {
   const canCoach = configured && sourceText.trim().length > 0 && userSummary.trim().length > 0;
   const summaryReady = userSummary.trim().length > 0;
 
+  const lastSnap = loadLastStudy();
+  const showResumeHint = configured && !!unitId && !localFile;
+
   return (
     <div className="flex min-h-[calc(100dvh-5.5rem)] flex-col gap-3 lg:min-h-[calc(100dvh-6rem)]">
+      {showResumeHint ? (
+        <div className="rounded-xl border border-copper/25 bg-rose-light/40 px-4 py-3 text-sm text-ink shadow-sm backdrop-blur-sm">
+          <span className="font-medium">Resume session:</span> open the same PDF file to reconnect markup and the viewer
+          {lastSnap?.pdfTitle ? (
+            <>
+              {" "}
+              (<span className="italic">{lastSnap.pdfTitle}</span>)
+            </>
+          ) : null}
+          .
+        </div>
+      ) : null}
       {!configured ? (
         <div className="rounded-xl border border-amber-200/80 bg-amber-50/90 px-4 py-3 text-sm text-amber-950">
           Set <code className="rounded bg-white/80 px-1">NEXT_PUBLIC_STUDY_API_URL</code> to your FastAPI base URL
@@ -530,6 +582,8 @@ export function StudyWorkspace() {
           <Loader2 className="h-8 w-8 animate-spin text-copper" />
         </div>
       ) : null}
+
+      {supportToast ? <SupportMessageOverlay message={supportToast} onDismiss={dismissToast} /> : null}
 
       <Dialog open={flashcardsOpen} onOpenChange={setFlashcardsOpen}>
         <DialogContent className="max-h-[min(90dvh,720px)] w-[min(520px,calc(100%-24px))] overflow-hidden p-0">
