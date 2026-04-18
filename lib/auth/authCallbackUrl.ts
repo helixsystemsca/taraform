@@ -17,6 +17,17 @@ export function withAppBasePath(path: string): string {
  * Env values like `taraform.vercel.app` (no scheme) make `new URL(path, base)` throw "Invalid URL".
  * This normalizes to a valid `origin` only (no path).
  */
+/** True if this origin should never be used for email / magic links in production. */
+export function isLocalDevOrigin(origin: string): boolean {
+  try {
+    const u = new URL(origin);
+    const h = u.hostname.toLowerCase();
+    return h === "localhost" || h === "127.0.0.1" || h === "[::1]" || h.endsWith(".local");
+  } catch {
+    return false;
+  }
+}
+
 function normalizeEnvOrigin(raw: string, fallbackOrigin: string): string {
   const s = raw.trim().replace(/\/+$/, "");
   if (!s) return fallbackOrigin;
@@ -51,7 +62,15 @@ function normalizeEnvOrigin(raw: string, fallbackOrigin: string): string {
 export function getAuthRedirectOrigin(req: NextRequest): string {
   const requestFallback = req.nextUrl.origin || "http://localhost:3000";
   const raw = [process.env.AUTH_REDIRECT_ORIGIN, process.env.NEXT_PUBLIC_SITE_URL].map((s) => s?.trim() ?? "").find(Boolean) ?? "";
-  if (raw) return normalizeEnvOrigin(raw, requestFallback);
+  if (raw) {
+    const fromEnv = normalizeEnvOrigin(raw, requestFallback);
+    // Never send magic links to localhost from a production build (common Vercel footgun:
+    // NEXT_PUBLIC_SITE_URL still set to http://localhost:3000).
+    if (process.env.NODE_ENV === "production" && isLocalDevOrigin(fromEnv)) {
+      return PRODUCTION_APP_ORIGIN;
+    }
+    return fromEnv;
+  }
 
   if (process.env.NODE_ENV === "production") {
     return PRODUCTION_APP_ORIGIN;

@@ -20,10 +20,33 @@ def get_database_url() -> str:
     return url
 
 
+def _supabase_direct_db_host(url: str) -> bool:
+    u = url.lower()
+    return "db." in u and "supabase.co" in u and "pooler.supabase.com" not in u
+
+
+def _asyncpg_engine_kwargs(url: str) -> dict:
+    """PgBouncer (e.g. Supabase transaction pooler :6543) needs statement cache disabled for asyncpg."""
+    if "+asyncpg" not in url:
+        return {}
+    if "pooler.supabase.com" in url.lower() or ":6543" in url:
+        return {"connect_args": {"statement_cache_size": 0}}
+    return {}
+
+
 def get_engine():
     global _engine, _session_factory
     if _engine is None:
-        _engine = create_async_engine(get_database_url(), echo=False)
+        url = get_database_url()
+        if "+asyncpg" in url and _supabase_direct_db_host(url):
+            print(
+                "WARN: DATABASE_URL uses Supabase direct host (db.*.supabase.co). "
+                "Render often fails with [Errno 101] Network is unreachable (IPv6). "
+                "Switch to the Pooler connection string in Supabase → Project Settings → Database "
+                "(Transaction pooler, port 6543, or Session pooler)."
+            )
+        kwargs = _asyncpg_engine_kwargs(url)
+        _engine = create_async_engine(url, echo=False, pool_pre_ping=True, **kwargs)
         _session_factory = async_sessionmaker(_engine, expire_on_commit=False, class_=AsyncSession)
     return _engine
 

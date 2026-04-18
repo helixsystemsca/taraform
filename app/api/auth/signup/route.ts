@@ -46,7 +46,12 @@ export async function POST(req: NextRequest) {
     return jsonWithSupabaseCookies(
       getResponse(),
       needsEmailConfirm
-        ? { ok: true, needsEmailConfirm: true, message: "Check your email to confirm your account." }
+        ? {
+            ok: true,
+            needsEmailConfirm: true,
+            message: "Check your email to confirm your account.",
+            emailRedirectTo,
+          }
         : { ok: true, redirectTo: next || "/home" },
     );
   } catch (e) {

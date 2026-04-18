@@ -38,7 +38,13 @@ export async function POST(req: NextRequest) {
     }
 
     console.log("[auth] magic-link: Supabase accepted send", { email });
-    return jsonWithSupabaseCookies(getResponse(), { ok: true, message: "Magic link sent. Check your email." });
+    return jsonWithSupabaseCookies(getResponse(), {
+      ok: true,
+      message: "Magic link sent. Check your email.",
+      // Echo for debugging: if this is correct but the email link still shows localhost, fix Supabase
+      // Authentication → URL Configuration (Site URL + Redirect URLs), not Vercel.
+      emailRedirectTo,
+    });
   } catch (e) {
     const message = e instanceof Error ? e.message : "Magic link failed.";
     if (auth) {
