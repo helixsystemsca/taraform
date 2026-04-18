@@ -1,11 +1,9 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
 
-
-def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+from ..db_time import utcnow_naive
 
 
 class UnitPdfMarkup(SQLModel, table=True):
@@ -15,4 +13,4 @@ class UnitPdfMarkup(SQLModel, table=True):
 
     unit_id: str = Field(primary_key=True, max_length=36, foreign_key="units.id")
     payload_json: str = Field(sa_column=Column(Text))
-    updated_at: datetime = Field(default_factory=utcnow)
+    updated_at: datetime = Field(default_factory=utcnow_naive)

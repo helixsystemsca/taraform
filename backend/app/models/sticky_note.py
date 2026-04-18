@@ -1,11 +1,9 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
 
-
-def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+from ..db_time import utcnow_naive
 
 
 class StickyNote(SQLModel, table=True):
@@ -17,4 +15,4 @@ class StickyNote(SQLModel, table=True):
     x_position: float = Field()
     y_position: float = Field()
     content: str = Field(default="", sa_column=Column(Text))
-    created_at: datetime = Field(default_factory=utcnow)
+    created_at: datetime = Field(default_factory=utcnow_naive)

@@ -1,11 +1,9 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
 
-
-def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+from ..db_time import utcnow_naive
 
 
 class Summary(SQLModel, table=True):
@@ -17,5 +15,5 @@ class Summary(SQLModel, table=True):
     user_summary: str = Field(sa_column=Column(Text))
     ai_feedback: str | None = Field(default=None, sa_column=Column(Text))
     structured_data: str | None = Field(default=None, sa_column=Column(Text))
-    created_at: datetime = Field(default_factory=utcnow)
-    updated_at: datetime = Field(default_factory=utcnow)
+    created_at: datetime = Field(default_factory=utcnow_naive)
+    updated_at: datetime = Field(default_factory=utcnow_naive)

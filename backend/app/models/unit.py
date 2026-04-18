@@ -1,11 +1,9 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 from sqlalchemy import Column, Text
 from sqlmodel import Field, SQLModel
 
-
-def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
+from ..db_time import utcnow_naive
 
 
 class Unit(SQLModel, table=True):
@@ -14,4 +12,4 @@ class Unit(SQLModel, table=True):
     id: str = Field(primary_key=True, max_length=36)
     title: str = Field(max_length=512)
     pdf_file_path: str = Field(sa_column=Column(Text))
-    created_at: datetime = Field(default_factory=utcnow)
+    created_at: datetime = Field(default_factory=utcnow_naive)

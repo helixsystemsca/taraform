@@ -1,12 +1,12 @@
 import json
 import uuid
-from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
 from ..db.database import get_db
+from ..db_time import utcnow_naive
 from ..models.sticky_note import StickyNote
 from ..models.unit import Unit
 from ..models.unit_pdf_markup import UnitPdfMarkup
@@ -14,10 +14,6 @@ from ..schemas.sticky_note import StickyNoteCreate, StickyNoteRead, StickyNoteUp
 from ..schemas.unit_pdf_markup import UnitPdfMarkupRead, UnitPdfMarkupWrite
 
 router = APIRouter()
-
-
-def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
 
 
 async def _require_unit(session: AsyncSession, unit_id: str) -> Unit:
@@ -66,7 +62,7 @@ async def create_sticky_note(
         x_position=body.x_position,
         y_position=body.y_position,
         content=body.content,
-        created_at=utcnow(),
+        created_at=utcnow_naive(),
     )
     session.add(row)
     await session.commit()
@@ -135,7 +131,7 @@ async def get_pdf_markup(unit_id: str, session: AsyncSession = Depends(get_db)) 
     await _require_unit(session, unit_id)
     row = await session.get(UnitPdfMarkup, unit_id)
     if not row:
-        return UnitPdfMarkupRead(unit_id=unit_id, payload={}, updated_at=utcnow())
+        return UnitPdfMarkupRead(unit_id=unit_id, payload={}, updated_at=utcnow_naive())
     try:
         payload = json.loads(row.payload_json) if row.payload_json else {}
     except json.JSONDecodeError:
@@ -150,7 +146,7 @@ async def put_pdf_markup(
     session: AsyncSession = Depends(get_db),
 ) -> UnitPdfMarkupRead:
     await _require_unit(session, unit_id)
-    now = utcnow()
+    now = utcnow_naive()
     raw = json.dumps(body.payload)
     row = await session.get(UnitPdfMarkup, unit_id)
     if row:

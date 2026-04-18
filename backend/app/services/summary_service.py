@@ -1,17 +1,13 @@
 import json
 import uuid
-from datetime import datetime, timezone
 from typing import Any
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from ..db_time import utcnow_naive
 from ..models.summary import Summary
 from ..models.unit import Unit
 from ..schemas.summary import SummaryRead, SummaryWrite
-
-
-def utcnow() -> datetime:
-    return datetime.now(timezone.utc)
 
 
 def _parse_json_field(raw: str | None) -> dict[str, Any] | None:
@@ -46,7 +42,7 @@ async def upsert_summary(session: AsyncSession, body: SummaryWrite) -> SummaryRe
     if not await ensure_unit_exists(session, body.unit_id):
         raise ValueError("unit_not_found")
 
-    now = utcnow()
+    now = utcnow_naive()
     if body.id:
         row = await session.get(Summary, body.id)
         if row is None:
@@ -93,7 +89,7 @@ async def save_ai_feedback(session: AsyncSession, summary_id: str, feedback: dic
     if row is None:
         raise ValueError("summary_not_found")
     row.ai_feedback = json.dumps(feedback, ensure_ascii=False)
-    row.updated_at = utcnow()
+    row.updated_at = utcnow_naive()
     session.add(row)
     await session.commit()
 
@@ -106,6 +102,6 @@ async def touch_summary_text(
         raise ValueError("summary_not_found")
     row.source_text = source_text
     row.user_summary = user_summary
-    row.updated_at = utcnow()
+    row.updated_at = utcnow_naive()
     session.add(row)
     await session.commit()
