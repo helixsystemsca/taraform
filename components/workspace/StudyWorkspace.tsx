@@ -17,6 +17,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import {
   getSummary,
+  listStickyNotes,
   postCoach,
   postFlashcards,
   postImprove,
@@ -26,31 +27,20 @@ import {
   studyApiConfigured,
   type CoachResponse,
   type FlashcardItem,
+  type StickyNoteDto,
 } from "@/lib/studyApi";
 import { cn } from "@/lib/utils";
+import { StudyPdfMarkupViewer } from "@/components/workspace/StudyPdfMarkupViewer";
+import { useAnnotationToolbarStore } from "@/stores/useAnnotationToolbarStore";
 
 const PANEL_MIN = 280;
 const PANEL_MAX = 560;
 const DEBOUNCE_MS = 900;
 const MAX_SOURCE_CHARS = 50_000;
-/** Poll PDF iframe selection; PDF viewers often don’t bubble events to the parent. */
-const SELECTION_POLL_MS = 320;
-
-function readIframeSelection(iframe: HTMLIFrameElement | null): string {
-  if (!iframe?.contentWindow) return "";
-  try {
-    const sel = iframe.contentWindow.getSelection?.();
-    return sel?.toString().trim() ?? "";
-  } catch {
-    return "";
-  }
-}
 
 export function StudyWorkspace() {
-  const iframeRef = React.useRef<HTMLIFrameElement>(null);
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-  const [pdfUrl, setPdfUrl] = React.useState<string | null>(null);
   const [localFile, setLocalFile] = React.useState<File | null>(null);
   const [unitId, setUnitId] = React.useState<string | null>(null);
   const [sourceText, setSourceText] = React.useState("");
@@ -68,6 +58,7 @@ export function StudyWorkspace() {
   const [busy, setBusy] = React.useState<string | null>(null);
   const [flashcardsOpen, setFlashcardsOpen] = React.useState(false);
   const [flashcards, setFlashcards] = React.useState<FlashcardItem[]>([]);
+  const [stickyNotes, setStickyNotes] = React.useState<StickyNoteDto[]>([]);
 
   /** Last excerpt applied from the PDF (avoids re-running feedback clear on duplicate polls). */
   const lastPdfExcerptRef = React.useRef("");
@@ -85,82 +76,36 @@ export function StudyWorkspace() {
   }, []);
 
   React.useEffect(() => {
-    return () => {
-      if (pdfUrl) URL.revokeObjectURL(pdfUrl);
-    };
-  }, [pdfUrl]);
-
-  /** After pointer/keyboard activity, read selection from the embedded PDF (same-origin blob). */
-  const syncSelectionFromPdf = React.useCallback(() => {
-    const t = readIframeSelection(iframeRef.current);
-    if (t) applyPdfSelection(t, false);
-  }, [applyPdfSelection]);
+    if (!localFile) lastPdfExcerptRef.current = "";
+  }, [localFile]);
 
   React.useEffect(() => {
-    if (!pdfUrl) {
-      lastPdfExcerptRef.current = "";
+    if (!studyApiConfigured() || !unitId) {
+      setStickyNotes([]);
       return;
     }
+    void listStickyNotes(unitId)
+      .then(setStickyNotes)
+      .catch(() => setStickyNotes([]));
+  }, [unitId]);
 
-    const onPointerUpCapture = () => {
-      requestAnimationFrame(() => syncSelectionFromPdf());
-    };
-    let keyTimer: ReturnType<typeof setTimeout> | null = null;
-    const onKeyUpCapture = () => {
-      if (keyTimer) return;
-      keyTimer = setTimeout(() => {
-        keyTimer = null;
-        syncSelectionFromPdf();
-      }, 60);
-    };
+  const appendStickyToSummary = React.useCallback((text: string) => {
+    const block = text.trim();
+    if (!block) return;
+    setUserSummary((s) => (s.trim() ? `${s.trim()}\n\n— Sticky —\n${block}` : block));
+  }, []);
 
-    window.addEventListener("pointerup", onPointerUpCapture, true);
-    window.addEventListener("keyup", onKeyUpCapture, true);
-
-    const poll = window.setInterval(() => syncSelectionFromPdf(), SELECTION_POLL_MS);
-
-    return () => {
-      window.removeEventListener("pointerup", onPointerUpCapture, true);
-      window.removeEventListener("keyup", onKeyUpCapture, true);
-      clearInterval(poll);
-      if (keyTimer) clearTimeout(keyTimer);
-    };
-  }, [pdfUrl, syncSelectionFromPdf]);
-
-  const attachIframeDomListeners = React.useCallback((): (() => void) | null => {
-    const iframe = iframeRef.current;
-    const doc = iframe?.contentDocument;
-    if (!doc) return null;
-    const on = () => syncSelectionFromPdf();
-    doc.addEventListener("mouseup", on);
-    doc.addEventListener("selectionchange", on);
-    return () => {
-      doc.removeEventListener("mouseup", on);
-      doc.removeEventListener("selectionchange", on);
-    };
-  }, [syncSelectionFromPdf]);
-
-  const iframeDomDetachRef = React.useRef<(() => void) | null>(null);
-
-  const onPdfIframeLoad = React.useCallback(() => {
-    iframeDomDetachRef.current?.();
-    iframeDomDetachRef.current = null;
-    requestAnimationFrame(() => {
-      const detach = attachIframeDomListeners();
-      if (detach) iframeDomDetachRef.current = detach;
+  const appendStickyToExcerpt = React.useCallback((text: string) => {
+    const block = text.trim();
+    if (!block) return;
+    setSourceText((s) => {
+      const next = s.trim() ? `${s.trim()}\n\n— Sticky —\n${block}` : block;
+      return next.slice(0, MAX_SOURCE_CHARS);
     });
-  }, [attachIframeDomListeners]);
-
-  React.useEffect(() => {
-    if (!pdfUrl) {
-      iframeDomDetachRef.current?.();
-      iframeDomDetachRef.current = null;
-    }
-    return () => {
-      iframeDomDetachRef.current?.();
-      iframeDomDetachRef.current = null;
-    };
-  }, [pdfUrl]);
+    setPanelActive(true);
+    setFeedback(null);
+    setFeedbackVisible(false);
+  }, []);
 
   const onPointerMove = React.useCallback((e: PointerEvent) => {
     const d = dragRef.current;
@@ -182,18 +127,17 @@ export function StudyWorkspace() {
     window.addEventListener("pointerup", onPointerUp);
   };
 
-  /** Fallback when the browser PDF viewer blocks parent selection APIs. */
+  /** Copy current window selection into the excerpt (forces update even if unchanged). */
   const captureSelectionManual = React.useCallback(() => {
-    const t = readIframeSelection(iframeRef.current);
+    const t = window.getSelection()?.toString().replace(/\s+/g, " ").trim() ?? "";
     if (t) applyPdfSelection(t, true);
   }, [applyPdfSelection]);
 
   const onPickPdf = async (file: File | null) => {
     if (!file || file.type !== "application/pdf") return;
+    useAnnotationToolbarStore.getState().setTool("select");
     setLocalFile(file);
-    if (pdfUrl) URL.revokeObjectURL(pdfUrl);
-    const url = URL.createObjectURL(file);
-    setPdfUrl(url);
+    setSaveError(null);
     setUnitId(null);
     setSummaryId(null);
     setSourceText("");
@@ -383,7 +327,7 @@ export function StudyWorkspace() {
         {localFile ? (
           <span className="text-xs text-ink-muted">
             {localFile.name}
-            {unitId ? " · synced" : configured ? " · uploading…" : ""}
+            {unitId ? " · synced" : busy === "upload" ? " · uploading…" : ""}
           </span>
         ) : (
           <span className="text-xs text-ink-muted">A PDF is one Unit on the server.</span>
@@ -403,14 +347,14 @@ export function StudyWorkspace() {
         className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-[rgba(120,90,80,0.1)] bg-surface-panel/40 lg:flex-row"
         style={{ minHeight: 480 }}
       >
-        <div className="relative min-h-[42dvh] min-w-0 flex-1 border-b border-[rgba(120,90,80,0.08)] lg:border-b-0 lg:border-r-0">
-          {pdfUrl ? (
-            <iframe
-              ref={iframeRef}
-              title="PDF"
-              src={pdfUrl}
-              className="h-full min-h-[42dvh] w-full bg-white"
-              onLoad={onPdfIframeLoad}
+        <div className="relative flex min-h-[42dvh] min-w-0 flex-1 flex-col overflow-hidden border-b border-[rgba(120,90,80,0.08)] lg:min-h-0 lg:border-b-0 lg:border-r-0">
+          {localFile ? (
+            <StudyPdfMarkupViewer
+              file={localFile}
+              unitId={unitId}
+              stickyNotes={stickyNotes}
+              onStickyNotesChange={setStickyNotes}
+              onExcerpt={applyPdfSelection}
             />
           ) : (
             <div className="flex h-full min-h-[42dvh] items-center justify-center text-sm text-ink-muted">
@@ -450,7 +394,7 @@ export function StudyWorkspace() {
               <button
                 type="button"
                 className="font-medium text-rose-deep underline decoration-rose-deep/40 underline-offset-2 hover:decoration-rose-deep"
-                disabled={!pdfUrl}
+                disabled={!localFile}
                 onClick={captureSelectionManual}
               >
                 capture selection manually
@@ -462,6 +406,48 @@ export function StudyWorkspace() {
               <div className="rounded-lg border border-[rgba(120,90,80,0.1)] bg-white/60 p-3 text-xs text-ink-secondary">
                 <div className="font-medium text-ink-muted">Source excerpt</div>
                 <p className="mt-1 max-h-24 overflow-y-auto whitespace-pre-wrap leading-relaxed">{sourceText}</p>
+              </div>
+            ) : null}
+
+            {stickyNotes.length > 0 ? (
+              <div className="space-y-2">
+                <div className="text-[11px] font-medium uppercase tracking-[0.12em] text-ink-muted">Sticky notes</div>
+                <ul className="max-h-40 space-y-2 overflow-y-auto pr-1">
+                  {stickyNotes.map((n) => (
+                    <li
+                      key={n.id}
+                      className="rounded-lg border border-[rgba(120,90,80,0.1)] bg-white/70 p-2.5 text-xs shadow-sm"
+                    >
+                      <div className="text-[10px] text-ink-muted">
+                        Page {n.page_number}
+                        {n.content.trim() ? null : " · empty"}
+                      </div>
+                      <p className="mt-1 line-clamp-3 whitespace-pre-wrap text-ink-secondary">{n.content || "—"}</p>
+                      <div className="mt-2 flex flex-wrap gap-1.5">
+                        <Button
+                          type="button"
+                          variant="default"
+                          size="sm"
+                          className="h-7 text-[11px]"
+                          disabled={!n.content.trim()}
+                          onClick={() => appendStickyToSummary(n.content)}
+                        >
+                          Insert into summary
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="h-7 text-[11px]"
+                          disabled={!n.content.trim()}
+                          onClick={() => appendStickyToExcerpt(n.content)}
+                        >
+                          Add to excerpt
+                        </Button>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ) : null}
 

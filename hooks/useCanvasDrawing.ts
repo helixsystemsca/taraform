@@ -288,6 +288,7 @@ export function useCanvasDrawing({
     (e: React.PointerEvent<HTMLCanvasElement>) => {
       const canvas = canvasRef.current;
       if (!canvas) return;
+      if (toolState.tool === "select" || toolState.tool === "sticky") return;
       if (isProbablyPalm(e.nativeEvent)) return;
       if (drawingPointerIdRef.current != null) return;
 

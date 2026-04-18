@@ -58,8 +58,10 @@ def session_factory() -> async_sessionmaker[AsyncSession]:
 
 
 async def init_db() -> None:
+    from ..models import sticky_note as _sticky_note_model  # noqa: F401
     from ..models import summary as _summary_model  # noqa: F401
     from ..models import unit as _unit_model  # noqa: F401
+    from ..models import unit_pdf_markup as _unit_pdf_markup_model  # noqa: F401
 
     engine = get_engine()
     async with engine.begin() as conn:

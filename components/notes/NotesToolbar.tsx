@@ -1,7 +1,20 @@
 "use client";
 
 import * as React from "react";
-import { Eraser, Highlighter, Paintbrush2, Redo2, Trash2, Undo2, Download, Save } from "lucide-react";
+import Link from "next/link";
+import {
+  Download,
+  Eraser,
+  Highlighter,
+  Home,
+  MousePointer2,
+  Paintbrush2,
+  Redo2,
+  Save,
+  StickyNote,
+  Trash2,
+  Undo2,
+} from "lucide-react";
 
 import type { NotesTool } from "@/components/notes/types";
 import { cn } from "@/lib/utils";
@@ -20,10 +33,10 @@ export const pastelColors = [
 
 type PaperStyle = "blank" | "lined";
 
-/** Shared control height (40px) — buttons, segmented control shell, slider rows. */
-const CONTROL_H = "h-10 min-h-10";
+const ROW = "flex h-9 min-h-9 shrink-0 items-center";
 
 export function NotesToolbar({
+  variant = "notepad",
   tool,
   onToolChange,
   color,
@@ -41,7 +54,10 @@ export function NotesToolbar({
   onClear,
   onSave,
   onExportPng,
+  showPaper = true,
+  showExportSave = true,
 }: {
+  variant?: "notepad" | "study-pdf";
   tool: NotesTool;
   onToolChange: (t: NotesTool) => void;
   color: string;
@@ -59,7 +75,12 @@ export function NotesToolbar({
   onClear: () => void;
   onSave: () => void;
   onExportPng: () => void;
+  /** When false, hides lined/blank + opacity (e.g. study PDF). */
+  showPaper?: boolean;
+  /** When false, hides export + save (e.g. study PDF uses its own persistence). */
+  showExportSave?: boolean;
 }) {
+  const isPdf = variant === "study-pdf";
   const style = paperStyle ?? "blank";
   const opacity = paperOpacity ?? 0.18;
 
@@ -76,139 +97,142 @@ export function NotesToolbar({
   return (
     <div
       className={cn(
-        "pointer-events-auto w-full min-w-0 max-w-full rounded-xl border border-[rgba(120,90,80,0.1)]",
-        "bg-surface-panel/95 px-2 py-2 shadow-warm backdrop-blur-xl sm:px-3 sm:py-2.5",
-        // No horizontal scroll: wrap onto extra rows on narrow / tablet widths instead of overflow-x.
-        "overflow-x-hidden overflow-y-visible",
+        "pointer-events-auto w-full min-w-0 rounded-xl border border-[rgba(120,90,80,0.1)]",
+        "bg-surface-panel/95 px-1.5 py-1 shadow-warm backdrop-blur-xl",
+        "overflow-x-auto overflow-y-hidden",
       )}
     >
-      <div
-        className={cn(
-          "flex w-full flex-wrap items-center justify-center gap-x-2 gap-y-2 sm:gap-x-3 sm:gap-y-2 lg:justify-between",
-        )}
-      >
-        {/* LEFT — drawing tools */}
-        <div className={cn("flex shrink-0 items-center gap-2 sm:gap-3")} aria-label="Drawing tools">
-          <ToolButton active={tool === "pen"} label="Pen" onClick={() => onToolChange("pen")}>
-            <Paintbrush2 className="h-4 w-4 shrink-0" />
-          </ToolButton>
-          <ToolButton
-            active={tool === "highlighter"}
-            label="Highlighter"
-            onClick={() => onToolChange("highlighter")}
-          >
-            <Highlighter className="h-4 w-4 shrink-0" />
-          </ToolButton>
-          <ToolButton active={tool === "eraser"} label="Eraser" onClick={() => onToolChange("eraser")}>
-            <Eraser className="h-4 w-4 shrink-0" />
-          </ToolButton>
-        </div>
-
-        {/* CENTER — color + stroke size */}
-        <div
+      <div className={cn("flex w-max min-w-full flex-nowrap items-center gap-1 sm:gap-1.5")}>
+        <Link
+          href="/home"
           className={cn(
-            "flex min-w-0 flex-[1_1_220px] flex-wrap items-center justify-center gap-2 sm:gap-3 lg:flex-nowrap lg:flex-1",
+            ROW,
+            "w-9 justify-center rounded-lg border border-transparent text-ink-secondary transition-editorial",
+            "hover:border-[rgba(120,90,80,0.12)] hover:bg-black/[0.04] hover:text-ink",
           )}
-          aria-label="Color and stroke"
+          aria-label="Home"
         >
-          <div className={cn("flex h-10 flex-wrap items-center justify-center", "gap-1.5 sm:gap-2")}>
-            {pastelColors.map((c) => (
-              <button
-                key={c}
-                type="button"
-                className={cn(
-                  "size-[20px] shrink-0 rounded-full border border-[rgba(120,90,80,0.15)] shadow-sm transition-editorial sm:size-[22px]",
-                  c === color ? "ring-2 ring-copper/40 ring-offset-2 ring-offset-surface-panel" : "hover:scale-[1.04]",
-                )}
-                style={{ background: c }}
-                aria-label={`Set color ${c}`}
-                onClick={() => onColorChange(c)}
-              />
-            ))}
-            <input
-              type="color"
-              value={color}
-              onChange={(e) => onColorChange(e.target.value)}
-              className={cn(
-                "size-[20px] shrink-0 cursor-pointer rounded-full border border-[rgba(120,90,80,0.15)] bg-transparent p-0 sm:size-[22px]",
-                "self-center",
-              )}
-              aria-label="Pick custom color"
-            />
-          </div>
+          <Home className="h-4 w-4 shrink-0" strokeWidth={1.75} />
+        </Link>
 
-          <div className={cn("flex flex-wrap items-center justify-center", "gap-1.5 sm:gap-2")}>
-            <span className="hidden shrink-0 text-xs font-medium text-ink-muted sm:inline">Size</span>
-            <div className={cn("flex shrink-0 items-center", CONTROL_H)}>
-              <input
-                type="range"
-                min={2}
-                max={26}
-                step={1}
-                value={size}
-                onChange={(e) => onSizeChange(Number(e.target.value))}
-                className="h-4 w-[min(152px,calc(100vw-12rem))] max-w-[152px] cursor-pointer accent-copper"
-                aria-label="Stroke size"
-              />
-            </div>
-            <span
-              className={cn(
-                CONTROL_H,
-                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink-secondary",
-              )}
-            >
-              {size}px
-            </span>
-          </div>
+        <span className="h-5 w-px shrink-0 bg-[rgba(120,90,80,0.12)]" aria-hidden />
+
+        <div className={cn(ROW, "gap-0.5")} aria-label={isPdf ? "PDF annotation tools" : "Drawing tools"}>
+          {isPdf ? (
+            <>
+              <ToolButton active={tool === "select"} label="Select text" onClick={() => onToolChange("select")}>
+                <MousePointer2 className="h-4 w-4 shrink-0" />
+              </ToolButton>
+              <ToolButton
+                active={tool === "highlighter"}
+                label="Highlight text"
+                onClick={() => onToolChange("highlighter")}
+              >
+                <Highlighter className="h-4 w-4 shrink-0" />
+              </ToolButton>
+              <ToolButton active={tool === "sticky"} label="Sticky note" onClick={() => onToolChange("sticky")}>
+                <StickyNote className="h-4 w-4 shrink-0" />
+              </ToolButton>
+              <ToolButton active={tool === "eraser"} label="Eraser" onClick={() => onToolChange("eraser")}>
+                <Eraser className="h-4 w-4 shrink-0" />
+              </ToolButton>
+            </>
+          ) : (
+            <>
+              <ToolButton active={tool === "pen"} label="Pen" onClick={() => onToolChange("pen")}>
+                <Paintbrush2 className="h-4 w-4 shrink-0" />
+              </ToolButton>
+              <ToolButton active={tool === "highlighter"} label="Highlighter" onClick={() => onToolChange("highlighter")}>
+                <Highlighter className="h-4 w-4 shrink-0" />
+              </ToolButton>
+              <ToolButton active={tool === "eraser"} label="Eraser" onClick={() => onToolChange("eraser")}>
+                <Eraser className="h-4 w-4 shrink-0" />
+              </ToolButton>
+            </>
+          )}
         </div>
 
-        {/* RIGHT — paper, opacity, actions */}
-        <div
-          className={cn("flex shrink-0 flex-wrap items-center justify-center gap-2 sm:gap-3 lg:justify-end")}
-          aria-label="Paper and actions"
-        >
-          <div
-            className={cn(
-              "flex shrink-0 items-stretch rounded-lg border border-[rgba(120,90,80,0.12)] bg-surface-page/90 p-1",
-              CONTROL_H,
-            )}
-            role="group"
-            aria-label="Paper style"
-          >
-            <button
-              type="button"
-              onClick={() => setPaper({ style: "blank" })}
-              className={cn(
-                "inline-flex min-w-[2.25rem] flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition sm:min-w-0",
-                style === "blank" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
-              )}
-              aria-pressed={style === "blank"}
-            >
-              <span className="size-3 shrink-0 rounded-sm border border-[rgba(120,90,80,0.15)] bg-surface-panel" aria-hidden />
-              <span className="hidden sm:inline">Blank</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setPaper({ style: "lined" })}
-              className={cn(
-                "inline-flex min-w-[2.25rem] flex-1 items-center justify-center gap-1.5 rounded-md px-3 text-sm font-medium transition sm:min-w-0",
-                style === "lined" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
-              )}
-              aria-pressed={style === "lined"}
-            >
-              <span
-                className="flex size-3 shrink-0 items-center justify-center rounded-sm border border-[rgba(120,90,80,0.15)] bg-surface-panel"
-                aria-hidden
-              >
-                <span className="h-px w-2 bg-ink/40" />
-              </span>
-              <span className="hidden sm:inline">Lined</span>
-            </button>
-          </div>
+        <span className="h-5 w-px shrink-0 bg-[rgba(120,90,80,0.12)]" aria-hidden />
 
-          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
-            <span className="hidden shrink-0 text-xs font-medium text-ink-muted lg:inline">Paper</span>
-            <div className={cn("flex shrink-0 items-center", CONTROL_H)}>
+        <div className={cn(ROW, "gap-1")} aria-label="Colors">
+          {pastelColors.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={cn(
+                "size-[17px] shrink-0 rounded-full border border-[rgba(120,90,80,0.15)] shadow-sm transition-editorial",
+                c === color ? "ring-2 ring-copper/40 ring-offset-1 ring-offset-surface-panel" : "hover:scale-[1.05]",
+              )}
+              style={{ background: c }}
+              aria-label={`Set color ${c}`}
+              onClick={() => onColorChange(c)}
+            />
+          ))}
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => onColorChange(e.target.value)}
+            className="size-[17px] shrink-0 cursor-pointer rounded-full border border-[rgba(120,90,80,0.15)] bg-transparent p-0"
+            aria-label="Pick custom color"
+          />
+        </div>
+
+        <span className="h-5 w-px shrink-0 bg-[rgba(120,90,80,0.12)]" aria-hidden />
+
+        <div className={cn(ROW, "gap-1")} aria-label="Stroke size">
+          <span className="hidden shrink-0 text-[10px] font-medium uppercase tracking-wide text-ink-muted sm:inline">
+            Size
+          </span>
+          <input
+            type="range"
+            min={2}
+            max={26}
+            step={1}
+            value={size}
+            onChange={(e) => onSizeChange(Number(e.target.value))}
+            className="h-3 w-[88px] shrink-0 cursor-pointer accent-copper sm:w-[100px]"
+            aria-label="Stroke size"
+          />
+          <span className="w-7 shrink-0 text-right text-[10px] font-medium tabular-nums text-ink-secondary">{size}</span>
+        </div>
+
+        <span className="h-5 w-px shrink-0 bg-[rgba(120,90,80,0.12)]" aria-hidden />
+
+        {showPaper ? (
+          <>
+            <div
+              className={cn(ROW, "rounded-md border border-[rgba(120,90,80,0.12)] bg-surface-page/90 p-0.5")}
+              role="group"
+              aria-label="Paper style"
+            >
+              <button
+                type="button"
+                onClick={() => setPaper({ style: "blank" })}
+                className={cn(
+                  "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition",
+                  style === "blank" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
+                )}
+                aria-pressed={style === "blank"}
+              >
+                Blank
+              </button>
+              <button
+                type="button"
+                onClick={() => setPaper({ style: "lined" })}
+                className={cn(
+                  "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition",
+                  style === "lined" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
+                )}
+                aria-pressed={style === "lined"}
+              >
+                Lined
+              </button>
+            </div>
+
+            <div className={cn(ROW, "gap-1")} aria-label="Paper opacity">
+              <span className="hidden text-[10px] font-medium uppercase tracking-wide text-ink-muted md:inline">
+                Paper
+              </span>
               <input
                 type="range"
                 min={0}
@@ -216,35 +240,32 @@ export function NotesToolbar({
                 step={0.01}
                 value={opacity}
                 onChange={(e) => setPaper({ opacity: Number(e.target.value) })}
-                className="h-4 w-[min(136px,calc(100vw-14rem))] max-w-[136px] shrink-0 cursor-pointer accent-copper"
+                className="h-3 w-[72px] shrink-0 cursor-pointer accent-copper md:w-[88px]"
                 aria-label="Paper opacity"
               />
+              <span className="w-7 shrink-0 text-right text-[10px] font-medium tabular-nums text-ink-secondary">
+                {(opacity * 100).toFixed(0)}%
+              </span>
             </div>
-            <span
-              className={cn(
-                CONTROL_H,
-                "inline-flex w-9 shrink-0 items-center justify-end text-xs font-medium tabular-nums text-ink-secondary",
-              )}
-            >
-              {(opacity * 100).toFixed(0)}%
-            </span>
-          </div>
 
-          <span className="hidden h-6 w-px shrink-0 self-center bg-[rgba(120,90,80,0.12)] sm:block" aria-hidden />
+            <span className="h-5 w-px shrink-0 bg-[rgba(120,90,80,0.12)]" aria-hidden />
+          </>
+        ) : null}
 
-          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
-            <ToolButton label="Undo" disabled={!canUndo} onClick={onUndo}>
-              <Undo2 className="h-4 w-4 shrink-0" />
-            </ToolButton>
-            <ToolButton label="Redo" disabled={!canRedo} onClick={onRedo}>
-              <Redo2 className="h-4 w-4 shrink-0" />
-            </ToolButton>
-            <ToolButton label="Clear" onClick={onClear}>
-              <Trash2 className="h-4 w-4 shrink-0" />
-            </ToolButton>
-          </div>
+        <div className={cn(ROW, "gap-0.5")} aria-label="History">
+          <ToolButton label="Undo" disabled={!canUndo} onClick={onUndo}>
+            <Undo2 className="h-4 w-4 shrink-0" />
+          </ToolButton>
+          <ToolButton label="Redo" disabled={!canRedo} onClick={onRedo}>
+            <Redo2 className="h-4 w-4 shrink-0" />
+          </ToolButton>
+          <ToolButton label="Clear" onClick={onClear}>
+            <Trash2 className="h-4 w-4 shrink-0" />
+          </ToolButton>
+        </div>
 
-          <div className={cn("flex flex-nowrap items-center", "gap-2")}>
+        {showExportSave ? (
+          <div className={cn(ROW, "gap-0.5")} aria-label="Export and save">
             <ToolButton label="Export PNG" onClick={onExportPng}>
               <Download className="h-4 w-4 shrink-0" />
             </ToolButton>
@@ -252,7 +273,7 @@ export function NotesToolbar({
               <Save className="h-4 w-4 shrink-0" />
             </ToolButton>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );
@@ -279,7 +300,7 @@ function ToolButton({
       aria-pressed={active === undefined ? undefined : active}
       onClick={onClick}
       className={cn(
-        "inline-flex h-10 min-h-10 shrink-0 items-center justify-center gap-2 rounded-lg px-3 text-sm font-medium leading-none transition-editorial",
+        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-medium leading-none transition-editorial",
         "border border-transparent",
         "disabled:pointer-events-none disabled:opacity-40",
         active
@@ -288,7 +309,6 @@ function ToolButton({
       )}
     >
       {children}
-      <span className="hidden sm:inline">{label}</span>
     </button>
   );
 }

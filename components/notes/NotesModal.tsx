@@ -2,13 +2,14 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { X, Plus, FileText, Trash2 } from "lucide-react";
+import { Plus, FileText, Trash2 } from "lucide-react";
 
-import type { LocalNote, NotesTool, NoteStroke } from "@/components/notes/types";
+import type { LocalNote, NoteStroke } from "@/components/notes/types";
 import { NotesCanvas } from "@/components/notes/NotesCanvas";
 import { NotesToolbar } from "@/components/notes/NotesToolbar";
 import { useUndoRedo } from "@/hooks/useUndoRedo";
 import { cn } from "@/lib/utils";
+import { useAnnotationToolbarStore } from "@/stores/useAnnotationToolbarStore";
 import { deleteLocalNote, getLocalNote, listLocalNotes, newNoteId, putLocalNote } from "@/utils/storage";
 
 type ChapterOption = { id: string; label: string };
@@ -37,9 +38,18 @@ export function NotesModal({
   const [activeNoteId, setActiveNoteId] = React.useState<string | null>(null);
   const [title, setTitle] = React.useState<string>("");
 
-  const [tool, setTool] = React.useState<NotesTool>("pen");
-  const [color, setColor] = React.useState("#2b2b2b");
-  const [size, setSize] = React.useState(10);
+  const tool = useAnnotationToolbarStore((s) => s.tool);
+  const setTool = useAnnotationToolbarStore((s) => s.setTool);
+  const color = useAnnotationToolbarStore((s) => s.color);
+  const setColor = useAnnotationToolbarStore((s) => s.setColor);
+  const size = useAnnotationToolbarStore((s) => s.size);
+  const setSize = useAnnotationToolbarStore((s) => s.setSize);
+
+  React.useEffect(() => {
+    if (!open) return;
+    const t = useAnnotationToolbarStore.getState().tool;
+    if (t === "select" || t === "sticky") setTool("pen");
+  }, [open, setTool]);
 
   const { present: strokes, set: setStrokes, undo, redo, canUndo, canRedo, reset } = useUndoRedo<NoteStroke>([]);
   const exportPngRef = React.useRef<(() => string | null) | null>(null);
@@ -201,45 +211,6 @@ export function NotesModal({
             open ? "scale-100 opacity-100" : "scale-[0.985] opacity-0",
           )}
         >
-          <header className="z-30 mb-2 flex shrink-0 items-start gap-2 sm:mb-3 sm:gap-3">
-            <div className="min-w-0 flex-1">
-              <NotesToolbar
-                tool={tool}
-                onToolChange={setTool}
-                color={color}
-                onColorChange={setColor}
-                size={size}
-                onSizeChange={setSize}
-                canUndo={canUndo}
-                canRedo={canRedo}
-                onUndo={undo}
-                onRedo={redo}
-                onClear={() => setStrokes([], { replace: false })}
-                onSave={() => void saveNow()}
-                onExportPng={() => {
-                  const dataUrl = exportPngRef.current?.();
-                  if (!dataUrl) return;
-                  downloadDataUrl(dataUrl, `taraform-note-${new Date().toISOString().slice(0, 10)}.png`);
-                }}
-              />
-            </div>
-            <div className="flex shrink-0 flex-col items-end gap-2 pt-0.5 sm:flex-row sm:items-start sm:pt-1">
-              <div className="rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 px-2.5 py-1.5 text-[11px] font-medium leading-tight text-ink-secondary shadow-warm backdrop-blur-xl sm:px-3 sm:text-xs">
-                {saveBadge.dirty
-                  ? "Saving…"
-                  : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
-              </div>
-              <button
-                type="button"
-                onClick={close}
-                className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 text-ink-secondary shadow-warm backdrop-blur-xl transition-editorial hover:border-copper/25 hover:bg-rose-light/40 hover:text-ink"
-                aria-label="Close notes"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-          </header>
-
           <div className="flex min-h-0 flex-1 items-stretch gap-2 sm:gap-3 md:gap-4">
             <aside className="pointer-events-auto hidden h-full min-h-0 w-[min(280px,32vw)] shrink-0 overflow-hidden rounded-xl border border-[rgba(120,90,80,0.1)] bg-surface-panel shadow-warm backdrop-blur-xl md:flex md:flex-col">
               <div className="flex items-center justify-between gap-2 border-b border-[rgba(120,90,80,0.08)] bg-rose-light/35 px-4 py-3">
@@ -323,17 +294,47 @@ export function NotesModal({
               </div>
             </aside>
 
-            <div className="relative min-h-0 min-w-0 flex-1 self-stretch">
-              <NotesCanvas
-                strokes={strokes}
-                onChangeStrokes={setStrokes}
-                tool={tool}
-                color={color}
-                size={size}
-                onExportPngReady={(fn) => {
-                  exportPngRef.current = fn;
-                }}
-              />
+            <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2 self-stretch sm:gap-2">
+              <div className="z-30 flex shrink-0 items-center gap-2">
+                <div className="min-w-0 flex-1">
+                  <NotesToolbar
+                    tool={tool}
+                    onToolChange={setTool}
+                    color={color}
+                    onColorChange={setColor}
+                    size={size}
+                    onSizeChange={setSize}
+                    canUndo={canUndo}
+                    canRedo={canRedo}
+                    onUndo={undo}
+                    onRedo={redo}
+                    onClear={() => setStrokes([], { replace: false })}
+                    onSave={() => void saveNow()}
+                    onExportPng={() => {
+                      const dataUrl = exportPngRef.current?.();
+                      if (!dataUrl) return;
+                      downloadDataUrl(dataUrl, `taraform-note-${new Date().toISOString().slice(0, 10)}.png`);
+                    }}
+                  />
+                </div>
+                <div className="shrink-0 rounded-full border border-[rgba(120,90,80,0.12)] bg-surface-panel/90 px-2.5 py-1.5 text-[10px] font-medium leading-tight text-ink-secondary shadow-warm backdrop-blur-xl sm:px-3 sm:text-xs">
+                  {saveBadge.dirty
+                    ? "Saving…"
+                    : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
+                </div>
+              </div>
+              <div className="relative min-h-0 min-w-0 flex-1">
+                <NotesCanvas
+                  strokes={strokes}
+                  onChangeStrokes={setStrokes}
+                  tool={tool}
+                  color={color}
+                  size={size}
+                  onExportPngReady={(fn) => {
+                    exportPngRef.current = fn;
+                  }}
+                />
+              </div>
             </div>
           </div>
         </div>

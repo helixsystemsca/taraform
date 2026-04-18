@@ -137,3 +137,98 @@ export async function postQuizStub(): Promise<StubResponse> {
   const res = await fetch(`${b}/api/ai/quiz`, { method: "POST" });
   return parseJson(res);
 }
+
+export type StickyNoteDto = {
+  id: string;
+  unit_id: string;
+  page_number: number;
+  x_position: number;
+  y_position: number;
+  content: string;
+  created_at: string;
+};
+
+export type PdfTextHighlightDto = {
+  id: string;
+  page_number: number;
+  text: string;
+  rects: { x: number; y: number; w: number; h: number }[];
+};
+
+export type PdfMarkupPayload = {
+  strokes_by_page?: Record<string, unknown>;
+  text_highlights?: PdfTextHighlightDto[];
+};
+
+export async function listStickyNotes(unitId: string): Promise<StickyNoteDto[]> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/units/${encodeURIComponent(unitId)}/sticky-notes`);
+  return parseJson(res);
+}
+
+export async function createStickyNote(
+  unitId: string,
+  body: { page_number: number; x_position: number; y_position: number; content?: string },
+): Promise<StickyNoteDto> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/units/${encodeURIComponent(unitId)}/sticky-notes`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ ...body, content: body.content ?? "" }),
+  });
+  return parseJson(res);
+}
+
+export async function patchStickyNote(
+  unitId: string,
+  noteId: string,
+  body: { page_number?: number; x_position?: number; y_position?: number; content?: string },
+): Promise<StickyNoteDto> {
+  const b = baseUrl();
+  const res = await fetch(
+    `${b}/api/units/${encodeURIComponent(unitId)}/sticky-notes/${encodeURIComponent(noteId)}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    },
+  );
+  return parseJson(res);
+}
+
+export async function deleteStickyNote(unitId: string, noteId: string): Promise<void> {
+  const b = baseUrl();
+  const res = await fetch(
+    `${b}/api/units/${encodeURIComponent(unitId)}/sticky-notes/${encodeURIComponent(noteId)}`,
+    { method: "DELETE" },
+  );
+  const text = await res.text();
+  if (!res.ok) {
+    let msg = text || `HTTP ${res.status}`;
+    try {
+      const data = text ? JSON.parse(text) : null;
+      if (data && typeof data === "object" && "detail" in data) msg = String((data as { detail: unknown }).detail);
+    } catch {
+      /* use msg */
+    }
+    throw new Error(msg);
+  }
+}
+
+export type PdfMarkupRead = { unit_id: string; payload: PdfMarkupPayload; updated_at: string };
+
+export async function getPdfMarkup(unitId: string): Promise<PdfMarkupRead> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/units/${encodeURIComponent(unitId)}/pdf-markup`);
+  return parseJson(res);
+}
+
+export async function putPdfMarkup(unitId: string, payload: PdfMarkupPayload): Promise<PdfMarkupRead> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/units/${encodeURIComponent(unitId)}/pdf-markup`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ payload }),
+  });
+  return parseJson(res);
+}

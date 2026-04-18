@@ -87,6 +87,7 @@ export function NotesCanvas({
 
   function onPointerMove(e: React.PointerEvent<HTMLCanvasElement>) {
     bind.onPointerMove?.(e);
+    if (tool === "select" || tool === "sticky") return;
     const canvas = e.currentTarget;
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -97,6 +98,7 @@ export function NotesCanvas({
   }
 
   function onPointerEnter() {
+    if (tool === "select" || tool === "sticky") return;
     cursorVisibleRef.current = true;
     scheduleCursorUpdate();
   }

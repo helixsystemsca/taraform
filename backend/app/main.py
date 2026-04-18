@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .db.database import init_db
-from .routers import ai, summaries, units
+from .routers import ai, summaries, unit_annotations, units
 
 
 def get_cors_origins():
@@ -39,6 +39,7 @@ app.add_middleware(
 app.include_router(ai.router, prefix="/api/ai", tags=["ai"])
 app.include_router(summaries.router, prefix="/api/summaries", tags=["summaries"])
 app.include_router(units.router, prefix="/api/units", tags=["units"])
+app.include_router(unit_annotations.router, prefix="/api/units", tags=["units"])
 
 
 @app.get("/health")

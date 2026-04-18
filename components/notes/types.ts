@@ -1,4 +1,8 @@
-export type NotesTool = "pen" | "highlighter" | "eraser";
+/** Shared toolbar: notepad uses pen + ink; study PDF uses select + sticky + ink. */
+export type NotesTool = "select" | "pen" | "highlighter" | "eraser" | "sticky";
+
+/** Tools that produce canvas strokes (excludes select / sticky). */
+export type DrawTool = "pen" | "highlighter" | "eraser";
 
 export type NotePoint = {
   x: number;
@@ -11,7 +15,7 @@ export type NoteStroke = {
   points: NotePoint[];
   color: string;
   size: number;
-  tool: NotesTool;
+  tool: DrawTool;
 };
 
 export type LocalNote = {

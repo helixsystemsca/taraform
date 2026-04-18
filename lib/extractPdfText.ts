@@ -1,11 +1,12 @@
+import { configurePdfjsWorker } from "@/lib/pdfjsClient";
+
 /**
  * Extract plain text from a PDF (browser / client). Uses dynamic import so `pdfjs-dist`
  * is not loaded on the server when unused.
  */
 export async function extractPdfTextFromArrayBuffer(data: ArrayBuffer): Promise<string> {
   const pdfjs = await import("pdfjs-dist");
-  const version = (pdfjs as { version?: string }).version ?? "5.6.205";
-  pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${version}/build/pdf.worker.min.mjs`;
+  configurePdfjsWorker(pdfjs);
 
   const loadingTask = pdfjs.getDocument({ data: new Uint8Array(data) });
   const pdf = await loadingTask.promise;

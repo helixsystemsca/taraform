@@ -117,3 +117,25 @@ body {
     transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 }
+
+/* pdf.js TextLayer (study workspace) — transparent selectable text over rendered page */
+.study-pdf-text-layer {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  line-height: 1;
+  pointer-events: auto;
+}
+
+.study-pdf-text-layer span {
+  position: absolute;
+  white-space: pre;
+  transform-origin: 0 0;
+  color: transparent;
+  cursor: text;
+  user-select: text;
+}
+
+.study-pdf-text-layer span::selection {
+  background: rgba(197, 143, 143, 0.35);
+}
