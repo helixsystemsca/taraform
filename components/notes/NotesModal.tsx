@@ -298,6 +298,7 @@ export function NotesModal({
               <div className="z-30 flex shrink-0 items-center gap-2">
                 <div className="min-w-0 flex-1">
                   <NotesToolbar
+                    mode="draw"
                     tool={tool}
                     onToolChange={setTool}
                     color={color}

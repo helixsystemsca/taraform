@@ -1,10 +1,13 @@
 import * as React from "react";
 import { getStroke } from "perfect-freehand";
 
-import type { NotePoint, NoteStroke, NotesTool } from "@/components/notes/types";
+import type { NotePoint, NoteStroke } from "@/components/notes/types";
+import type { AnnotationTool } from "@/lib/annotations";
+import { hitTestStrokeIndex, selectionKeyStroke } from "@/lib/annotations";
+import { useAnnotationToolbarStore } from "@/stores/useAnnotationToolbarStore";
 
 type ToolState = {
-  tool: NotesTool;
+  tool: AnnotationTool;
   color: string;
   size: number;
 };
@@ -142,6 +145,7 @@ function drawCursor(
   cursor: { x: number; y: number } | null,
 ) {
   if (!cursor) return;
+  if (toolState.tool === "select" || toolState.tool === "sticky") return;
 
   ctx.save();
 
@@ -182,6 +186,13 @@ export function useCanvasDrawing({
   const needsRebuildBaseRef = React.useRef(true);
   const rafRef = React.useRef<number | null>(null);
   const cursorRef = React.useRef({ x: 0, y: 0 });
+
+  const selectDragRef = React.useRef<{
+    pointerId: number;
+    strokeId: string;
+    lastX: number;
+    lastY: number;
+  } | null>(null);
 
   const paperPaddingPx = renderOptions?.paperPaddingPx ?? 34;
 
@@ -284,6 +295,82 @@ export function useCanvasDrawing({
     return () => window.removeEventListener("resize", onResize);
   }, [scheduleRender]);
 
+  const handleSelectPointerDown = React.useCallback(
+    (e: React.PointerEvent<HTMLCanvasElement>) => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      if (isProbablyPalm(e.nativeEvent)) return;
+      if (drawingPointerIdRef.current != null) return;
+
+      const p = canvasPoint(canvas, e.nativeEvent);
+      createHiDpiCanvas(canvas);
+      const x = p.x;
+      const y = p.y;
+
+      const list = strokesRef.current.filter((s) => s.tool !== "eraser");
+      const idx = hitTestStrokeIndex(list, x, y);
+      const store = useAnnotationToolbarStore.getState();
+      if (idx < 0) {
+        store.clearSelection();
+        return;
+      }
+      const stroke = list[idx]!;
+      store.setSelectedAnnotation(selectionKeyStroke(0, stroke.id));
+      drawingPointerIdRef.current = e.pointerId;
+      canvas.setPointerCapture(e.pointerId);
+      selectDragRef.current = {
+        pointerId: e.pointerId,
+        strokeId: stroke.id,
+        lastX: x,
+        lastY: y,
+      };
+    },
+    [],
+  );
+
+  const handleSelectPointerMove = React.useCallback(
+    (e: React.PointerEvent<HTMLCanvasElement>) => {
+      const d = selectDragRef.current;
+      if (!d || drawingPointerIdRef.current !== e.pointerId) return;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const p = canvasPoint(canvas, e.nativeEvent);
+      const dx = p.x - d.lastX;
+      const dy = p.y - d.lastY;
+      d.lastX = p.x;
+      d.lastY = p.y;
+      if (Math.abs(dx) + Math.abs(dy) < 0.25) return;
+      onChangeStrokes((prev) =>
+        prev.map((s) =>
+          s.id === d.strokeId
+            ? { ...s, points: s.points.map((pt) => ({ ...pt, x: pt.x + dx, y: pt.y + dy })) }
+            : s,
+        ),
+      );
+      needsRebuildBaseRef.current = true;
+      scheduleRender();
+    },
+    [onChangeStrokes, scheduleRender],
+  );
+
+  const handleSelectPointerUp = React.useCallback(
+    (e: React.PointerEvent<HTMLCanvasElement>) => {
+      if (drawingPointerIdRef.current !== e.pointerId) return;
+      const canvas = canvasRef.current;
+      drawingPointerIdRef.current = null;
+      selectDragRef.current = null;
+      if (canvas) {
+        try {
+          canvas.releasePointerCapture(e.pointerId);
+        } catch {
+          /* ignore */
+        }
+      }
+      scheduleRender();
+    },
+    [scheduleRender],
+  );
+
   const beginStroke = React.useCallback(
     (e: React.PointerEvent<HTMLCanvasElement>) => {
       const canvas = canvasRef.current;
@@ -309,12 +396,13 @@ export function useCanvasDrawing({
 
       const pressure = clamp(isPen ? e.pressure || 0.5 : e.pressure || 0.5, 0.08, 1);
 
+      const drawTool = toolState.tool === "eraser" ? "eraser" : toolState.tool;
       inProgressRef.current = {
         id: `stroke_${Date.now().toString(16)}_${Math.random().toString(16).slice(2)}`,
         points: [{ x, y, pressure }],
         color: toolState.color,
         size: toolState.size,
-        tool: toolState.tool,
+        tool: drawTool,
       };
       scheduleRender();
     },
@@ -324,6 +412,7 @@ export function useCanvasDrawing({
   const moveStroke = React.useCallback(
     (e: React.PointerEvent<HTMLCanvasElement>) => {
       if (drawingPointerIdRef.current !== e.pointerId) return;
+      if (selectDragRef.current) return;
       const canvas = canvasRef.current;
       if (!canvas) return;
       if (!inProgressRef.current) return;
@@ -351,6 +440,10 @@ export function useCanvasDrawing({
     (e: React.PointerEvent<HTMLCanvasElement>) => {
       if (drawingPointerIdRef.current !== e.pointerId) return;
       const canvas = canvasRef.current;
+      if (selectDragRef.current) {
+        handleSelectPointerUp(e);
+        return;
+      }
       const stroke = inProgressRef.current;
 
       drawingPointerIdRef.current = null;
@@ -387,11 +480,25 @@ export function useCanvasDrawing({
         return;
       }
     },
-    [commitStrokeToBase, onChangeStrokes, scheduleRender],
+    [commitStrokeToBase, handleSelectPointerUp, onChangeStrokes, scheduleRender],
   );
 
   const cancelStroke = React.useCallback((e: React.PointerEvent<HTMLCanvasElement>) => {
     if (drawingPointerIdRef.current !== e.pointerId) return;
+    if (selectDragRef.current) {
+      selectDragRef.current = null;
+      drawingPointerIdRef.current = null;
+      const canvas = canvasRef.current;
+      if (canvas) {
+        try {
+          canvas.releasePointerCapture(e.pointerId);
+        } catch {
+          /* ignore */
+        }
+      }
+      scheduleRender();
+      return;
+    }
     drawingPointerIdRef.current = null;
     isDrawingRef.current = false;
     inProgressRef.current = null;
@@ -430,18 +537,40 @@ export function useCanvasDrawing({
     return out.toDataURL("image/png");
   }, []);
 
+  const onPointerDown = React.useCallback(
+    (e: React.PointerEvent<HTMLCanvasElement>) => {
+      if (toolState.tool === "select") {
+        handleSelectPointerDown(e);
+        return;
+      }
+      beginStroke(e);
+    },
+    [beginStroke, handleSelectPointerDown, toolState.tool],
+  );
+
+  const onPointerMove = React.useCallback(
+    (e: React.PointerEvent<HTMLCanvasElement>) => {
+      if (toolState.tool === "select" && selectDragRef.current) {
+        handleSelectPointerMove(e);
+        return;
+      }
+      moveStroke(e);
+    },
+    [handleSelectPointerMove, moveStroke, toolState.tool],
+  );
+
   const bind = React.useMemo(
     () => ({
       ref: canvasRef,
-      onPointerDown: beginStroke,
-      onPointerMove: moveStroke,
+      onPointerDown,
+      onPointerMove,
       onPointerUp: endStroke,
       onPointerCancel: cancelStroke,
       onPointerLeave: (e: React.PointerEvent<HTMLCanvasElement>) => {
         if (drawingPointerIdRef.current === e.pointerId) endStroke(e);
       },
     }),
-    [beginStroke, cancelStroke, endStroke, moveStroke],
+    [cancelStroke, endStroke, onPointerDown, onPointerMove],
   );
 
   return {

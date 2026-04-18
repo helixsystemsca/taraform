@@ -3,11 +3,22 @@
 import * as React from "react";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { getStroke } from "perfect-freehand";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, X } from "lucide-react";
 import { v4 as uuid } from "uuid";
 
 import { NotesToolbar } from "@/components/notes/NotesToolbar";
-import type { NotePoint, NoteStroke, NotesTool } from "@/components/notes/types";
+import type { NotePoint, NoteStroke } from "@/components/notes/types";
+import type { AnnotationTool } from "@/lib/annotations";
+import {
+  highlightHitId,
+  hitTestStrokeIndex,
+  parseSelectionKey,
+  selectionKeyHighlight,
+  selectionKeySticky,
+  selectionKeyStroke,
+  stickyHitId,
+  strokeBBox,
+} from "@/lib/annotations";
 import { configurePdfjsWorker } from "@/lib/pdfjsClient";
 import {
   createStickyNote,
@@ -121,19 +132,43 @@ function rectsFromSelection(wrap: HTMLElement): { x: number; y: number; w: numbe
   return out;
 }
 
+function unionHighlightRects(rects: { x: number; y: number; w: number; h: number }[]) {
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = 0;
+  let maxY = 0;
+  for (const r of rects) {
+    minX = Math.min(minX, r.x);
+    minY = Math.min(minY, r.y);
+    maxX = Math.max(maxX, r.x + r.w);
+    maxY = Math.max(maxY, r.y + r.h);
+  }
+  if (!Number.isFinite(minX)) return null;
+  return { minX, minY, maxX, maxY };
+}
+
 function PdfStickyCard({
   note,
   onPatch,
   onDelete,
+  tool,
+  isSelected,
 }: {
   note: StickyNoteDto;
   onPatch: (id: string, body: { x_position?: number; y_position?: number; content?: string }) => void;
   onDelete: (id: string) => void;
+  tool: AnnotationTool;
+  isSelected: boolean;
 }) {
   const dragRef = React.useRef<{ pid: number; sx: number; sy: number; ox: number; oy: number } | null>(null);
   const posRef = React.useRef({ x: note.x_position, y: note.y_position });
   const [local, setLocal] = React.useState({ x: note.x_position, y: note.y_position });
   const [draftContent, setDraftContent] = React.useState(note.content);
+  const [lifting, setLifting] = React.useState(false);
+  const tiltRef = React.useRef<number | null>(null);
+  if (tiltRef.current == null) tiltRef.current = (Math.random() - 0.5) * 3;
+  const tiltDeg = tiltRef.current;
+
   React.useEffect(() => {
     posRef.current = { x: note.x_position, y: note.y_position };
     setLocal({ x: note.x_position, y: note.y_position });
@@ -151,16 +186,23 @@ function PdfStickyCard({
 
   return (
     <div
-      className="absolute z-[6] w-[min(220px,72vw)] cursor-grab select-none active:cursor-grabbing"
+      className={cn(
+        "absolute w-[min(220px,72vw)] select-none",
+        tool === "sticky" ? "cursor-cell" : "cursor-grab active:cursor-grabbing",
+        isSelected ? "z-[32] scale-[1.04]" : "z-[6]",
+        "transition-[transform,box-shadow] duration-150 ease-out",
+      )}
       style={{
         left: `${local.x * 100}%`,
         top: `${local.y * 100}%`,
         transform: "translate(-50%, -108%)",
+        boxShadow: lifting ? "0 18px 40px rgba(40,30,20,0.14)" : undefined,
       }}
       data-study-sticky
       onPointerDown={(e) => {
         if ((e.target as HTMLElement).closest("textarea")) return;
         e.currentTarget.setPointerCapture(e.pointerId);
+        setLifting(true);
         dragRef.current = {
           pid: e.pointerId,
           sx: e.clientX,
@@ -184,6 +226,7 @@ function PdfStickyCard({
         const d = dragRef.current;
         if (!d || d.pid !== e.pointerId) return;
         dragRef.current = null;
+        setLifting(false);
         try {
           e.currentTarget.releasePointerCapture(e.pointerId);
         } catch {
@@ -193,6 +236,7 @@ function PdfStickyCard({
       }}
       onPointerCancel={(e) => {
         dragRef.current = null;
+        setLifting(false);
         try {
           e.currentTarget.releasePointerCapture(e.pointerId);
         } catch {
@@ -202,11 +246,27 @@ function PdfStickyCard({
     >
       <div
         className={cn(
-          "rounded-lg border border-[rgba(197,143,143,0.35)] px-2.5 pb-2 pt-2 shadow-warm",
+          "relative origin-center rounded-lg border border-[rgba(197,143,143,0.38)] px-2.5 pb-2 pt-2",
           "bg-gradient-to-br from-[#fff9e6] via-[#fff3d6] to-[#fde8d4]",
-          "rotate-[-0.8deg]",
+          "shadow-[0_10px_28px_rgba(40,30,20,0.1),0_1px_0_rgba(255,255,255,0.65)_inset]",
+          "animate-[tara-sticky-in_120ms_ease-out_both]",
         )}
+        style={{ transform: `rotate(${tiltDeg}deg)` }}
       >
+        {isSelected && tool === "select" ? (
+          <button
+            type="button"
+            aria-label="Delete sticky note"
+            className="absolute -right-1.5 -top-1.5 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-[rgba(120,90,80,0.15)] bg-surface-panel/98 text-ink-secondary shadow-md backdrop-blur-sm transition-colors hover:bg-rose-light/70 hover:text-ink"
+            onClick={(e) => {
+              e.stopPropagation();
+              useAnnotationToolbarStore.getState().clearSelection();
+              onDelete(note.id);
+            }}
+          >
+            <X className="h-3.5 w-3.5" strokeWidth={2} />
+          </button>
+        ) : null}
         <textarea
           value={draftContent}
           placeholder="Jot something…"
@@ -248,12 +308,17 @@ function PdfPageInner({
   onStickyCreate,
   onStickyPatch,
   onStickyDelete,
+  onMoveHighlightByDelta,
+  selectedAnnotationId,
+  setSelectedAnnotation,
+  clearSelection,
+  onDeleteSelection,
   onLayout,
 }: {
   pdf: PDFDocumentProxy;
   pageNumber: number;
   maxCssWidth: number;
-  tool: NotesTool;
+  tool: AnnotationTool;
   size: number;
   strokes: NoteStroke[];
   pageHighlights: PdfTextHighlightDto[];
@@ -265,6 +330,11 @@ function PdfPageInner({
   onStickyCreate: (page: number, x: number, y: number) => void;
   onStickyPatch: (id: string, body: { x_position?: number; y_position?: number; content?: string }) => void;
   onStickyDelete: (id: string) => void;
+  onMoveHighlightByDelta: (highlightId: string, dxRatio: number, dyRatio: number) => void;
+  selectedAnnotationId: string | null;
+  setSelectedAnnotation: (id: string | null) => void;
+  clearSelection: () => void;
+  onDeleteSelection: () => void;
   onLayout?: (h: number) => void;
 }) {
   const wrapRef = React.useRef<HTMLDivElement>(null);
@@ -278,6 +348,24 @@ function PdfPageInner({
   onLayoutRef.current = onLayout;
   const strokesRef = React.useRef(strokes);
   strokesRef.current = strokes;
+
+  const pdfAnnotDragRef = React.useRef<
+    | null
+    | {
+        pointerId: number;
+        kind: "stroke";
+        strokeId: string;
+        lastClientX: number;
+        lastClientY: number;
+      }
+    | {
+        pointerId: number;
+        kind: "highlight";
+        highlightId: string;
+        lastClientX: number;
+        lastClientY: number;
+      }
+  >(null);
 
   React.useLayoutEffect(() => {
     let cancelled = false;
@@ -372,6 +460,130 @@ function PdfPageInner({
     return () => wrap.removeEventListener("pointerup", onUp);
   }, [tool, pageNumber, onAddHighlight, onExcerpt]);
 
+  const onSelectPointerDownCapture = React.useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      if (tool !== "select" || !wrapRef.current || cssSize.w <= 0 || cssSize.h <= 0) return;
+      const el = e.target as HTMLElement;
+      if (el.closest("textarea, input")) return;
+      const rect = wrapRef.current.getBoundingClientRect();
+      const xr = (e.clientX - rect.left) / rect.width;
+      const yr = (e.clientY - rect.top) / rect.height;
+      const cw = cssSize.w;
+      const ch = cssSize.h;
+
+      const sid = stickyHitId(
+        pageStickies.map((n) => ({ id: n.id, x_position: n.x_position, y_position: n.y_position })),
+        xr,
+        yr,
+        cw,
+        ch,
+      );
+      if (sid) {
+        setSelectedAnnotation(selectionKeySticky(sid));
+        return;
+      }
+      const hid = highlightHitId(
+        pageHighlights.map((h) => ({ id: h.id, rects: h.rects })),
+        xr,
+        yr,
+      );
+      if (hid) {
+        setSelectedAnnotation(selectionKeyHighlight(hid));
+        pdfAnnotDragRef.current = {
+          pointerId: e.pointerId,
+          kind: "highlight",
+          highlightId: hid,
+          lastClientX: e.clientX,
+          lastClientY: e.clientY,
+        };
+        try {
+          wrapRef.current.setPointerCapture(e.pointerId);
+        } catch {
+          /* ignore */
+        }
+        return;
+      }
+      const list = strokes.filter((s) => s.tool !== "eraser");
+      const sidx = hitTestStrokeIndex(list, xr * cw, yr * ch);
+      if (sidx >= 0) {
+        const s = list[sidx]!;
+        setSelectedAnnotation(selectionKeyStroke(pageNumber, s.id));
+        pdfAnnotDragRef.current = {
+          pointerId: e.pointerId,
+          kind: "stroke",
+          strokeId: s.id,
+          lastClientX: e.clientX,
+          lastClientY: e.clientY,
+        };
+        try {
+          wrapRef.current.setPointerCapture(e.pointerId);
+        } catch {
+          /* ignore */
+        }
+        return;
+      }
+      const inText = el.closest(".study-pdf-text-layer");
+      if (!inText) clearSelection();
+    },
+    [
+      tool,
+      cssSize.w,
+      cssSize.h,
+      pageStickies,
+      pageHighlights,
+      strokes,
+      pageNumber,
+      setSelectedAnnotation,
+      clearSelection,
+    ],
+  );
+
+  const onWrapPointerMove = React.useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      const d = pdfAnnotDragRef.current;
+      if (!d || d.pointerId !== e.pointerId || !wrapRef.current) return;
+      const rect = wrapRef.current.getBoundingClientRect();
+      const cw = cssSize.w;
+      const ch = cssSize.h;
+      const dxPx = e.clientX - d.lastClientX;
+      const dyPx = e.clientY - d.lastClientY;
+      d.lastClientX = e.clientX;
+      d.lastClientY = e.clientY;
+      if (Math.abs(dxPx) + Math.abs(dyPx) < 0.25) return;
+      const scaleX = cw / rect.width;
+      const scaleY = ch / rect.height;
+      if (d.kind === "stroke") {
+        onStrokesChange(
+          strokes.map((s) =>
+            s.id === d.strokeId
+              ? {
+                  ...s,
+                  points: s.points.map((p) => ({ ...p, x: p.x + dxPx * scaleX, y: p.y + dyPx * scaleY })),
+                }
+              : s,
+          ),
+        );
+      } else {
+        onMoveHighlightByDelta(d.highlightId, dxPx / rect.width, dyPx / rect.height);
+      }
+    },
+    [cssSize.w, cssSize.h, onMoveHighlightByDelta, onStrokesChange, strokes],
+  );
+
+  const onWrapPointerUpDrag = React.useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    const d = pdfAnnotDragRef.current;
+    if (!d || d.pointerId !== e.pointerId) return;
+    pdfAnnotDragRef.current = null;
+    const wrap = wrapRef.current;
+    if (wrap) {
+      try {
+        wrap.releasePointerCapture(e.pointerId);
+      } catch {
+        /* ignore */
+      }
+    }
+  }, []);
+
   const onInkPointerDown = (e: React.PointerEvent<HTMLCanvasElement>) => {
     if (tool !== "eraser") return;
     e.preventDefault();
@@ -458,11 +670,29 @@ function PdfPageInner({
   const textPointer = tool === "select" || tool === "highlighter";
   const inkPointer = tool === "eraser";
 
+  const parsedSel = parseSelectionKey(selectedAnnotationId);
+  const selStroke =
+    parsedSel?.kind === "stroke" && parsedSel.page === pageNumber
+      ? strokes.find((s) => s.id === parsedSel.id && s.tool !== "eraser")
+      : undefined;
+  const selHighlight =
+    parsedSel?.kind === "highlight" ? pageHighlights.find((h) => h.id === parsedSel.id) : undefined;
+  const selStickyId = parsedSel?.kind === "sticky" ? parsedSel.id : null;
+
+  const cw = cssSize.w || 1;
+  const ch = cssSize.h || 1;
+  const strokeBox = selStroke ? strokeBBox(selStroke.points) : null;
+  const hlBox = selHighlight ? unionHighlightRects(selHighlight.rects) : null;
+
   return (
     <div
       ref={wrapRef}
       className="study-pdf-page-wrap relative mx-auto mb-3 bg-white shadow-[0_1px_8px_rgba(0,0,0,0.06)]"
       style={{ width: cssSize.w ? cssSize.w : undefined }}
+      onPointerDownCapture={onSelectPointerDownCapture}
+      onPointerMove={onWrapPointerMove}
+      onPointerUp={onWrapPointerUpDrag}
+      onPointerCancel={onWrapPointerUpDrag}
       onPointerDown={tool === "sticky" || tool === "eraser" ? onWrapPointerDown : undefined}
     >
       {cssSize.w > 0 ? (
@@ -474,7 +704,7 @@ function PdfPageInner({
                 {h.rects.map((r, i) => (
                   <div
                     key={`${h.id}-${i}`}
-                    className="absolute rounded-sm bg-[rgba(255,230,120,0.42)] mix-blend-multiply"
+                    className="absolute rounded-sm bg-[rgba(255,230,120,0.42)] mix-blend-multiply animate-[tara-hl-in_100ms_ease-out_both]"
                     style={{
                       left: `${r.x * 100}%`,
                       top: `${r.y * 100}%`,
@@ -495,15 +725,88 @@ function PdfPageInner({
           />
           <canvas
             ref={inkRef}
-            className={cn("absolute left-0 top-0 z-[3] touch-none", inkPointer ? "pointer-events-auto" : "pointer-events-none")}
+            className={cn(
+              "absolute left-0 top-0 z-[3] touch-none",
+              inkPointer ? "pointer-events-auto" : "pointer-events-none",
+              tool === "eraser" ? "cursor-none" : tool === "select" ? "cursor-default" : "",
+            )}
             style={{ width: cssSize.w, height: cssSize.h }}
             onPointerDown={onInkPointerDown}
             onPointerMove={onInkPointerMove}
             onPointerUp={onInkPointerUp}
             onPointerCancel={onInkPointerUp}
           />
+          {tool === "select" && (strokeBox || hlBox) ? (
+            <div className="pointer-events-none absolute inset-0 z-[28] animate-[tara-selection-in_140ms_ease-out_both]">
+              {strokeBox ? (
+                <>
+                  <div
+                    className="pointer-events-none absolute rounded-md border border-copper/35 bg-copper/[0.04] shadow-[0_0_0_1px_rgba(197,143,143,0.12)]"
+                    style={{
+                      left: `${(strokeBox.minX / cw) * 100}%`,
+                      top: `${(strokeBox.minY / ch) * 100}%`,
+                      width: `${((strokeBox.maxX - strokeBox.minX) / cw) * 100}%`,
+                      height: `${((strokeBox.maxY - strokeBox.minY) / ch) * 100}%`,
+                    }}
+                  />
+                  <button
+                    type="button"
+                    aria-label="Delete stroke"
+                    className="pointer-events-auto absolute flex h-7 w-7 items-center justify-center rounded-full border border-[rgba(120,90,80,0.15)] bg-surface-panel/95 text-ink-secondary shadow-warm backdrop-blur-sm transition-colors hover:bg-rose-light/60 hover:text-ink"
+                    style={{
+                      left: `${(strokeBox.maxX / cw) * 100}%`,
+                      top: `${(strokeBox.minY / ch) * 100}%`,
+                      transform: "translate(-60%, -55%)",
+                    }}
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      onDeleteSelection();
+                    }}
+                  >
+                    <X className="h-3.5 w-3.5" strokeWidth={2} />
+                  </button>
+                </>
+              ) : null}
+              {hlBox ? (
+                <>
+                  <div
+                    className="pointer-events-none absolute rounded-md border border-copper/35 bg-copper/[0.04] shadow-[0_0_0_1px_rgba(197,143,143,0.12)]"
+                    style={{
+                      left: `${hlBox.minX * 100}%`,
+                      top: `${hlBox.minY * 100}%`,
+                      width: `${(hlBox.maxX - hlBox.minX) * 100}%`,
+                      height: `${(hlBox.maxY - hlBox.minY) * 100}%`,
+                    }}
+                  />
+                  <button
+                    type="button"
+                    aria-label="Delete highlight"
+                    className="pointer-events-auto absolute flex h-7 w-7 items-center justify-center rounded-full border border-[rgba(120,90,80,0.15)] bg-surface-panel/95 text-ink-secondary shadow-warm backdrop-blur-sm transition-colors hover:bg-rose-light/60 hover:text-ink"
+                    style={{
+                      left: `${hlBox.maxX * 100}%`,
+                      top: `${hlBox.minY * 100}%`,
+                      transform: "translate(-60%, -55%)",
+                    }}
+                    onClick={(ev) => {
+                      ev.stopPropagation();
+                      onDeleteSelection();
+                    }}
+                  >
+                    <X className="h-3.5 w-3.5" strokeWidth={2} />
+                  </button>
+                </>
+              ) : null}
+            </div>
+          ) : null}
           {pageStickies.map((n) => (
-            <PdfStickyCard key={n.id} note={n} onPatch={onStickyPatch} onDelete={onStickyDelete} />
+            <PdfStickyCard
+              key={n.id}
+              note={n}
+              onPatch={onStickyPatch}
+              onDelete={onStickyDelete}
+              tool={tool}
+              isSelected={selStickyId === n.id}
+            />
           ))}
         </>
       ) : (
@@ -532,6 +835,11 @@ function PdfPageSlot({
   onStickyCreate,
   onStickyPatch,
   onStickyDelete,
+  onMoveHighlightByDelta,
+  selectedAnnotationId,
+  setSelectedAnnotation,
+  clearSelection,
+  onDeleteSelection,
 }: {
   pdf: PDFDocumentProxy;
   pageNumber: number;
@@ -540,7 +848,7 @@ function PdfPageSlot({
   placeholderHeight: number;
   onHeight: (page: number, h: number) => void;
   onStrokesChangeForPage: (page: number, next: NoteStroke[]) => void;
-  tool: NotesTool;
+  tool: AnnotationTool;
   size: number;
   strokes: NoteStroke[];
   pageHighlights: PdfTextHighlightDto[];
@@ -551,6 +859,11 @@ function PdfPageSlot({
   onStickyCreate: (page: number, x: number, y: number) => void;
   onStickyPatch: (id: string, body: { x_position?: number; y_position?: number; content?: string }) => void;
   onStickyDelete: (id: string) => void;
+  onMoveHighlightByDelta: (highlightId: string, dxRatio: number, dyRatio: number) => void;
+  selectedAnnotationId: string | null;
+  setSelectedAnnotation: (id: string | null) => void;
+  clearSelection: () => void;
+  onDeleteSelection: () => void;
 }) {
   const [slotEl, setSlotEl] = React.useState<HTMLDivElement | null>(null);
   const visible = useIntersectionVisible(slotEl, scrollRoot);
@@ -574,6 +887,11 @@ function PdfPageSlot({
           onStickyCreate={onStickyCreate}
           onStickyPatch={onStickyPatch}
           onStickyDelete={onStickyDelete}
+          onMoveHighlightByDelta={onMoveHighlightByDelta}
+          selectedAnnotationId={selectedAnnotationId}
+          setSelectedAnnotation={setSelectedAnnotation}
+          clearSelection={clearSelection}
+          onDeleteSelection={onDeleteSelection}
           onLayout={(h) => onHeight(pageNumber, h)}
         />
       ) : (
@@ -611,6 +929,9 @@ export function StudyPdfMarkupViewer({
   const setColor = useAnnotationToolbarStore((s) => s.setColor);
   const size = useAnnotationToolbarStore((s) => s.size);
   const setSize = useAnnotationToolbarStore((s) => s.setSize);
+  const selectedAnnotationId = useAnnotationToolbarStore((s) => s.selectedAnnotationId);
+  const setSelectedAnnotation = useAnnotationToolbarStore((s) => s.setSelectedAnnotation);
+  const clearSelection = useAnnotationToolbarStore((s) => s.clearSelection);
 
   const outerRef = React.useRef<HTMLDivElement>(null);
   const [scrollRoot, setScrollRoot] = React.useState<HTMLDivElement | null>(null);
@@ -628,6 +949,10 @@ export function StudyPdfMarkupViewer({
   zoomRef.current = zoom;
   const pdfRef = React.useRef<PDFDocumentProxy | null>(null);
   const markupSaveTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  React.useEffect(() => {
+    if (tool === "pen") setTool("highlighter");
+  }, [pdf, setTool, tool]);
 
   const onHeight = React.useCallback((page: number, h: number) => {
     const prev = pageHeightsRef.current.get(page);
@@ -811,6 +1136,62 @@ export function StudyPdfMarkupViewer({
     [unitId, onStickyNotesChange],
   );
 
+  const onMoveHighlightByDelta = React.useCallback(
+    (highlightId: string, dxRatio: number, dyRatio: number) => {
+      setMarkup((prev) => ({
+        ...prev,
+        textHighlights: prev.textHighlights.map((h) => {
+          if (h.id !== highlightId) return h;
+          return {
+            ...h,
+            rects: h.rects.map((r) => ({
+              ...r,
+              x: Math.max(0, Math.min(1 - r.w, r.x + dxRatio)),
+              y: Math.max(0, Math.min(1 - r.h, r.y + dyRatio)),
+            })),
+          };
+        }),
+      }));
+    },
+    [setMarkup],
+  );
+
+  const onDeleteSelection = React.useCallback(() => {
+    const key = useAnnotationToolbarStore.getState().selectedAnnotationId;
+    if (!key) return;
+    const p = parseSelectionKey(key);
+    useAnnotationToolbarStore.getState().clearSelection();
+    if (!p) return;
+    if (p.kind === "sticky") void onStickyDelete(p.id);
+    else if (p.kind === "highlight") {
+      setMarkup((prev) => ({
+        ...prev,
+        textHighlights: prev.textHighlights.filter((h) => h.id !== p.id),
+      }));
+    } else if (p.kind === "stroke") {
+      setMarkup((prev) => ({
+        ...prev,
+        strokesByPage: {
+          ...prev.strokesByPage,
+          [p.page]: (prev.strokesByPage[p.page] ?? []).filter((s) => s.id !== p.id),
+        },
+      }));
+    }
+  }, [onStickyDelete, setMarkup]);
+
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Delete" && e.key !== "Backspace") return;
+      const el = e.target as HTMLElement;
+      if (el.closest("textarea, input, [contenteditable=true]")) return;
+      if (!useAnnotationToolbarStore.getState().selectedAnnotationId) return;
+      e.preventDefault();
+      onDeleteSelection();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onDeleteSelection]);
+
   const clearMarkup = React.useCallback(() => {
     setMarkup(emptyMarkup());
     clearHistory();
@@ -838,7 +1219,7 @@ export function StudyPdfMarkupViewer({
         <div className="flex min-w-0 flex-wrap items-start gap-2">
           <div className="min-w-0 min-w-[200px] flex-1">
             <NotesToolbar
-              variant="study-pdf"
+              mode="annotate"
               showPaper={false}
               showExportSave={false}
               tool={tool}
@@ -886,12 +1267,14 @@ export function StudyPdfMarkupViewer({
         </div>
         <p className="text-[10px] leading-snug text-ink-muted">
           {tool === "select"
-            ? "Select text to sync an excerpt to the study panel."
+            ? "Tap ink, highlights, or stickies to select; drag to move. Drag text to pull an excerpt into the study panel."
             : tool === "highlighter"
               ? "Drag to select text — a soft highlight is added and the excerpt syncs."
               : tool === "sticky"
                 ? "Tap the page to drop a sticky note. Drag the card to reposition."
-                : "Drag on ink marks to erase strokes, or tap a highlight region to clear it."}
+                : tool === "pen"
+                  ? "Pen is off in study mode — switch to the notepad for handwriting."
+                  : "Drag on ink marks to erase strokes, or tap a highlight region to clear it."}
           {!unitId || !studyApiConfigured()
             ? " Sign in to the study API to sync stickies and highlights."
             : null}
@@ -920,6 +1303,11 @@ export function StudyPdfMarkupViewer({
             onStickyCreate={onStickyCreate}
             onStickyPatch={onStickyPatch}
             onStickyDelete={onStickyDelete}
+            onMoveHighlightByDelta={onMoveHighlightByDelta}
+            selectedAnnotationId={selectedAnnotationId}
+            setSelectedAnnotation={setSelectedAnnotation}
+            clearSelection={clearSelection}
+            onDeleteSelection={onDeleteSelection}
           />
         ))}
       </div>

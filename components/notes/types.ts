@@ -1,7 +1,6 @@
-/** Shared toolbar: notepad uses pen + ink; study PDF uses select + sticky + ink. */
-export type NotesTool = "select" | "pen" | "highlighter" | "eraser" | "sticky";
+export type { AnnotationTool } from "@/lib/annotations";
 
-/** Tools that produce canvas strokes (excludes select / sticky). */
+/** Tools that produce persisted canvas strokes (eraser is transient while erasing). */
 export type DrawTool = "pen" | "highlighter" | "eraser";
 
 export type NotePoint = {

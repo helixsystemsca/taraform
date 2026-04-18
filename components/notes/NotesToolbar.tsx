@@ -16,7 +16,7 @@ import {
   Undo2,
 } from "lucide-react";
 
-import type { NotesTool } from "@/components/notes/types";
+import type { AnnotationTool } from "@/lib/annotations";
 import { cn } from "@/lib/utils";
 
 export const pastelColors = [
@@ -32,11 +32,21 @@ export const pastelColors = [
 ];
 
 type PaperStyle = "blank" | "lined";
+export type NotesToolbarMode = "draw" | "annotate";
 
 const ROW = "flex h-9 min-h-9 shrink-0 items-center";
 
+const TOOL_ORDER: AnnotationTool[] = ["select", "pen", "highlighter", "sticky", "eraser"];
+
+function toolDisabled(mode: NotesToolbarMode, t: AnnotationTool): boolean {
+  if (mode === "draw") {
+    return t === "select" || t === "sticky";
+  }
+  return t === "pen";
+}
+
 export function NotesToolbar({
-  variant = "notepad",
+  mode,
   tool,
   onToolChange,
   color,
@@ -57,9 +67,9 @@ export function NotesToolbar({
   showPaper = true,
   showExportSave = true,
 }: {
-  variant?: "notepad" | "study-pdf";
-  tool: NotesTool;
-  onToolChange: (t: NotesTool) => void;
+  mode: NotesToolbarMode;
+  tool: AnnotationTool;
+  onToolChange: (t: AnnotationTool) => void;
   color: string;
   onColorChange: (c: string) => void;
   size: number;
@@ -75,12 +85,9 @@ export function NotesToolbar({
   onClear: () => void;
   onSave: () => void;
   onExportPng: () => void;
-  /** When false, hides lined/blank + opacity (e.g. study PDF). */
   showPaper?: boolean;
-  /** When false, hides export + save (e.g. study PDF uses its own persistence). */
   showExportSave?: boolean;
 }) {
-  const isPdf = variant === "study-pdf";
   const style = paperStyle ?? "blank";
   const opacity = paperOpacity ?? 0.18;
 
@@ -107,7 +114,7 @@ export function NotesToolbar({
           href="/home"
           className={cn(
             ROW,
-            "w-9 justify-center rounded-lg border border-transparent text-ink-secondary transition-editorial",
+            "w-9 justify-center rounded-lg border border-transparent text-ink-secondary transition-[color,background-color,border-color] duration-150 ease-out",
             "hover:border-[rgba(120,90,80,0.12)] hover:bg-black/[0.04] hover:text-ink",
           )}
           aria-label="Home"
@@ -117,39 +124,62 @@ export function NotesToolbar({
 
         <span className="h-5 w-px shrink-0 bg-[rgba(120,90,80,0.12)]" aria-hidden />
 
-        <div className={cn(ROW, "gap-0.5")} aria-label={isPdf ? "PDF annotation tools" : "Drawing tools"}>
-          {isPdf ? (
-            <>
-              <ToolButton active={tool === "select"} label="Select text" onClick={() => onToolChange("select")}>
-                <MousePointer2 className="h-4 w-4 shrink-0" />
-              </ToolButton>
-              <ToolButton
-                active={tool === "highlighter"}
-                label="Highlight text"
-                onClick={() => onToolChange("highlighter")}
-              >
-                <Highlighter className="h-4 w-4 shrink-0" />
-              </ToolButton>
-              <ToolButton active={tool === "sticky"} label="Sticky note" onClick={() => onToolChange("sticky")}>
-                <StickyNote className="h-4 w-4 shrink-0" />
-              </ToolButton>
-              <ToolButton active={tool === "eraser"} label="Eraser" onClick={() => onToolChange("eraser")}>
+        <div className={cn(ROW, "gap-0.5")} aria-label="Annotation tools">
+          {TOOL_ORDER.map((t) => {
+            const disabled = toolDisabled(mode, t);
+            const active = tool === t;
+            if (t === "select") {
+              return (
+                <ToolButton
+                  key={t}
+                  active={active}
+                  disabled={disabled}
+                  label="Select"
+                  onClick={() => onToolChange("select")}
+                >
+                  <MousePointer2 className="h-4 w-4 shrink-0" />
+                </ToolButton>
+              );
+            }
+            if (t === "pen") {
+              return (
+                <ToolButton key={t} active={active} disabled={disabled} label="Pen" onClick={() => onToolChange("pen")}>
+                  <Paintbrush2 className="h-4 w-4 shrink-0" />
+                </ToolButton>
+              );
+            }
+            if (t === "highlighter") {
+              return (
+                <ToolButton
+                  key={t}
+                  active={active}
+                  disabled={disabled}
+                  label="Highlighter"
+                  onClick={() => onToolChange("highlighter")}
+                >
+                  <Highlighter className="h-4 w-4 shrink-0" />
+                </ToolButton>
+              );
+            }
+            if (t === "sticky") {
+              return (
+                <ToolButton
+                  key={t}
+                  active={active}
+                  disabled={disabled}
+                  label="Sticky note"
+                  onClick={() => onToolChange("sticky")}
+                >
+                  <StickyNote className="h-4 w-4 shrink-0" />
+                </ToolButton>
+              );
+            }
+            return (
+              <ToolButton key={t} active={active} disabled={disabled} label="Eraser" onClick={() => onToolChange("eraser")}>
                 <Eraser className="h-4 w-4 shrink-0" />
               </ToolButton>
-            </>
-          ) : (
-            <>
-              <ToolButton active={tool === "pen"} label="Pen" onClick={() => onToolChange("pen")}>
-                <Paintbrush2 className="h-4 w-4 shrink-0" />
-              </ToolButton>
-              <ToolButton active={tool === "highlighter"} label="Highlighter" onClick={() => onToolChange("highlighter")}>
-                <Highlighter className="h-4 w-4 shrink-0" />
-              </ToolButton>
-              <ToolButton active={tool === "eraser"} label="Eraser" onClick={() => onToolChange("eraser")}>
-                <Eraser className="h-4 w-4 shrink-0" />
-              </ToolButton>
-            </>
-          )}
+            );
+          })}
         </div>
 
         <span className="h-5 w-px shrink-0 bg-[rgba(120,90,80,0.12)]" aria-hidden />
@@ -160,7 +190,7 @@ export function NotesToolbar({
               key={c}
               type="button"
               className={cn(
-                "size-[17px] shrink-0 rounded-full border border-[rgba(120,90,80,0.15)] shadow-sm transition-editorial",
+                "size-[17px] shrink-0 rounded-full border border-[rgba(120,90,80,0.15)] shadow-sm transition-[transform,box-shadow] duration-150 ease-out",
                 c === color ? "ring-2 ring-copper/40 ring-offset-1 ring-offset-surface-panel" : "hover:scale-[1.05]",
               )}
               style={{ background: c }}
@@ -209,7 +239,7 @@ export function NotesToolbar({
                 type="button"
                 onClick={() => setPaper({ style: "blank" })}
                 className={cn(
-                  "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition",
+                  "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition-colors duration-150",
                   style === "blank" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
                 )}
                 aria-pressed={style === "blank"}
@@ -220,7 +250,7 @@ export function NotesToolbar({
                 type="button"
                 onClick={() => setPaper({ style: "lined" })}
                 className={cn(
-                  "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition",
+                  "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition-colors duration-150",
                   style === "lined" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
                 )}
                 aria-pressed={style === "lined"}
@@ -300,8 +330,8 @@ function ToolButton({
       aria-pressed={active === undefined ? undefined : active}
       onClick={onClick}
       className={cn(
-        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-medium leading-none transition-editorial",
-        "border border-transparent",
+        "inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-sm font-medium leading-none",
+        "border border-transparent transition-[color,background-color,border-color,box-shadow] duration-150 ease-out",
         "disabled:pointer-events-none disabled:opacity-40",
         active
           ? "border-copper/30 bg-rose-light/60 text-ink shadow-sm"
