@@ -66,7 +66,7 @@ export function NotesCanvas({
   );
 
   React.useEffect(() => {
-    if (paperStyleProp) setPaperStyle(paperStyleProp);
+    if (paperStyleProp !== undefined) setPaperStyle(paperStyleProp);
   }, [paperStyleProp]);
   React.useEffect(() => {
     if (paperOpacityProp != null) setPaperOpacity(paperOpacityProp);
@@ -79,9 +79,9 @@ export function NotesCanvas({
     const onPaper = (e: Event) => {
       const detail = (e as CustomEvent<{ style?: PaperStyle; opacity?: number; lineOpacity?: number }>).detail;
       if (!detail) return;
-      if (detail.style) setPaperStyle(detail.style);
-      if (detail.opacity != null) setPaperOpacity(detail.opacity);
-      if (detail.lineOpacity != null) setPaperLineOpacity(detail.lineOpacity);
+      if ("style" in detail && detail.style !== undefined) setPaperStyle(detail.style);
+      if ("opacity" in detail && detail.opacity !== undefined) setPaperOpacity(detail.opacity);
+      if ("lineOpacity" in detail && detail.lineOpacity !== undefined) setPaperLineOpacity(detail.lineOpacity);
     };
     window.addEventListener("taraform:paper", onPaper as EventListener);
     return () => window.removeEventListener("taraform:paper", onPaper as EventListener);

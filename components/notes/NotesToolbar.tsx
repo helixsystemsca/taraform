@@ -137,22 +137,54 @@ export function NotesToolbar({
   showPaper?: boolean;
   showExportSave?: boolean;
 }) {
-  const style = paperStyle ?? "blank";
-  const opacity = paperOpacity ?? 0.18;
-  const lineOpacity = paperLineOpacity ?? 1;
+  type Paper = { style: PaperStyle; opacity: number; lineOpacity: number };
+  const paperRef = React.useRef<Paper>({
+    style: paperStyle ?? "blank",
+    opacity: paperOpacity ?? 0.18,
+    lineOpacity: paperLineOpacity ?? 1,
+  });
+  const [paper, setPaperState] = React.useState<Paper>(() => paperRef.current);
 
-  function setPaper(next: { style?: PaperStyle; opacity?: number; lineOpacity?: number }) {
-    const nextStyle = next.style ?? style;
-    const nextOpacity = next.opacity ?? opacity;
-    const nextLineOpacity = next.lineOpacity ?? lineOpacity;
-    onPaperStyleChange?.(nextStyle);
-    onPaperOpacityChange?.(nextOpacity);
-    onPaperLineOpacityChange?.(nextLineOpacity);
-    window.dispatchEvent(
-      new CustomEvent("taraform:paper", {
-        detail: { style: nextStyle, opacity: nextOpacity, lineOpacity: nextLineOpacity },
-      }),
-    );
+  React.useEffect(() => {
+    const n = { ...paperRef.current };
+    let changed = false;
+    if (paperStyle !== undefined && paperStyle !== n.style) {
+      n.style = paperStyle;
+      changed = true;
+    }
+    if (paperOpacity !== undefined && paperOpacity !== n.opacity) {
+      n.opacity = paperOpacity;
+      changed = true;
+    }
+    if (paperLineOpacity !== undefined && paperLineOpacity !== n.lineOpacity) {
+      n.lineOpacity = paperLineOpacity;
+      changed = true;
+    }
+    if (!changed) return;
+    paperRef.current = n;
+    setPaperState(n);
+  }, [paperStyle, paperOpacity, paperLineOpacity]);
+
+  const { style, opacity, lineOpacity } = paper;
+
+  function updatePaper(next: { style?: PaperStyle; opacity?: number; lineOpacity?: number }) {
+    const n: Paper = {
+      style: next.style ?? paperRef.current.style,
+      opacity: next.opacity ?? paperRef.current.opacity,
+      lineOpacity: next.lineOpacity ?? paperRef.current.lineOpacity,
+    };
+    paperRef.current = n;
+    setPaperState(n);
+    onPaperStyleChange?.(n.style);
+    onPaperOpacityChange?.(n.opacity);
+    onPaperLineOpacityChange?.(n.lineOpacity);
+    // Only include keys the user actually changed so the canvas does not reset paper style
+    // when adjusting opacity (e.g. old bug: missing controlled style defaulted to "blank").
+    const detail: { style?: PaperStyle; opacity?: number; lineOpacity?: number } = {};
+    if ("style" in next) detail.style = n.style;
+    if ("opacity" in next) detail.opacity = n.opacity;
+    if ("lineOpacity" in next) detail.lineOpacity = n.lineOpacity;
+    window.dispatchEvent(new CustomEvent("taraform:paper", { detail }));
   }
 
   return (
@@ -316,7 +348,7 @@ export function NotesToolbar({
               <ToolbarTooltip text="Plain canvas — no ruled lines">
                 <button
                   type="button"
-                  onClick={() => setPaper({ style: "blank" })}
+                  onClick={() => updatePaper({ style: "blank" })}
                   className={cn(
                     "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition-colors duration-150",
                     style === "blank" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
@@ -329,7 +361,7 @@ export function NotesToolbar({
               <ToolbarTooltip text="Notebook-style horizontal rules">
                 <button
                   type="button"
-                  onClick={() => setPaper({ style: "lined" })}
+                  onClick={() => updatePaper({ style: "lined" })}
                   className={cn(
                     "inline-flex h-8 min-w-[2rem] items-center justify-center rounded px-2 text-xs font-medium transition-colors duration-150",
                     style === "lined" ? "bg-surface-panel text-ink shadow-sm" : "text-ink-secondary hover:text-ink",
@@ -341,7 +373,7 @@ export function NotesToolbar({
               </ToolbarTooltip>
             </div>
 
-            <ToolbarTooltip text="Overall strength of the ruled paper layer (lined mode)">
+            <ToolbarTooltip text="Strength of the ruled-paper background (use Lined to see lines; Blank hides the layer)">
               <div className={cn(ROW, "gap-1")} aria-label="Paper layer opacity">
                 <span className="hidden text-[10px] font-medium uppercase tracking-wide text-ink-muted md:inline">
                   Paper
@@ -352,7 +384,8 @@ export function NotesToolbar({
                   max={0.3}
                   step={0.01}
                   value={opacity}
-                  onChange={(e) => setPaper({ opacity: Number(e.target.value) })}
+                  onChange={(e) => updatePaper({ opacity: Number(e.target.value) })}
+                  onPointerDown={(e) => e.stopPropagation()}
                   className="h-3 w-[72px] shrink-0 cursor-pointer accent-copper md:w-[88px]"
                   aria-label="Paper layer opacity"
                 />
@@ -374,7 +407,8 @@ export function NotesToolbar({
                     max={1}
                     step={0.02}
                     value={lineOpacity}
-                    onChange={(e) => setPaper({ lineOpacity: Number(e.target.value) })}
+                    onChange={(e) => updatePaper({ lineOpacity: Number(e.target.value) })}
+                    onPointerDown={(e) => e.stopPropagation()}
                     className="h-3 w-[72px] shrink-0 cursor-pointer accent-copper lg:w-[88px]"
                     aria-label="Ruled line opacity"
                   />
