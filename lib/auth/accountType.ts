@@ -14,9 +14,15 @@ type ProfileRow = {
   account_type?: string | null;
 } | null;
 
-export function effectiveAccountType(profile: ProfileRow, email: string | null | undefined): AccountType {
+export function effectiveAccountType(
+  profile: ProfileRow,
+  email: string | null | undefined,
+  authAccountType?: AccountType | null,
+): AccountType {
+  if (authAccountType === "supporter") return "supporter";
   if (profile?.account_type === "supporter") return "supporter";
   if (isSupporterEmailFromEnv(email)) return "supporter";
+  if (authAccountType === "user") return "user";
   return "user";
 }
 

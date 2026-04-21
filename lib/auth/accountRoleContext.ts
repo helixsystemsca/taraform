@@ -3,6 +3,7 @@ import "server-only";
 import { cache } from "react";
 
 import { effectiveAccountType, syncSupporterRoleInDb, type AccountType } from "@/lib/auth/accountType";
+import { selectProfileRow } from "@/lib/auth/profileRow";
 import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 import { isSupabaseSchemaMissingError } from "@/lib/supabase/migrationErrors";
 
@@ -15,7 +16,7 @@ export type ProfileForSettings = {
 };
 
 export const SETTINGS_SETUP_HINT =
-  "Supabase is not fully migrated. In the SQL editor, run `supabase/sql/auth_settings_audio.sql` (includes `account_type` on profiles), or run `supabase/sql/profiles_account_type.sql` on an older database.";
+  "Supabase is not fully migrated. In the SQL editor, run `supabase/sql/auth_settings_audio.sql` (profiles including `account_type`, `user_audio`, storage policies, and the `audio` bucket), or run `supabase/sql/profiles_account_type.sql` on an older database. Supporter routing also honors `TARAFORM_SUPPORTER_EMAILS` (Vercel env) or Auth metadata `taraform_account_type: \"supporter\"`.";
 
 /**
  * Per-request cached role + profile for settings routing and pages.
@@ -37,11 +38,7 @@ export const getAccountRoleContext = cache(async () => {
     .from("profiles")
     .upsert({ id: user.id, email: user.email }, { onConflict: "id" });
 
-  const { data: profileRow, error: profileErr } = await supabase
-    .from("profiles")
-    .select("id,email,notifications_enabled,created_at,account_type")
-    .eq("id", user.id)
-    .maybeSingle();
+  const { data: profileRow, error: profileErr } = await selectProfileRow(supabase, user.id);
 
   let initialSetupError: string | null = null;
   const errMsg = profileErr?.message ?? upsertErr?.message ?? "";
@@ -49,10 +46,9 @@ export const getAccountRoleContext = cache(async () => {
     initialSetupError = SETTINGS_SETUP_HINT;
   }
 
-  const synced = initialSetupError
-    ? profileRow
-    : await syncSupporterRoleInDb(supabase, user.id, user.email, profileRow);
-  const role = effectiveAccountType(synced ?? profileRow, user.email);
+  // Always sync env-based supporters; do not gate on initialSetupError (profile select can fail while email allowlist still applies).
+  const synced = await syncSupporterRoleInDb(supabase, user.id, user.email, profileRow);
+  const role = effectiveAccountType(synced ?? profileRow, user.email, user.authAccountType);
 
   const base = synced ?? profileRow;
   const profile: ProfileForSettings | null = base

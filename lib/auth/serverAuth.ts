@@ -1,12 +1,29 @@
 import "server-only";
 
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
+import { createClient, type SupabaseClient, type User } from "@supabase/supabase-js";
 
+import type { AccountType } from "@/lib/auth/accountType";
 import { DEV_USER, isDevAuthBypass } from "@/lib/auth/devUser";
 import { getSupabaseEnv } from "@/lib/supabase/env";
 import { supabaseServer } from "@/lib/supabase/server";
 
-export type CurrentUser = { id: string; email: string };
+export type CurrentUser = {
+  id: string;
+  email: string;
+  /**
+   * From Supabase Auth `app_metadata` / `user_metadata` key `taraform_account_type`
+   * (`"supporter"` | `"user"`). Useful before `profiles.account_type` exists.
+   */
+  authAccountType?: AccountType;
+};
+
+function accountTypeFromAuthUser(user: User): AccountType | undefined {
+  const app = user.app_metadata as Record<string, unknown> | undefined;
+  const um = user.user_metadata as Record<string, unknown> | undefined;
+  const raw = app?.taraform_account_type ?? um?.taraform_account_type;
+  if (raw === "supporter" || raw === "user") return raw;
+  return undefined;
+}
 
 /**
  * Current actor for server code and middleware-aligned checks.
@@ -21,7 +38,8 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
   const supabase = await supabaseServer();
   const { data, error } = await supabase.auth.getUser();
   if (error || !data.user?.id || !data.user.email) return null;
-  return { id: data.user.id, email: data.user.email };
+  const authAccountType = accountTypeFromAuthUser(data.user);
+  return { id: data.user.id, email: data.user.email, ...(authAccountType ? { authAccountType } : {}) };
 }
 
 /**

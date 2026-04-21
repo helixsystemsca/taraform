@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { effectiveAccountType, syncSupporterRoleInDb } from "@/lib/auth/accountType";
+import { selectProfileRow } from "@/lib/auth/profileRow";
 import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
 import { isSupabaseSchemaMissingError } from "@/lib/supabase/migrationErrors";
 
@@ -25,11 +26,7 @@ export async function GET() {
     .from("profiles")
     .upsert({ id: auth.user.id, email: auth.user.email }, { onConflict: "id" });
 
-  const { data, error } = await auth.supabase
-    .from("profiles")
-    .select("id,email,notifications_enabled,created_at,account_type")
-    .eq("id", auth.user.id)
-    .maybeSingle();
+  const { data, error } = await selectProfileRow(auth.supabase, auth.user.id);
 
   if (error) {
     if (isSupabaseSchemaMissingError(error.message)) {
@@ -43,7 +40,7 @@ export async function GET() {
   }
 
   const synced = await syncSupporterRoleInDb(auth.supabase, auth.user.id, auth.user.email, data);
-  const role = effectiveAccountType(synced ?? data, auth.user.email);
+  const role = effectiveAccountType(synced ?? data, auth.user.email, auth.user.authAccountType);
   const profile = data
     ? {
         ...data,
