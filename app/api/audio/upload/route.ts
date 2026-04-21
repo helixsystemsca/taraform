@@ -43,7 +43,19 @@ export async function POST(req: Request) {
     contentType: "audio/mpeg",
     upsert: true,
   });
-  if (uploadErr) return NextResponse.json({ error: uploadErr.message }, { status: 500 });
+  if (uploadErr) {
+    const msg = uploadErr.message ?? "";
+    if (/bucket not found/i.test(msg)) {
+      return NextResponse.json(
+        {
+          error:
+            "Storage bucket `audio` is missing. Run `supabase/sql/auth_settings_audio.sql` in the Supabase SQL editor (it creates the bucket and policies), or create a private bucket named `audio` under Storage → Buckets.",
+        },
+        { status: 503 },
+      );
+    }
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
 
   // Store the storage path (in `file_url`) so we can generate signed URLs for playback.
   const { error: dbErr } = await supabase.from("user_audio").insert({ user_id: userId, type, file_url: path });

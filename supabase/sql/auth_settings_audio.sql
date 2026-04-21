@@ -89,8 +89,10 @@ using (auth.uid() = user_id);
 -- -----------------------------
 -- Storage bucket + policies
 -- -----------------------------
--- Create a private bucket named `audio` in the Supabase Dashboard (Storage → Buckets).
--- Then add policies below.
+-- Private bucket for encouragement MP3s (paths: `{user_id}/before|after/...`).
+insert into storage.buckets (id, name, public)
+values ('audio', 'audio', false)
+on conflict (id) do nothing;
 
 -- Allow users to read their own objects (for signed URLs).
 create policy "storage_audio_read_own"

@@ -5,6 +5,7 @@ import type { NotePoint, NoteStroke } from "@/components/notes/types";
 import type { AnnotationTool } from "@/lib/annotations";
 import { hitTestStrokeIndex, selectionKeyStroke } from "@/lib/annotations";
 import { useAnnotationToolbarStore } from "@/stores/useAnnotationToolbarStore";
+import { LINED_PAPER_ROW_PX } from "@/components/notes/linedPaper";
 
 type ToolState = {
   tool: AnnotationTool;
@@ -42,7 +43,7 @@ function drawPaper(
   ctx.strokeStyle = "#8e8e8e";
   ctx.lineWidth = 1;
 
-  const spacing = 24 * dpr;
+  const spacing = LINED_PAPER_ROW_PX * dpr;
 
   for (let y = spacing; y < height; y += spacing) {
     ctx.beginPath();

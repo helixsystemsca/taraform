@@ -9,6 +9,7 @@ import type { NoteStroke } from "@/components/notes/types";
 import { useCanvasDrawing } from "@/hooks/useCanvasDrawing";
 import { cn } from "@/lib/utils";
 import { useAnnotationToolbarStore } from "@/stores/useAnnotationToolbarStore";
+import { LINED_PAPER_ROW_PX } from "@/components/notes/linedPaper";
 
 type PaperStyle = "blank" | "lined";
 
@@ -197,7 +198,7 @@ export function NotesCanvas({
           style={{
             opacity: paperOpacity,
             backgroundImage: `linear-gradient(0deg, rgba(120,90,80,${0.02 + paperLineOpacity * 0.52}) 1px, transparent 1px)`,
-            backgroundSize: "100% 24px",
+            backgroundSize: `100% ${LINED_PAPER_ROW_PX}px`,
           }}
         />
       ) : null}
