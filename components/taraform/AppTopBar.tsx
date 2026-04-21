@@ -6,7 +6,7 @@ import { Bell, Search, Settings, User } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
-export function AppTopBar() {
+export function AppTopBar({ settingsHref = "/settings" }: { settingsHref?: string }) {
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -66,7 +66,7 @@ export function AppTopBar() {
             <Bell className="h-[18px] w-[18px] stroke-[1.5]" />
           </button>
           <Link
-            href="/settings"
+            href={settingsHref}
             className="inline-flex h-9 w-9 items-center justify-center rounded-full text-ink-secondary transition-editorial hover:bg-rose-light/60 hover:text-ink"
             aria-label="Settings"
           >
@@ -85,7 +85,7 @@ export function AppTopBar() {
             {open ? (
               <div className="absolute right-0 mt-2 w-44 overflow-hidden rounded-xl border border-[rgba(120,90,80,0.12)] bg-surface-panel/95 shadow-warm backdrop-blur-xl">
                 <Link
-                  href="/settings"
+                  href={settingsHref}
                   className="block px-4 py-2.5 text-sm text-ink-secondary transition-editorial hover:bg-rose-light/50 hover:text-ink"
                   onClick={() => setOpen(false)}
                 >

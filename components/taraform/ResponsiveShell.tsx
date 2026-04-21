@@ -135,7 +135,14 @@ function FocusTopBar({ pathname }: { pathname: string }) {
   );
 }
 
-export function ResponsiveShell({ children }: { children: React.ReactNode }) {
+export function ResponsiveShell({
+  children,
+  settingsHref = "/settings",
+}: {
+  children: React.ReactNode;
+  /** Primary settings destination (student vs supporter). */
+  settingsHref?: string;
+}) {
   const pathname = usePathname() || "/";
   const isNotes = isActive(pathname, "/notes");
   const isWorkspace = isActive(pathname, "/workspace");
@@ -174,7 +181,7 @@ export function ResponsiveShell({ children }: { children: React.ReactNode }) {
       </aside>
 
       <div className="flex min-h-0 min-w-0 flex-1 flex-col">
-        <AppTopBar />
+        <AppTopBar settingsHref={settingsHref} />
         <div
           className={cn(
             "flex-1 overflow-y-auto",

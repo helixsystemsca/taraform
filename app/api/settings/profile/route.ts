@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { effectiveAccountType, syncSupporterRoleInDb } from "@/lib/auth/accountType";
 import { getCurrentUser, getServerSupabase } from "@/lib/auth/serverAuth";
+import { isSupabaseSchemaMissingError } from "@/lib/supabase/migrationErrors";
 
 const UpdateSchema = z.object({
   notifications_enabled: z.boolean(),
@@ -25,12 +27,31 @@ export async function GET() {
 
   const { data, error } = await auth.supabase
     .from("profiles")
-    .select("id,email,notifications_enabled,created_at")
+    .select("id,email,notifications_enabled,created_at,account_type")
     .eq("id", auth.user.id)
     .maybeSingle();
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json({ profile: data });
+  if (error) {
+    if (isSupabaseSchemaMissingError(error.message)) {
+      return NextResponse.json({
+        profile: null,
+        setupError:
+          "Supabase is not fully migrated. In the SQL editor, run `supabase/sql/auth_settings_audio.sql` (profiles, user_audio, storage policies, and the `audio` bucket).",
+      });
+    }
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  const synced = await syncSupporterRoleInDb(auth.supabase, auth.user.id, auth.user.email, data);
+  const role = effectiveAccountType(synced ?? data, auth.user.email);
+  const profile = data
+    ? {
+        ...data,
+        account_type: role,
+      }
+    : null;
+
+  return NextResponse.json({ profile });
 }
 
 export async function POST(req: Request) {
@@ -46,7 +67,18 @@ export async function POST(req: Request) {
     .update({ notifications_enabled: parsed.data.notifications_enabled })
     .eq("id", auth.user.id);
 
-  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+  if (error) {
+    if (isSupabaseSchemaMissingError(error.message)) {
+      return NextResponse.json(
+        {
+          error:
+            "Supabase is not fully migrated. Run `supabase/sql/auth_settings_audio.sql` in the SQL editor, then try again.",
+        },
+        { status: 503 },
+      );
+    }
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
   return NextResponse.json({ ok: true });
 }
 
