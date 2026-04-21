@@ -324,17 +324,19 @@ export function NotesModal({
                     : `Saved ${new Date(saveBadge.savedAt || lastSavedAtRef.current || Date.now()).toLocaleTimeString()}`}
                 </div>
               </div>
-              <div className="relative min-h-0 min-w-0 flex-1">
-                <NotesCanvas
-                  strokes={strokes}
-                  onChangeStrokes={setStrokes}
-                  tool={tool}
-                  color={color}
-                  size={size}
-                  onExportPngReady={(fn) => {
-                    exportPngRef.current = fn;
-                  }}
-                />
+              <div className="relative flex min-h-0 min-w-0 flex-1 items-start justify-center">
+                <div className="h-full max-h-full w-auto max-w-full aspect-[8.5/11]">
+                  <NotesCanvas
+                    strokes={strokes}
+                    onChangeStrokes={setStrokes}
+                    tool={tool}
+                    color={color}
+                    size={size}
+                    onExportPngReady={(fn) => {
+                      exportPngRef.current = fn;
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>

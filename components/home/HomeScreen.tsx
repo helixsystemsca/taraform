@@ -57,6 +57,7 @@ export function HomeScreen() {
     <div className="mx-auto w-full max-w-3xl space-y-8 px-4 py-8 sm:py-12">
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">Taraform</p>
+        <p className="text-base font-medium text-ink sm:text-lg">Hi Tara {'<3'},</p>
         <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-ink sm:text-4xl">Welcome back</h1>
         <p className="max-w-lg text-sm leading-relaxed text-ink-secondary">{greetingSubtext()}</p>
       </header>
