@@ -1,0 +1,61 @@
+# Scenario Bank Structure
+
+## Purpose
+
+Store and organize practice scenarios.
+
+------------------------------------------------------------------------
+
+## Scenario Format
+
+### Title:
+
+Short description
+
+### Context:
+
+Realistic situation (2--4 sentences)
+
+### Question:
+
+What should you do next?
+
+------------------------------------------------------------------------
+
+## Example
+
+### Title:
+
+Scope confusion
+
+### Context:
+
+A stakeholder says the project is not meeting expectations halfway
+through.
+
+### Question:
+
+What is the most likely issue and what should you do?
+
+------------------------------------------------------------------------
+
+## Tags
+
+Each scenario should include: - Domain (fundamentals, planning, agile,
+business) - Difficulty (easy, medium, hard) - Skill (scope, risk,
+communication)
+
+------------------------------------------------------------------------
+
+## Expansion Rules
+
+-   Keep scenarios realistic
+-   Avoid obvious answers
+-   Include ambiguity
+
+------------------------------------------------------------------------
+
+## Goal
+
+Build a large library of scenarios that train decision-making, not
+memorization.
