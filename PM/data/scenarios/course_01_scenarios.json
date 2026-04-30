@@ -1,0 +1,342 @@
+[
+  {
+    "id": "init_s_001",
+    "type": "scenario",
+    "scenario": "Your sponsor asks you to start building a detailed schedule and cost estimate, but you have not received any formal authorization.",
+    "question": "What is the BEST next step?",
+    "answers": [
+      "Start the schedule to show initiative and refine later",
+      "Request a signed project charter (or equivalent authorization) before proceeding",
+      "Ask the team to begin requirements workshops immediately",
+      "Escalate to the PMO to cancel the project"
+    ],
+    "correct_index": 1,
+    "explanation": "Without formal authorization (charter), the project is not officially started and the PM typically should not commit resources to detailed planning. Secure the charter first.",
+    "difficulty": "easy",
+    "tags": ["charter", "authorization", "initiation"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_002",
+    "type": "scenario",
+    "scenario": "A stakeholder keeps insisting on a specific vendor solution during initiation, but you suspect the real need is different.",
+    "question": "What should you do FIRST?",
+    "answers": [
+      "Accept the vendor preference to keep the stakeholder happy",
+      "Document the vendor as a requirement in the charter",
+      "Clarify the underlying business need and high-level requirements before committing to a solution",
+      "Reject the stakeholder request and move on"
+    ],
+    "correct_index": 2,
+    "explanation": "Initiation focuses on needs and high-level requirements. A specific vendor is often a constraint or preference; clarify the real need before locking in a solution.",
+    "difficulty": "easy",
+    "tags": ["requirements", "stakeholders", "initiation"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_003",
+    "type": "scenario",
+    "scenario": "The sponsor says the project must go live by a fixed regulatory deadline with no additional budget.",
+    "question": "How should you treat this statement?",
+    "answers": [
+      "As an assumption that can be ignored later",
+      "As a constraint that must be documented and planned around",
+      "As a risk that should only be discussed during execution",
+      "As a requirement that defines the product scope"
+    ],
+    "correct_index": 1,
+    "explanation": "A fixed deadline and budget cap are constraints. They limit options and must be captured early and used to shape planning and trade-offs.",
+    "difficulty": "easy",
+    "tags": ["constraints", "schedule", "cost"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_004",
+    "type": "scenario",
+    "scenario": "A new department will be heavily impacted by the solution, but they were not included in initial discussions and are now unhappy.",
+    "question": "What is the BEST action?",
+    "answers": [
+      "Proceed without them to avoid delays",
+      "Update the stakeholder register and engage them to understand expectations and concerns",
+      "Ask the sponsor to handle all communications",
+      "Wait until planning is complete before informing them"
+    ],
+    "correct_index": 1,
+    "explanation": "Stakeholders must be identified and engaged early and iteratively. Update the stakeholder register and begin appropriate engagement.",
+    "difficulty": "easy",
+    "tags": ["stakeholders", "register", "engagement"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_005",
+    "type": "scenario",
+    "scenario": "You are a PM in a functional organization and need a subject matter expert (SME) for two days a week, but the functional manager refuses.",
+    "question": "What should you do?",
+    "answers": [
+      "Assign the SME anyway since the project is important",
+      "Negotiate with the functional manager and escalate to the sponsor if priorities conflict",
+      "Replace the SME with any available junior staff member",
+      "Stop the project because functional organizations cannot support projects"
+    ],
+    "correct_index": 1,
+    "explanation": "In functional orgs, PM authority is limited. The PM should negotiate for resources and escalate priority conflicts through governance/sponsor as needed.",
+    "difficulty": "medium",
+    "tags": ["org-structure", "authority", "resources"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_006",
+    "type": "scenario",
+    "scenario": "A portfolio committee compares two projects. Project A has higher NPV; Project B has lower NPV but is required for compliance.",
+    "question": "Which is MOST likely to be selected?",
+    "answers": [
+      "Project A, because higher NPV always wins",
+      "Project B, because compliance/strategic requirements can outweigh pure financial return",
+      "Neither project can be selected using NPV",
+      "Project A, because payback is faster"
+    ],
+    "correct_index": 1,
+    "explanation": "Selection uses multiple criteria. Strategic or compliance drivers can override financial models like NPV.",
+    "difficulty": "medium",
+    "tags": ["selection", "npv", "governance"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_007",
+    "type": "scenario",
+    "scenario": "Your sponsor wants you to promise a fixed delivery date during initiation, but requirements are still unclear.",
+    "question": "What is the BEST response?",
+    "answers": [
+      "Agree and plan to compress the schedule later",
+      "Refuse to provide any timeline until execution",
+      "Provide a high-level milestone estimate with assumptions and document constraints/risks",
+      "Commit to the date and reduce quality if needed"
+    ],
+    "correct_index": 2,
+    "explanation": "During initiation, you can provide high-level milestones and document assumptions/constraints/risks. Avoid premature detailed commitments without clarity.",
+    "difficulty": "medium",
+    "tags": ["charter", "assumptions", "constraints"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_008",
+    "type": "scenario",
+    "scenario": "A stakeholder is high power but low interest. They don’t want frequent meetings.",
+    "question": "How should you manage them?",
+    "answers": [
+      "Manage closely with daily updates",
+      "Keep satisfied with periodic high-level updates",
+      "Ignore them until they show interest",
+      "Treat them the same as all stakeholders"
+    ],
+    "correct_index": 1,
+    "explanation": "Power/interest grid: high power/low interest stakeholders should be kept satisfied with tailored, high-level communications.",
+    "difficulty": "easy",
+    "tags": ["stakeholders", "analysis", "communication"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_009",
+    "type": "scenario",
+    "scenario": "The sponsor says: “We assume the vendor can deliver the API by May.”",
+    "question": "What should you do?",
+    "answers": [
+      "Treat it as a fact and proceed without tracking it",
+      "Document it as an assumption and evaluate its risk impact",
+      "Convert it into a constraint immediately",
+      "Ignore it until the vendor misses the date"
+    ],
+    "correct_index": 1,
+    "explanation": "Assumptions should be documented and monitored because they can become risks if they prove false.",
+    "difficulty": "easy",
+    "tags": ["assumptions", "risk"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_010",
+    "type": "scenario",
+    "scenario": "Your sponsor asks who is responsible for realizing benefits after the project ends.",
+    "question": "What is the BEST answer?",
+    "answers": [
+      "The PM, indefinitely",
+      "Operations or a named benefit owner, as defined in the benefits management plan",
+      "The project team, until the next project begins",
+      "No one; benefits are automatic once delivered"
+    ],
+    "correct_index": 1,
+    "explanation": "Benefits realization often extends beyond project close and should have an owner (often operations) defined in the benefits management plan.",
+    "difficulty": "medium",
+    "tags": ["benefits", "governance"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_011",
+    "type": "scenario",
+    "scenario": "A department says they will only participate if the solution includes a new reporting dashboard, but your charter says reporting is out of scope.",
+    "question": "What should you do FIRST?",
+    "answers": [
+      "Promise to include the dashboard to gain support",
+      "Update the charter scope boundaries through appropriate change/approval if needed",
+      "Ignore them and proceed with the original scope",
+      "Ask the team to build the dashboard quietly"
+    ],
+    "correct_index": 1,
+    "explanation": "If boundaries need to change, handle through governance and proper approval. Do not promise scope changes informally.",
+    "difficulty": "medium",
+    "tags": ["scope", "charter", "governance"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_012",
+    "type": "scenario",
+    "scenario": "You are asked which document formally authorizes the project and grants you authority to apply resources.",
+    "question": "What is the correct answer?",
+    "answers": [
+      "Business case",
+      "Project management plan",
+      "Project charter",
+      "Scope baseline"
+    ],
+    "correct_index": 2,
+    "explanation": "The charter formally authorizes the project and empowers the PM to use organizational resources.",
+    "difficulty": "easy",
+    "tags": ["charter", "authorization"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_013",
+    "type": "scenario",
+    "scenario": "A PM is accountable for delivery but cannot approve overtime, cannot select vendors, and cannot get functional managers to assign staff.",
+    "question": "What is the BEST next step?",
+    "answers": [
+      "Accept the situation and work harder",
+      "Clarify decision rights and escalate authority gaps to the sponsor/governance",
+      "Replace functional managers with project managers",
+      "Stop communicating about constraints to avoid conflict"
+    ],
+    "correct_index": 1,
+    "explanation": "When responsibility and authority are misaligned, the PM should clarify decision rights and escalate gaps through the sponsor/governance structure.",
+    "difficulty": "hard",
+    "tags": ["authority", "governance", "org-structure"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_014",
+    "type": "scenario",
+    "scenario": "A portfolio manager asks which selection method best accounts for the time value of money.",
+    "question": "Which method is BEST?",
+    "answers": [
+      "Payback period",
+      "Net present value (NPV)",
+      "Scoring model",
+      "Expert judgment"
+    ],
+    "correct_index": 1,
+    "explanation": "NPV explicitly discounts future cash flows, accounting for the time value of money.",
+    "difficulty": "easy",
+    "tags": ["selection", "npv", "finance"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_015",
+    "type": "scenario",
+    "scenario": "A stakeholder complains that they are receiving too much detail and too many meeting invites.",
+    "question": "What should you do?",
+    "answers": [
+      "Continue; transparency requires maximum communication",
+      "Tailor communications based on stakeholder needs and update the stakeholder register/strategy",
+      "Stop communicating to all stakeholders to reduce noise",
+      "Only communicate through the sponsor"
+    ],
+    "correct_index": 1,
+    "explanation": "Stakeholder engagement is tailored. Update stakeholder information and adjust communication approach based on needs and influence.",
+    "difficulty": "medium",
+    "tags": ["stakeholders", "communication", "engagement"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_016",
+    "type": "scenario",
+    "scenario": "Your sponsor wants the PM assigned only after planning is complete to 'save cost.'",
+    "question": "What is the BEST rationale to assign a PM earlier?",
+    "answers": [
+      "PMs are required by law during initiation",
+      "Early PM involvement helps shape realistic constraints and reduces rework",
+      "The PM should run the business case process",
+      "It prevents any risk from occurring"
+    ],
+    "correct_index": 1,
+    "explanation": "Best practice is to assign the PM as early as possible to influence the charter, stakeholder identification, and early planning assumptions/constraints.",
+    "difficulty": "medium",
+    "tags": ["pm-role", "initiation"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_017",
+    "type": "scenario",
+    "scenario": "A sponsor states: “We must use Vendor X because we already have a contract.”",
+    "question": "How should the PM treat this during initiation?",
+    "answers": [
+      "As a constraint to be documented and managed",
+      "As a risk to be ignored until procurement",
+      "As a benefit that improves NPV",
+      "As an assumption that Vendor X might be used"
+    ],
+    "correct_index": 0,
+    "explanation": "A mandated vendor is a constraint (limiting factor). Document it and plan accordingly rather than treating it as optional.",
+    "difficulty": "easy",
+    "tags": ["constraints", "procurement"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_018",
+    "type": "scenario",
+    "scenario": "A compliance requirement is discovered late because compliance was not consulted.",
+    "question": "What should the PM have done earlier?",
+    "answers": [
+      "Avoid involving compliance to keep scope small",
+      "Identify compliance as a stakeholder and capture regulatory requirements early",
+      "Assume compliance requirements are the same as last year",
+      "Only consult compliance after development"
+    ],
+    "correct_index": 1,
+    "explanation": "Compliance is a key stakeholder and requirements source; identify and engage them early to avoid rework and risk.",
+    "difficulty": "medium",
+    "tags": ["stakeholders", "requirements", "compliance"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_019",
+    "type": "scenario",
+    "scenario": "You’re asked whether knowledge areas occur in a fixed sequence like initiation → planning → execution.",
+    "question": "What is the BEST answer?",
+    "answers": [
+      "Yes, knowledge areas are the project life cycle steps",
+      "No, knowledge areas are classifications; they overlap throughout the project",
+      "Yes, integration always comes first and then ends",
+      "No, knowledge areas apply only during closing"
+    ],
+    "correct_index": 1,
+    "explanation": "Knowledge areas classify work; they are not chronological steps and overlap across the project life cycle.",
+    "difficulty": "easy",
+    "tags": ["knowledge-areas", "overview"],
+    "xp": 25
+  },
+  {
+    "id": "init_s_020",
+    "type": "scenario",
+    "scenario": "The sponsor demands a shorter schedule but refuses any budget increase and will not reduce scope.",
+    "question": "What should the PM do?",
+    "answers": [
+      "Agree and plan to reduce quality silently",
+      "Explain trade-offs and negotiate scope/cost/schedule options through governance",
+      "Ignore the request and proceed as planned",
+      "Add more risks without discussing changes"
+    ],
+    "correct_index": 1,
+    "explanation": "Constraints are interdependent; the PM should communicate trade-offs and negotiate options rather than accepting impossible constraints.",
+    "difficulty": "hard",
+    "tags": ["constraints", "tradeoffs", "integration"],
+    "xp": 25
+  }
+]
