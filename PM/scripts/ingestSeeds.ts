@@ -1,4 +1,4 @@
-import { loadCourse, loadScenarios, type SeedConcept, type SeedScenario } from "../lib/seedLoader";
+import { loadCourse, loadScenarios, type SeedConcept, type SeedScenario } from "../lib/seedLoader.js";
 
 type Workspace = "pm" | "study";
 
