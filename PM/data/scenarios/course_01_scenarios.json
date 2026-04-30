@@ -11,7 +11,7 @@
       "Escalate to the PMO to cancel the project"
     ],
     "correct_index": 1,
-    "explanation": "Without formal authorization (charter), the project is not officially started and the PM typically should not commit resources to detailed planning. Secure the charter first.",
+    "explanation": "Without formal authorization (charter), the project is not officially started and you should not commit resources to detailed planning. Secure the charter first.",
     "difficulty": "easy",
     "tags": ["charter", "authorization", "initiation"],
     "xp": 25
@@ -19,7 +19,7 @@
   {
     "id": "init_s_002",
     "type": "scenario",
-    "scenario": "A stakeholder keeps insisting on a specific vendor solution during initiation, but you suspect the real need is different.",
+    "scenario": "A stakeholder insists on a specific vendor solution during initiation, but you suspect the real need is different.",
     "question": "What should you do FIRST?",
     "answers": [
       "Accept the vendor preference to keep the stakeholder happy",
@@ -28,7 +28,7 @@
       "Reject the stakeholder request and move on"
     ],
     "correct_index": 2,
-    "explanation": "Initiation focuses on needs and high-level requirements. A specific vendor is often a constraint or preference; clarify the real need before locking in a solution.",
+    "explanation": "Initiation focuses on needs and high-level requirements. A specific vendor is typically a constraint or preference—clarify the need before locking in a solution.",
     "difficulty": "easy",
     "tags": ["requirements", "stakeholders", "initiation"],
     "xp": 25
@@ -45,7 +45,7 @@
       "As a requirement that defines the product scope"
     ],
     "correct_index": 1,
-    "explanation": "A fixed deadline and budget cap are constraints. They limit options and must be captured early and used to shape planning and trade-offs.",
+    "explanation": "A fixed deadline and budget cap are constraints. Capture them early and use them to shape planning and trade-offs.",
     "difficulty": "easy",
     "tags": ["constraints", "schedule", "cost"],
     "xp": 25
@@ -70,7 +70,7 @@
   {
     "id": "init_s_005",
     "type": "scenario",
-    "scenario": "You are a PM in a functional organization and need a subject matter expert (SME) for two days a week, but the functional manager refuses.",
+    "scenario": "You are a PM in a functional organization and need an SME for two days a week, but the functional manager refuses.",
     "question": "What should you do?",
     "answers": [
       "Assign the SME anyway since the project is important",
@@ -79,7 +79,7 @@
       "Stop the project because functional organizations cannot support projects"
     ],
     "correct_index": 1,
-    "explanation": "In functional orgs, PM authority is limited. The PM should negotiate for resources and escalate priority conflicts through governance/sponsor as needed.",
+    "explanation": "In functional orgs, PM authority is limited. Negotiate for resources and escalate priority conflicts through governance/sponsor as needed.",
     "difficulty": "medium",
     "tags": ["org-structure", "authority", "resources"],
     "xp": 25
@@ -96,7 +96,7 @@
       "Project A, because payback is faster"
     ],
     "correct_index": 1,
-    "explanation": "Selection uses multiple criteria. Strategic or compliance drivers can override financial models like NPV.",
+    "explanation": "Selection uses multiple criteria. Compliance/strategy can override pure financial models like NPV.",
     "difficulty": "medium",
     "tags": ["selection", "npv", "governance"],
     "xp": 25
@@ -113,7 +113,7 @@
       "Commit to the date and reduce quality if needed"
     ],
     "correct_index": 2,
-    "explanation": "During initiation, you can provide high-level milestones and document assumptions/constraints/risks. Avoid premature detailed commitments without clarity.",
+    "explanation": "During initiation you can provide high-level milestones and document assumptions/constraints/risks. Avoid premature detailed commitments.",
     "difficulty": "medium",
     "tags": ["charter", "assumptions", "constraints"],
     "xp": 25
@@ -121,7 +121,7 @@
   {
     "id": "init_s_008",
     "type": "scenario",
-    "scenario": "A stakeholder is high power but low interest. They don’t want frequent meetings.",
+    "scenario": "A stakeholder is high power but low interest and doesn’t want frequent meetings.",
     "question": "How should you manage them?",
     "answers": [
       "Manage closely with daily updates",
@@ -155,7 +155,7 @@
   {
     "id": "init_s_010",
     "type": "scenario",
-    "scenario": "Your sponsor asks who is responsible for realizing benefits after the project ends.",
+    "scenario": "A sponsor asks who is responsible for realizing benefits after the project ends.",
     "question": "What is the BEST answer?",
     "answers": [
       "The PM, indefinitely",
@@ -172,16 +172,16 @@
   {
     "id": "init_s_011",
     "type": "scenario",
-    "scenario": "A department says they will only participate if the solution includes a new reporting dashboard, but your charter says reporting is out of scope.",
+    "scenario": "A department says they will only participate if the solution includes a reporting dashboard, but the charter says reporting is out of scope.",
     "question": "What should you do FIRST?",
     "answers": [
       "Promise to include the dashboard to gain support",
-      "Update the charter scope boundaries through appropriate change/approval if needed",
+      "Update the charter scope boundaries through appropriate governance/approval if needed",
       "Ignore them and proceed with the original scope",
       "Ask the team to build the dashboard quietly"
     ],
     "correct_index": 1,
-    "explanation": "If boundaries need to change, handle through governance and proper approval. Do not promise scope changes informally.",
+    "explanation": "If boundaries need to change, handle it through governance and proper approval. Don’t promise scope changes informally.",
     "difficulty": "medium",
     "tags": ["scope", "charter", "governance"],
     "xp": 25
@@ -191,14 +191,9 @@
     "type": "scenario",
     "scenario": "You are asked which document formally authorizes the project and grants you authority to apply resources.",
     "question": "What is the correct answer?",
-    "answers": [
-      "Business case",
-      "Project management plan",
-      "Project charter",
-      "Scope baseline"
-    ],
+    "answers": ["Business case", "Project management plan", "Project charter", "Scope baseline"],
     "correct_index": 2,
-    "explanation": "The charter formally authorizes the project and empowers the PM to use organizational resources.",
+    "explanation": "The charter formally authorizes the project and empowers the PM to apply organizational resources.",
     "difficulty": "easy",
     "tags": ["charter", "authorization"],
     "xp": 25
@@ -215,7 +210,7 @@
       "Stop communicating about constraints to avoid conflict"
     ],
     "correct_index": 1,
-    "explanation": "When responsibility and authority are misaligned, the PM should clarify decision rights and escalate gaps through the sponsor/governance structure.",
+    "explanation": "When responsibility and authority are misaligned, clarify decision rights and escalate gaps through the sponsor/governance structure.",
     "difficulty": "hard",
     "tags": ["authority", "governance", "org-structure"],
     "xp": 25
@@ -225,12 +220,7 @@
     "type": "scenario",
     "scenario": "A portfolio manager asks which selection method best accounts for the time value of money.",
     "question": "Which method is BEST?",
-    "answers": [
-      "Payback period",
-      "Net present value (NPV)",
-      "Scoring model",
-      "Expert judgment"
-    ],
+    "answers": ["Payback period", "Net present value (NPV)", "Scoring model", "Expert judgment"],
     "correct_index": 1,
     "explanation": "NPV explicitly discounts future cash flows, accounting for the time value of money.",
     "difficulty": "easy",
@@ -244,7 +234,7 @@
     "question": "What should you do?",
     "answers": [
       "Continue; transparency requires maximum communication",
-      "Tailor communications based on stakeholder needs and update the stakeholder register/strategy",
+      "Tailor communications based on stakeholder needs and update your stakeholder engagement approach",
       "Stop communicating to all stakeholders to reduce noise",
       "Only communicate through the sponsor"
     ],
@@ -276,14 +266,9 @@
     "type": "scenario",
     "scenario": "A sponsor states: “We must use Vendor X because we already have a contract.”",
     "question": "How should the PM treat this during initiation?",
-    "answers": [
-      "As a constraint to be documented and managed",
-      "As a risk to be ignored until procurement",
-      "As a benefit that improves NPV",
-      "As an assumption that Vendor X might be used"
-    ],
+    "answers": ["As a constraint to be documented and managed", "As a risk to be ignored until procurement", "As a benefit that improves NPV", "As an assumption that Vendor X might be used"],
     "correct_index": 0,
-    "explanation": "A mandated vendor is a constraint (limiting factor). Document it and plan accordingly rather than treating it as optional.",
+    "explanation": "A mandated vendor is a constraint. Document it and plan accordingly rather than treating it as optional.",
     "difficulty": "easy",
     "tags": ["constraints", "procurement"],
     "xp": 25
@@ -334,7 +319,7 @@
       "Add more risks without discussing changes"
     ],
     "correct_index": 1,
-    "explanation": "Constraints are interdependent; the PM should communicate trade-offs and negotiate options rather than accepting impossible constraints.",
+    "explanation": "Constraints are interdependent; communicate trade-offs and negotiate options rather than accepting impossible constraints.",
     "difficulty": "hard",
     "tags": ["constraints", "tradeoffs", "integration"],
     "xp": 25

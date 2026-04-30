@@ -127,12 +127,17 @@ async function readJsonFile(filePath: string): Promise<unknown> {
   return JSON.parse(raw) as unknown;
 }
 
+function dataRoot() {
+  // Resolve relative to this file so ts-node works from any CWD.
+  return path.resolve(__dirname, "..", "data");
+}
+
 function courseFile(courseId: string) {
-  return path.join(process.cwd(), "pm", "data", "courses", `${courseId}_initiation.json`);
+  return path.join(dataRoot(), "courses", `${courseId}_initiation.json`);
 }
 
 function scenariosFile(courseId: string) {
-  return path.join(process.cwd(), "pm", "data", "scenarios", `${courseId}_scenarios.json`);
+  return path.join(dataRoot(), "scenarios", `${courseId}_scenarios.json`);
 }
 
 export async function loadCourse(courseId: string): Promise<SeedConcept[]> {
