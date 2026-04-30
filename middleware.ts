@@ -36,7 +36,9 @@ function isProtectedPath(pathname: string) {
     pathname.startsWith("/concepts") ||
     pathname.startsWith("/analytics") ||
     pathname.startsWith("/session") ||
-    pathname.startsWith("/workspace")
+    pathname.startsWith("/workspace") ||
+    pathname === "/pm" ||
+    pathname.startsWith("/pm/")
   );
 }
 

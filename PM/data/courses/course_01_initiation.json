@@ -1,610 +1,260 @@
-[
-  {
-    "id": "init_001",
-    "type": "concept",
-    "title": "Project initiation",
-    "definition": "Initiation is the phase where a project is formally authorized and its high-level purpose, boundaries, and leadership are established.",
-    "key_points": [
-      "Formally authorizes the project or phase",
-      "Appoints/empowers the project manager (PM) to begin planning",
-      "Creates alignment on why the project exists"
-    ],
-    "why_it_matters": "Many exam questions test whether you understand what can and cannot be done before authorization—initiation prevents wasted effort and misaligned work.",
-    "example": "An executive approves launching a new customer portal and assigns a PM, funding, and success criteria before detailed planning begins.",
-    "exam_trap": "Starting detailed scope, schedule, or procurement planning before the project is authorized.",
-    "tags": ["initiation", "process-groups", "authorization"],
-    "xp": 15
-  },
-  {
-    "id": "init_002",
-    "type": "concept",
-    "title": "Business case",
-    "definition": "A business case justifies the project by describing the business need, expected benefits, costs, risks, and alternatives.",
-    "key_points": [
-      "Explains why the project should exist",
-      "Often informs the charter",
-      "May compare options/solutions"
-    ],
-    "why_it_matters": "PMP questions often ask what document justifies a project and where the charter’s rationale comes from.",
-    "example": "A hospital estimates reduced readmissions by implementing a new care coordination system; compares build vs buy.",
-    "exam_trap": "Confusing the business case with the project charter; the charter authorizes, the business case justifies.",
-    "tags": ["business-case", "benefits", "initiation"],
-    "xp": 15
-  },
-  {
-    "id": "init_003",
-    "type": "concept",
-    "title": "Benefits management plan",
-    "definition": "A benefits management plan defines intended benefits, ownership, measurement approach, and timing—often beyond the project’s end date.",
-    "key_points": [
-      "Benefits can be realized after delivery",
-      "Assigns benefit owners (often operations)",
-      "Defines metrics and review cadence"
-    ],
-    "why_it_matters": "PMP scenarios test whether you connect projects to benefits realization, not just deliverables.",
-    "example": "After deploying a new billing system, finance owns a 12‑month target to reduce claim denials by 15%.",
-    "exam_trap": "Assuming benefits are realized at project close; deliverables ≠ benefits.",
-    "tags": ["benefits", "governance", "initiation"],
-    "xp": 15
-  },
-  {
-    "id": "init_004",
-    "type": "concept",
-    "title": "Project charter",
-    "definition": "The project charter is the document that formally authorizes the project and gives the PM authority to apply organizational resources.",
-    "key_points": [
-      "Issued by sponsor/authorizer",
-      "High-level scope, objectives, and success criteria",
-      "Names the PM and defines authority level"
-    ],
-    "why_it_matters": "Many PMP questions hinge on: 'Do you have a charter?' If not, you’re not authorized to proceed.",
-    "example": "The sponsor signs the charter stating objective, budget cap, major milestones, and PM authority to staff a team.",
-    "exam_trap": "Treating the charter like a detailed project management plan; it’s high-level and created early.",
-    "tags": ["charter", "authorization", "governance"],
-    "xp": 15
-  },
-  {
-    "id": "init_005",
-    "type": "concept",
-    "title": "Charter contents (typical)",
-    "definition": "A charter typically includes purpose, measurable objectives, high-level requirements, assumptions, constraints, risks, summary schedule and budget, and stakeholder list.",
-    "key_points": [
-      "High-level requirements (not full scope baseline)",
-      "Constraints and assumptions",
-      "High-level risks and milestone schedule"
-    ],
-    "why_it_matters": "Exam items may ask which element belongs in the charter vs the management plan.",
-    "example": "Charter lists budget ≤ $500k, go-live by Q4, and key requirement: HIPAA compliance.",
-    "exam_trap": "Putting WBS, detailed schedule network, or full risk register in the charter.",
-    "tags": ["charter", "requirements", "constraints", "assumptions"],
-    "xp": 15
-  },
-  {
-    "id": "init_006",
-    "type": "concept",
-    "title": "High-level requirements",
-    "definition": "High-level requirements describe what the solution must do, stated broadly enough to guide planning without constraining design prematurely.",
-    "key_points": [
-      "Express business needs at a high level",
-      "Refined later into detailed requirements",
-      "Help scope the project early"
-    ],
-    "why_it_matters": "You’ll be tested on distinguishing high-level requirements (charter) from detailed requirements (requirements documentation).",
-    "example": "“System must support multi-factor authentication for all staff users.”",
-    "exam_trap": "Jumping directly to detailed specifications and design choices during initiation.",
-    "tags": ["requirements", "scope", "initiation"],
-    "xp": 15
-  },
-  {
-    "id": "init_007",
-    "type": "concept",
-    "title": "Assumptions",
-    "definition": "Assumptions are factors considered true for planning purposes, which may later prove false and create risk.",
-    "key_points": [
-      "Unverified but treated as true",
-      "Should be documented and tracked",
-      "Can become risks if invalid"
-    ],
-    "why_it_matters": "PMP scenarios often ask what to do when assumptions change—update and manage impacts.",
-    "example": "Assuming a vendor API will be available by May; if delayed, schedule risk increases.",
-    "exam_trap": "Treating assumptions as guaranteed facts and ignoring their risk implications.",
-    "tags": ["assumptions", "risk", "planning"],
-    "xp": 15
-  },
-  {
-    "id": "init_008",
-    "type": "concept",
-    "title": "Constraints",
-    "definition": "Constraints are limiting factors that restrict options, such as fixed deadlines, budgets, resources, regulatory rules, or mandated tools.",
-    "key_points": [
-      "Limits the solution space",
-      "Often set by sponsor or environment",
-      "Must be incorporated into planning"
-    ],
-    "why_it_matters": "Constraints show up in many questions about feasibility and trade-offs.",
-    "example": "A regulatory deadline forces go-live before year-end; overtime budget is capped.",
-    "exam_trap": "Calling everything a constraint; distinguish constraints from assumptions and preferences.",
-    "tags": ["constraints", "schedule", "cost"],
-    "xp": 15
-  },
-  {
-    "id": "init_009",
-    "type": "concept",
-    "title": "Project selection methods (overview)",
-    "definition": "Selection methods help organizations choose which projects to authorize based on strategy, value, risk, and constraints.",
-    "key_points": [
-      "Benefit measurement methods (economic models)",
-      "Constrained optimization (math models)",
-      "Strategic alignment / scoring"
-    ],
-    "why_it_matters": "PMP commonly tests NPV/IRR/payback and how selection decisions are made.",
-    "example": "A portfolio team ranks proposals using NPV and risk score to decide which to fund.",
-    "exam_trap": "Assuming the PM chooses projects; selection is usually portfolio/governance.",
-    "tags": ["selection", "portfolio", "governance"],
-    "xp": 15
-  },
-  {
-    "id": "init_010",
-    "type": "concept",
-    "title": "Net present value (NPV)",
-    "definition": "NPV is the present value of expected cash inflows minus outflows; positive NPV indicates value creation given the discount rate.",
-    "key_points": [
-      "Accounts for time value of money",
-      "Higher NPV generally preferred (all else equal)",
-      "Uses a discount rate"
-    ],
-    "why_it_matters": "NPV is a frequent exam calculation/interpretation topic.",
-    "example": "A project with discounted benefits of $1.2M and costs of $900k has NPV = $300k.",
-    "exam_trap": "Comparing cash flows without discounting, or choosing lower NPV because it’s 'cheaper.'",
-    "tags": ["selection", "npv", "finance"],
-    "xp": 15
-  },
-  {
-    "id": "init_011",
-    "type": "concept",
-    "title": "Internal rate of return (IRR)",
-    "definition": "IRR is the discount rate at which NPV equals zero; projects with IRR above the hurdle rate are usually acceptable.",
-    "key_points": [
-      "Single rate summarizing return",
-      "Compared to required rate of return",
-      "May be less useful for non-standard cash flows"
-    ],
-    "why_it_matters": "PMP uses IRR for selection model questions and trade-offs.",
-    "example": "If hurdle rate is 8% and IRR is 12%, the project is generally attractive.",
-    "exam_trap": "Assuming higher IRR always best without considering strategic fit or risk.",
-    "tags": ["selection", "irr", "finance"],
-    "xp": 15
-  },
-  {
-    "id": "init_012",
-    "type": "concept",
-    "title": "Payback period",
-    "definition": "Payback period is the time required for cumulative benefits to repay the initial investment.",
-    "key_points": [
-      "Simple and intuitive",
-      "Ignores benefits after payback (limitation)",
-      "Does not discount unless 'discounted payback'"
-    ],
-    "why_it_matters": "Exam questions test method limitations and when to use them.",
-    "example": "A $200k project returning $50k/month has payback ~4 months (ignoring discounting).",
-    "exam_trap": "Using payback to pick between projects without considering total value or NPV.",
-    "tags": ["selection", "payback", "finance"],
-    "xp": 15
-  },
-  {
-    "id": "init_013",
-    "type": "concept",
-    "title": "Scoring models",
-    "definition": "Scoring models rank projects against weighted criteria such as strategic alignment, risk, compliance, and ROI.",
-    "key_points": [
-      "Weighted criteria",
-      "Supports apples-to-apples comparisons",
-      "Used in portfolio selection"
-    ],
-    "why_it_matters": "PMP questions often ask how to choose between competing projects with different benefits.",
-    "example": "Compliance gets weight 40%, revenue 30%, risk 30%; projects are scored and ranked.",
-    "exam_trap": "Thinking scoring replaces governance judgment; it supports decision-making.",
-    "tags": ["selection", "portfolio", "governance"],
-    "xp": 15
-  },
-  {
-    "id": "init_014",
-    "type": "concept",
-    "title": "Constraints vs requirements",
-    "definition": "Requirements define what must be delivered; constraints limit how/when/with what resources the work can be done.",
-    "key_points": [
-      "Requirement: outcome/feature",
-      "Constraint: limiting condition",
-      "Both influence scope and planning"
-    ],
-    "why_it_matters": "Exam items often give statements and ask you to classify them correctly.",
-    "example": "Requirement: 'support mobile login.' Constraint: 'must use existing SSO provider.'",
-    "exam_trap": "Labeling a preferred solution as a requirement when it’s actually a constraint or assumption.",
-    "tags": ["requirements", "constraints", "scope"],
-    "xp": 15
-  },
-  {
-    "id": "init_015",
-    "type": "concept",
-    "title": "Sponsor",
-    "definition": "The sponsor is the person or group that provides resources, champions the project, and authorizes the charter.",
-    "key_points": [
-      "Approves charter and funding",
-      "Resolves high-level issues/escalations",
-      "Ensures alignment with strategy"
-    ],
-    "why_it_matters": "PMP frequently tests roles/responsibilities and escalation paths.",
-    "example": "A VP sponsors an initiative, approves budget, and clears roadblocks with other departments.",
-    "exam_trap": "Assuming sponsor manages day-to-day work; that’s the PM’s role.",
-    "tags": ["stakeholders", "sponsor", "governance"],
-    "xp": 15
-  },
-  {
-    "id": "init_016",
-    "type": "concept",
-    "title": "Project manager (PM) authority",
-    "definition": "PM authority is the level of decision-making power granted to the PM, influenced by the charter and organizational structure.",
-    "key_points": [
-      "Defined/limited by org structure and charter",
-      "Affects resource control and decision speed",
-      "Must be understood early"
-    ],
-    "why_it_matters": "Many questions test how org structure affects PM power and how to lead without direct authority.",
-    "example": "In a functional org, the PM negotiates with department managers for staff time.",
-    "exam_trap": "Assuming every PM can assign resources directly; only true in stronger matrix/projectized orgs.",
-    "tags": ["authority", "org-structure", "leadership"],
-    "xp": 15
-  },
-  {
-    "id": "init_017",
-    "type": "concept",
-    "title": "Functional organization",
-    "definition": "A functional organization groups staff by specialty; PM authority is typically low and functional managers control resources.",
-    "key_points": [
-      "Clear departmental hierarchy",
-      "PM coordinates but lacks direct authority",
-      "Functional managers prioritize department work"
-    ],
-    "why_it_matters": "Org structure is a recurring PMP topic tied to resource negotiation and conflict.",
-    "example": "IT, Finance, and HR each allocate partial resources; approvals run through functional managers.",
-    "exam_trap": "Expecting dedicated team members in a functional org without negotiation.",
-    "tags": ["org-structure", "functional", "authority"],
-    "xp": 15
-  },
-  {
-    "id": "init_018",
-    "type": "concept",
-    "title": "Matrix organization (weak/balanced/strong)",
-    "definition": "Matrix orgs share power between functional managers and PMs; PM authority varies from weak to strong.",
-    "key_points": [
-      "Weak: PM low authority, FM high",
-      "Balanced: shared authority",
-      "Strong: PM high authority, dedicated resources more common"
-    ],
-    "why_it_matters": "PMP questions often give scenarios about conflicts and ask what structure is implied.",
-    "example": "A strong matrix gives PM budget control and decision rights while functional managers maintain career paths.",
-    "exam_trap": "Assuming 'matrix' always means high PM authority—weak matrix looks like functional.",
-    "tags": ["org-structure", "matrix", "authority"],
-    "xp": 15
-  },
-  {
-    "id": "init_019",
-    "type": "concept",
-    "title": "Projectized organization",
-    "definition": "In a projectized organization, PMs have high authority and teams are often dedicated full time to projects.",
-    "key_points": [
-      "High PM authority",
-      "Dedicated teams",
-      "Resources aligned to projects"
-    ],
-    "why_it_matters": "Exam questions test how authority and resource availability change across structures.",
-    "example": "A consulting firm assigns teams to projects; PMs control budgets and priorities.",
-    "exam_trap": "Thinking projectized eliminates all conflict—resources can still be constrained across projects.",
-    "tags": ["org-structure", "projectized", "authority"],
-    "xp": 15
-  },
-  {
-    "id": "init_020",
-    "type": "concept",
-    "title": "Stakeholder",
-    "definition": "A stakeholder is an individual, group, or organization that may affect, be affected by, or perceive itself to be affected by the project.",
-    "key_points": [
-      "Can be internal or external",
-      "Includes supporters and opponents",
-      "Stakeholders change over time"
-    ],
-    "why_it_matters": "Stakeholder identification is an initiation focus and a common source of exam scenarios.",
-    "example": "Patients, nurses, IT, compliance, and vendors are stakeholders in a healthcare software project.",
-    "exam_trap": "Only considering 'customers' as stakeholders; regulators and internal teams also count.",
-    "tags": ["stakeholders", "initiation"],
-    "xp": 15
-  },
-  {
-    "id": "init_021",
-    "type": "concept",
-    "title": "Stakeholder identification",
-    "definition": "Identifying stakeholders means discovering who has interests, influence, or impact related to the project and documenting them.",
-    "key_points": [
-      "Done early and iteratively",
-      "Captures roles, interests, influence",
-      "Feeds stakeholder engagement planning"
-    ],
-    "why_it_matters": "PMP scenarios frequently start with missed stakeholders causing late surprises.",
-    "example": "Including cybersecurity early prevents late-stage rework when security controls are required.",
-    "exam_trap": "Treating stakeholder lists as one-time; you must update as the project evolves.",
-    "tags": ["stakeholders", "planning", "communication"],
-    "xp": 15
-  },
-  {
-    "id": "init_022",
-    "type": "concept",
-    "title": "Stakeholder register",
-    "definition": "A stakeholder register is a document listing stakeholders and key details such as role, interest, influence, and engagement expectations.",
-    "key_points": [
-      "Created early (Identify Stakeholders)",
-      "Includes contact info and classification",
-      "Updated throughout the project"
-    ],
-    "why_it_matters": "The register is a common 'what document should you update?' answer choice.",
-    "example": "Register includes the compliance officer’s influence level and required review checkpoints.",
-    "exam_trap": "Confusing stakeholder register with communications plan; register identifies people, plan defines communications.",
-    "tags": ["stakeholders", "register", "communication"],
-    "xp": 15
-  },
-  {
-    "id": "init_023",
-    "type": "concept",
-    "title": "Power/interest grid",
-    "definition": "A power/interest grid classifies stakeholders based on their authority (power) and their level of concern (interest) to guide engagement strategies.",
-    "key_points": [
-      "High power/high interest: manage closely",
-      "High power/low interest: keep satisfied",
-      "Low power/high interest: keep informed"
-    ],
-    "why_it_matters": "PMP tests stakeholder engagement strategy choices based on classification.",
-    "example": "A CFO (high power, low interest) wants summary updates, not daily details.",
-    "exam_trap": "Sending the same communication to everyone—tailor engagement level to stakeholder needs.",
-    "tags": ["stakeholders", "analysis", "communication"],
-    "xp": 15
-  },
-  {
-    "id": "init_024",
-    "type": "concept",
-    "title": "PM knowledge areas (overview)",
-    "definition": "Knowledge areas group related project management processes such as scope, schedule, cost, quality, resources, communications, risk, procurement, and stakeholder management.",
-    "key_points": [
-      "Not a process group; it’s a classification",
-      "Used to organize planning and control",
-      "Integration ties everything together"
-    ],
-    "why_it_matters": "PMP often checks your conceptual map of where work belongs and how areas interact.",
-    "example": "A scope change affects schedule and cost; integration coordinates the trade-offs.",
-    "exam_trap": "Treating knowledge areas as chronological steps; they overlap throughout the project.",
-    "tags": ["knowledge-areas", "overview", "integration"],
-    "xp": 15
-  },
-  {
-    "id": "init_025",
-    "type": "concept",
-    "title": "Integration management (early focus)",
-    "definition": "Integration management ensures project work is coordinated; early integration includes developing the charter and aligning objectives with strategy.",
-    "key_points": [
-      "Develop Project Charter is an integration process",
-      "Coordinates trade-offs across areas",
-      "Provides overall project direction"
-    ],
-    "why_it_matters": "Initiation questions often tie charter work to integration management.",
-    "example": "PM ensures charter objectives align with portfolio strategy and constraints before detailed planning begins.",
-    "exam_trap": "Assuming integration is only about change control—it's broader.",
-    "tags": ["integration", "charter", "initiation"],
-    "xp": 15
-  },
-  {
-    "id": "init_026",
-    "type": "concept",
-    "title": "Enterprise environmental factors (EEFs)",
-    "definition": "EEFs are internal/external conditions that influence or constrain the project, such as regulations, culture, marketplace, and infrastructure.",
-    "key_points": [
-      "Not created by the project",
-      "Influence planning and execution",
-      "Can be internal or external"
-    ],
-    "why_it_matters": "PMP tests whether you can identify influences that come from the environment vs organizational assets.",
-    "example": "A new data privacy law forces requirements for consent and data retention.",
-    "exam_trap": "Calling internal templates an EEF; templates are OPAs (organizational process assets).",
-    "tags": ["eef", "context", "constraints"],
-    "xp": 15
-  },
-  {
-    "id": "init_027",
-    "type": "concept",
-    "title": "Organizational process assets (OPAs)",
-    "definition": "OPAs are internal resources such as templates, policies, lessons learned, and historical information used to guide project work.",
-    "key_points": [
-      "Internal and reusable",
-      "Includes templates and procedures",
-      "Lessons learned inform planning"
-    ],
-    "why_it_matters": "PMP frequently contrasts OPAs vs EEFs in initiation/planning questions.",
-    "example": "Using the organization’s charter template and historical schedule data from similar projects.",
-    "exam_trap": "Treating laws/regulations as OPAs—they are EEFs.",
-    "tags": ["opa", "templates", "lessons-learned"],
-    "xp": 15
-  },
-  {
-    "id": "init_028",
-    "type": "concept",
-    "title": "Constraints: triple constraint perspective",
-    "definition": "Schedule, cost, and scope are interdependent; changing one constraint usually affects at least one other and potentially quality/risk.",
-    "key_points": [
-      "Trade-offs are required",
-      "Quality and risk are impacted by constraint changes",
-      "Integration manages these decisions"
-    ],
-    "why_it_matters": "Questions often ask what the PM should do when a sponsor imposes a new deadline or budget cap.",
-    "example": "Shortening schedule may require more cost (overtime) or reduced scope.",
-    "exam_trap": "Agreeing to impossible constraints without negotiating scope/cost trade-offs.",
-    "tags": ["constraints", "tradeoffs", "integration"],
-    "xp": 15
-  },
-  {
-    "id": "init_029",
-    "type": "concept",
-    "title": "Requirements vs solution design",
-    "definition": "Requirements describe what is needed; solution design determines how to meet those requirements and is refined later.",
-    "key_points": [
-      "Separate need from implementation",
-      "Avoid premature design constraints",
-      "Validate with stakeholders"
-    ],
-    "why_it_matters": "PMP scenarios often include stakeholders prescribing a solution; the PM should clarify needs first.",
-    "example": "Stakeholder asks for 'a new app'; PM probes for underlying requirement: 'mobile access to scheduling.'",
-    "exam_trap": "Locking in a solution before understanding requirements and constraints.",
-    "tags": ["requirements", "scope", "stakeholders"],
-    "xp": 15
-  },
-  {
-    "id": "init_030",
-    "type": "concept",
-    "title": "Constraints: mandated technology",
-    "definition": "Sometimes sponsors or governance mandate tools/vendors; the PM treats this as a constraint and plans around it while managing expectations.",
-    "key_points": [
-      "Constraint set by organization",
-      "Impacts procurement and schedule",
-      "Requires clear documentation"
-    ],
-    "why_it_matters": "Exam questions test whether you document constraints and adjust planning rather than arguing after the fact.",
-    "example": "Company mandates Azure; PM ensures architecture and budget align with that constraint.",
-    "exam_trap": "Treating mandated tech as optional or changing it without approval.",
-    "tags": ["constraints", "technology", "governance"],
-    "xp": 15
-  },
-  {
-    "id": "init_031",
-    "type": "concept",
-    "title": "PM role in selection vs authorization",
-    "definition": "Project selection is typically done by portfolio/governance; initiation authorizes via charter, after which the PM leads planning and execution.",
-    "key_points": [
-      "Selection ≠ charter",
-      "PM may provide input but usually does not decide",
-      "Authorization triggers formal work"
-    ],
-    "why_it_matters": "Clarifies who decides to start projects and what the PM can do at each stage.",
-    "example": "Portfolio board approves project; sponsor issues charter; PM begins detailed planning.",
-    "exam_trap": "Assuming PM can start or cancel projects unilaterally.",
-    "tags": ["governance", "selection", "charter"],
-    "xp": 15
-  },
-  {
-    "id": "init_032",
-    "type": "concept",
-    "title": "Stakeholder engagement strategy (initiation)",
-    "definition": "Early engagement focuses on identifying key stakeholders, understanding expectations, and setting communication/participation approaches appropriate to influence.",
-    "key_points": [
-      "Engage high power stakeholders early",
-      "Clarify expectations and success criteria",
-      "Prevent late resistance"
-    ],
-    "why_it_matters": "Many project failures start with stakeholder resistance—PMP tests proactive engagement.",
-    "example": "Meet with department heads to clarify how the new workflow impacts staff and capture concerns.",
-    "exam_trap": "Delaying stakeholder conversations until planning is complete, causing rework.",
-    "tags": ["stakeholders", "engagement", "communication"],
-    "xp": 15
-  },
-  {
-    "id": "init_033",
-    "type": "concept",
-    "title": "PM appointment timing",
-    "definition": "Best practice is to assign the PM as early as possible (during initiation) to influence charter, stakeholder identification, and early planning.",
-    "key_points": [
-      "Earlier involvement reduces rework",
-      "PM helps shape realistic constraints",
-      "Supports smoother handoff into planning"
-    ],
-    "why_it_matters": "PMP questions may ask when PM should be assigned—early is the typical best answer.",
-    "example": "PM participates in charter workshops to ensure milestones and constraints are realistic.",
-    "exam_trap": "Assigning PM after planning is done; unrealistic commitments may already be made.",
-    "tags": ["pm-role", "initiation", "governance"],
-    "xp": 15
-  },
-  {
-    "id": "init_034",
-    "type": "concept",
-    "title": "Project boundaries",
-    "definition": "Project boundaries define what is in-scope and out-of-scope at a high level during initiation, setting expectations before detailed scope definition.",
-    "key_points": [
-      "Clarifies what the project will not do",
-      "Reduces early scope creep",
-      "Informs stakeholder expectations"
-    ],
-    "why_it_matters": "Scope boundary misunderstandings commonly create conflict; PMP tests early clarity.",
-    "example": "Charter states it will implement patient portal for appointments but not redesign billing.",
-    "exam_trap": "Using vague boundaries like 'modernize systems' without excluding major adjacent work.",
-    "tags": ["scope", "boundaries", "charter"],
-    "xp": 15
-  },
-  {
-    "id": "init_035",
-    "type": "concept",
-    "title": "High-level risks (initiation)",
-    "definition": "High-level risks are early, broad uncertainties identified during initiation to inform feasibility and charter decisions.",
-    "key_points": [
-      "Often tied to assumptions and constraints",
-      "Not a full risk register yet",
-      "Used to inform go/no-go and early planning"
-    ],
-    "why_it_matters": "PMP tests that you identify risks early and include them at a high level in initiation artifacts.",
-    "example": "Risk: vendor contract approval may take 8–10 weeks, threatening schedule constraint.",
-    "exam_trap": "Waiting until execution to identify risks or ignoring risk because it’s 'too early.'",
-    "tags": ["risk", "initiation", "assumptions"],
-    "xp": 15
-  },
-  {
-    "id": "init_036",
-    "type": "concept",
-    "title": "PM authority vs responsibility",
-    "definition": "Responsibility is the accountability for outcomes; authority is the power to make decisions and allocate resources—misalignment creates friction.",
-    "key_points": [
-      "Authority should match responsibility",
-      "Escalate gaps to sponsor",
-      "Clarify decision rights early"
-    ],
-    "why_it_matters": "Scenario questions often describe a PM held accountable without authority; the right move is clarify/escalate appropriately.",
-    "example": "PM is responsible for delivery but cannot secure SME time; escalates to sponsor to resolve priorities.",
-    "exam_trap": "Trying to 'power through' without resolving authority gaps, leading to ongoing delays.",
-    "tags": ["authority", "leadership", "governance"],
-    "xp": 15
-  },
-  {
-    "id": "init_037",
-    "type": "concept",
-    "title": "Requirements sources",
-    "definition": "Requirements come from business documents, stakeholder needs, regulations, and operational constraints; initiation clarifies sources and ownership.",
-    "key_points": [
-      "Regulatory/compliance requirements",
-      "Business process requirements",
-      "Stakeholder and user needs"
-    ],
-    "why_it_matters": "PMP tests whether you identify the right stakeholders and sources before documenting requirements.",
-    "example": "Compliance defines data retention; operations defines workflow needs; users define usability needs.",
-    "exam_trap": "Only gathering requirements from loud stakeholders and missing regulatory/operational sources.",
-    "tags": ["requirements", "stakeholders", "compliance"],
-    "xp": 15
-  },
-  {
-    "id": "init_038",
-    "type": "concept",
-    "title": "Initiation deliverables vs planning deliverables",
-    "definition": "Initiation deliverables authorize and frame the project; planning deliverables create baselines and detailed plans for execution and control.",
-    "key_points": [
-      "Initiation: charter, stakeholder register",
-      "Planning: PM plan, baselines, detailed requirements",
-      "Different level of detail and purpose"
-    ],
-    "why_it_matters": "This distinction appears across many PMP questions about 'what do you do next?'",
-    "example": "After charter approval, the PM develops the project management plan and scope baseline.",
-    "exam_trap": "Skipping initiation artifacts and jumping to baselines without authorization.",
-    "tags": ["process-groups", "initiation", "planning"],
-    "xp": 15
-  }
-]
+{
+  "course_id": "apmc_500v",
+  "title": "Project Initiation & Charter Development",
+  "domain": "Initiation",
+  "modules": [
+    {
+      "title": "Terminology & Foundations",
+      "concepts": [
+        {
+          "id": "init_001",
+          "title": "Project vs Operations",
+          "definition": "A project is a temporary endeavor that creates a unique result, while operations are ongoing activities that sustain the business.",
+          "key_points": [
+            "Projects have defined start and end dates",
+            "Operations are repetitive and continuous",
+            "Projects introduce change"
+          ],
+          "why_it_matters": "Many PMP questions test whether work is project-based or operational.",
+          "example": "Building a facility is a project; maintaining it is operations.",
+          "exam_trap": "Not all deadline-driven work is a project."
+        },
+        {
+          "id": "init_002",
+          "title": "Program vs Portfolio",
+          "definition": "Programs group related projects for shared benefits; portfolios align projects with strategic objectives.",
+          "key_points": [
+            "Programs deliver combined value",
+            "Portfolios focus on strategy alignment"
+          ],
+          "why_it_matters": "Helps understand decision-making at organizational level.",
+          "example": "Multiple facility upgrades = program.",
+          "exam_trap": "Programs are not just large projects."
+        },
+        {
+          "id": "init_003",
+          "title": "Deliverables & Milestones",
+          "definition": "Deliverables are outputs; milestones are key checkpoints.",
+          "key_points": [
+            "Deliverables must be verifiable",
+            "Milestones track progress"
+          ],
+          "why_it_matters": "Critical for planning and tracking.",
+          "example": "Completed blueprint = deliverable; approval date = milestone.",
+          "exam_trap": "Milestones are not work tasks."
+        },
+        {
+          "id": "init_004",
+          "title": "Scope Creep",
+          "definition": "Uncontrolled expansion of scope without adjustments to time or cost.",
+          "key_points": [
+            "Occurs without change control",
+            "Leads to delays and overruns"
+          ],
+          "why_it_matters": "One of the most common failure causes.",
+          "example": "Adding features without approval.",
+          "exam_trap": "Approved changes are not scope creep."
+        },
+        {
+          "id": "init_005",
+          "title": "Work Breakdown Structure (WBS)",
+          "definition": "A hierarchical decomposition of total project scope.",
+          "key_points": [
+            "Breaks work into manageable parts",
+            "Foundation for planning"
+          ],
+          "why_it_matters": "Everything builds from scope clarity.",
+          "example": "Breaking a build into phases and tasks.",
+          "exam_trap": "WBS is not a schedule."
+        }
+      ]
+    },
+
+    {
+      "title": "Lifecycle & Approach",
+      "concepts": [
+        {
+          "id": "init_010",
+          "title": "Project Lifecycle",
+          "definition": "The phases a project goes through from start to finish.",
+          "key_points": [
+            "Initiation → Planning → Execution → Monitoring → Closing"
+          ],
+          "why_it_matters": "Defines sequence of work.",
+          "example": "You must initiate before planning.",
+          "exam_trap": "Phases vary by organization."
+        },
+        {
+          "id": "init_011",
+          "title": "Predictive vs Agile vs Hybrid",
+          "definition": "Different approaches to managing project work.",
+          "key_points": [
+            "Predictive = fixed scope",
+            "Agile = evolving scope",
+            "Hybrid = mix"
+          ],
+          "why_it_matters": "Approach selection is scenario-tested.",
+          "example": "Construction = predictive.",
+          "exam_trap": "Agile is not always better."
+        },
+        {
+          "id": "init_012",
+          "title": "Tailoring",
+          "definition": "Adapting processes to fit the project environment.",
+          "key_points": [
+            "No one-size-fits-all approach"
+          ],
+          "why_it_matters": "Core PMP principle.",
+          "example": "Using agile for uncertain projects.",
+          "exam_trap": "Blindly following templates."
+        }
+      ]
+    },
+
+    {
+      "title": "Initiation",
+      "concepts": [
+        {
+          "id": "init_020",
+          "title": "Project Initiation Purpose",
+          "definition": "Formal authorization of a project.",
+          "key_points": [
+            "Defines high-level scope",
+            "Aligns with strategy"
+          ],
+          "why_it_matters": "Prevents premature execution.",
+          "example": "Approval required before work begins.",
+          "exam_trap": "Planning ≠ initiation."
+        },
+        {
+          "id": "init_021",
+          "title": "Business Case",
+          "definition": "Justifies project value and need.",
+          "key_points": [
+            "Defines problem and benefits"
+          ],
+          "why_it_matters": "Projects must deliver value.",
+          "example": "Reducing costs.",
+          "exam_trap": "Charter does not replace business case."
+        },
+        {
+          "id": "init_022",
+          "title": "Stakeholder Register",
+          "definition": "Document listing stakeholders and key info.",
+          "key_points": [
+            "Includes influence and interest"
+          ],
+          "why_it_matters": "Foundation for stakeholder management.",
+          "example": "List of supervisors and clients.",
+          "exam_trap": "Stakeholders are not static."
+        }
+      ]
+    },
+
+    {
+      "title": "Knowledge Areas",
+      "concepts": [
+        { "id": "init_030", "title": "Integration", "definition": "Coordinates all aspects.", "key_points": ["Central control"], "why_it_matters": "Ensures alignment.", "example": "Managing trade-offs.", "exam_trap": "Not a phase." },
+        { "id": "init_031", "title": "Scope", "definition": "Defines work included.", "key_points": ["Controls scope creep"], "why_it_matters": "Defines boundaries.", "example": "Scope statement.", "exam_trap": "Includes exclusions." },
+        { "id": "init_032", "title": "Schedule", "definition": "Manages timeline.", "key_points": ["Critical path"], "why_it_matters": "Ensures deadlines.", "example": "Gantt chart.", "exam_trap": "Not just dates." },
+        { "id": "init_033", "title": "Cost", "definition": "Manages budget.", "key_points": ["Estimation"], "why_it_matters": "Controls spending.", "example": "Budget tracking.", "exam_trap": "Cost ≠ value." },
+        { "id": "init_034", "title": "Quality", "definition": "Ensures requirements met.", "key_points": ["Prevention over inspection"], "why_it_matters": "Customer satisfaction.", "example": "QA checks.", "exam_trap": "Testing alone is insufficient." }
+      ]
+    },
+
+    {
+      "title": "Stakeholders & Organization",
+      "concepts": [
+        {
+          "id": "init_040",
+          "title": "Stakeholder Analysis",
+          "definition": "Evaluating stakeholder influence and interest.",
+          "key_points": [
+            "Power/interest grid"
+          ],
+          "why_it_matters": "Guides engagement strategy.",
+          "example": "High power = manage closely.",
+          "exam_trap": "Ignoring low power stakeholders."
+        },
+        {
+          "id": "init_041",
+          "title": "Organizational Structures",
+          "definition": "Defines authority distribution.",
+          "key_points": [
+            "Functional, matrix, projectized"
+          ],
+          "why_it_matters": "Affects PM authority.",
+          "example": "Matrix limits control.",
+          "exam_trap": "Authority varies widely."
+        }
+      ]
+    },
+
+    {
+      "title": "Requirements & Objectives",
+      "concepts": [
+        {
+          "id": "init_050",
+          "title": "Requirements",
+          "definition": "Conditions needed to satisfy stakeholders.",
+          "key_points": [
+            "Must be clear and measurable"
+          ],
+          "why_it_matters": "Prevents rework.",
+          "example": "Functional specs.",
+          "exam_trap": "Vague requirements fail."
+        },
+        {
+          "id": "init_051",
+          "title": "SMART Objectives",
+          "definition": "Clear measurable project goals.",
+          "key_points": [
+            "Specific, measurable, achievable, relevant, time-bound"
+          ],
+          "why_it_matters": "Defines success.",
+          "example": "Reduce costs by 10%.",
+          "exam_trap": "Goals ≠ objectives."
+        }
+      ]
+    },
+
+    {
+      "title": "Selection, Constraints & Charter",
+      "concepts": [
+        {
+          "id": "init_060",
+          "title": "Selection Methods",
+          "definition": "Evaluating project viability.",
+          "key_points": [
+            "NPV, IRR, Payback"
+          ],
+          "why_it_matters": "Ensures value.",
+          "example": "Choosing highest ROI.",
+          "exam_trap": "ROI alone isn’t enough."
+        },
+        {
+          "id": "init_061",
+          "title": "Constraints & Assumptions",
+          "definition": "Limits and accepted conditions.",
+          "key_points": [
+            "Assumptions create risk"
+          ],
+          "why_it_matters": "Impacts planning.",
+          "example": "Assuming resource availability.",
+          "exam_trap": "Assumptions are not facts."
+        },
+        {
+          "id": "init_062",
+          "title": "Project Charter",
+          "definition": "Document that authorizes the project.",
+          "key_points": [
+            "Grants PM authority"
+          ],
+          "why_it_matters": "Essential for project start.",
+          "example": "Signed by sponsor.",
+          "exam_trap": "Not a detailed plan."
+        }
+      ]
+    }
+  ]
+}

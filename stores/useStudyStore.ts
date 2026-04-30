@@ -4,6 +4,8 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 import type { QuizObject } from "@/lib/ai/schemas";
+import type { AppWorkspace } from "@/lib/appMode";
+import { DEFAULT_WORKSPACE } from "@/lib/appMode";
 import type { StudyPlanItem } from "@/lib/studyPlan";
 import { generateStudyPlan } from "@/lib/studyPlan";
 
@@ -22,6 +24,8 @@ export interface StudySection {
   sourceFileHash?: string;
   /** If true, this section is only a cheap doc-map stub and needs on-demand deep processing. */
   needsDeepProcessing?: boolean;
+  /** Study vs PM workspace; omitted / undefined treated as study for legacy data. */
+  workspace?: AppWorkspace;
 }
 
 export interface QuizResult {
@@ -122,7 +126,13 @@ export const useStudyStore = create<StudyStore>()(
 
       addSections: (newSections) =>
         set((s) => ({
-          sections: [...s.sections, ...newSections],
+          sections: [
+            ...s.sections,
+            ...newSections.map((sec) => ({
+              ...sec,
+              workspace: sec.workspace ?? DEFAULT_WORKSPACE,
+            })),
+          ],
           selectedSectionId:
             s.selectedSectionId ?? newSections[0]?.id ?? s.selectedSectionId,
         })),
