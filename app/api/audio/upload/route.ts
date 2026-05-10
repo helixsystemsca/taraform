@@ -9,10 +9,27 @@ const QuerySchema = z.object({
   type: z.enum(["before", "after"]),
 });
 
-function isMp3(file: File) {
-  const nameOk = file.name.toLowerCase().endsWith(".mp3");
-  const typeOk = file.type === "audio/mpeg" || file.type === "audio/mp3" || file.type === "";
-  return nameOk && typeOk;
+type AllowedExt = "mp3" | "m4a";
+
+function detectExt(name: string): AllowedExt | null {
+  const n = name.toLowerCase().trim();
+  if (n.endsWith(".mp3")) return "mp3";
+  if (n.endsWith(".m4a")) return "m4a";
+  return null;
+}
+
+function contentTypeForExt(ext: AllowedExt): string {
+  return ext === "m4a" ? "audio/mp4" : "audio/mpeg";
+}
+
+function isAllowedAudio(file: File): AllowedExt | null {
+  const ext = detectExt(file.name);
+  if (!ext) return null;
+  const t = (file.type || "").toLowerCase();
+  if (!t) return ext; // Some browsers omit it; rely on extension.
+  if (ext === "mp3" && (t === "audio/mpeg" || t === "audio/mp3")) return ext;
+  if (ext === "m4a" && (t === "audio/mp4" || t === "audio/x-m4a")) return ext;
+  return null;
 }
 
 export async function POST(req: Request) {
@@ -30,17 +47,18 @@ export async function POST(req: Request) {
   const file = form.get("file");
   if (!(file instanceof File)) return NextResponse.json({ error: "Missing file." }, { status: 400 });
 
-  if (!isMp3(file)) return NextResponse.json({ error: "Only .mp3 uploads are allowed." }, { status: 400 });
+  const ext = isAllowedAudio(file);
+  if (!ext) return NextResponse.json({ error: "Only .mp3 or .m4a uploads are allowed." }, { status: 400 });
   if (file.size > MAX_BYTES) return NextResponse.json({ error: "File too large (max 10MB)." }, { status: 413 });
 
   const type = parsedQuery.data.type;
   const userId = user.id;
   const ts = new Date().toISOString().replace(/[:.]/g, "-");
-  const path = `${userId}/${type}/${ts}.mp3`;
+  const path = `${userId}/${type}/${ts}.${ext}`;
 
   // Upload to private bucket `audio` (RLS policies restrict to the user's own folder).
   const { error: uploadErr } = await supabase.storage.from("audio").upload(path, file, {
-    contentType: "audio/mpeg",
+    contentType: file.type || contentTypeForExt(ext),
     upsert: true,
   });
   if (uploadErr) {

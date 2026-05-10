@@ -78,14 +78,14 @@ function UploadRow({
         <div className="min-w-0">
           <div className="text-sm font-semibold text-ink">{label}</div>
           <p className="mt-1 text-xs text-ink/55">
-            {count === 0 ? "No files yet." : `${count} in library`} · MP3 only (max 10MB). Each upload is kept — playback picks one at random.
+            {count === 0 ? "No files yet." : `${count} in library`} · MP3 or M4A (max 10MB). Each upload is kept — playback picks one at random.
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <input
             ref={inputRef}
             type="file"
-            accept=".mp3,audio/mpeg"
+            accept=".mp3,.m4a,audio/mpeg,audio/mp4"
             className="hidden"
             onChange={(e) => {
               const f = e.target.files?.[0];
@@ -95,7 +95,7 @@ function UploadRow({
           />
           <Button type="button" variant="ghost" onClick={pick}>
             <UploadCloud className="mr-2 h-4 w-4" />
-            Upload MP3
+            Upload audio
           </Button>
         </div>
       </div>
