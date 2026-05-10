@@ -132,6 +132,10 @@ def session_factory() -> async_sessionmaker[AsyncSession]:
 
 async def init_db() -> None:
     from ..models import sticky_note as _sticky_note_model  # noqa: F401
+    from ..models import study_flashcard as _study_flashcard_model  # noqa: F401
+    from ..models import study_generation_cache as _study_generation_cache_model  # noqa: F401
+    from ..models import study_highlight as _study_highlight_model  # noqa: F401
+    from ..models import study_quiz_question as _study_quiz_question_model  # noqa: F401
     from ..models import summary as _summary_model  # noqa: F401
     from ..models import unit as _unit_model  # noqa: F401
     from ..models import unit_pdf_markup as _unit_pdf_markup_model  # noqa: F401

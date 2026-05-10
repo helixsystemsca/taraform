@@ -1,0 +1,52 @@
+61
+Section 2 – Project Management Performance Domains
+⚫ Cost management. The primary source of project costs comes from the resources needed
+to complete the project activities. Every project decision may incur further costs related to
+using, maintaining, and supporting the project’s purpose to create value, emphasizing the
+need for life cycle cost and maintenance considerations. For example, limiting the number
+of design reviews could reduce the cost of the project but increase the resulting product’s
+operating costs.
+⚫
+Cost measurement. Different stakeholders measure project costs in different ways and
+at different times. For example, the cost of an acquired item may be measured when the
+acquisition decision is made or committed, the order is placed, the item is delivered, or the
+actual cost is incurred or recorded for project accounting purposes. In many organizations,
+predicting and analyzing the prospective financial performance of the project’s product is
+performed outside of the project. In others, such as a capital facilities project, project cost
+management should include this work.
+2.4.2 Processes
+The Finance performance domain includes the processes required to determine, manage, and
+control the finances of the project. The following processes are included in the Finance performance
+domain (see Figure 2-26):
+⚫
+Plan Financial Management. The process of defining how the project revenues and
+expenses will be estimated, budgeted, managed, monitored, and controlled, ensuring
+alignment with project objectives and organizational strategy.
+⚫
+Estimate Costs. The process of developing an approximation of the cost of resources
+needed to complete project work.
+Figure 2-25. Two Scenarios of Budget Buildup
+Reserves Managed ExplicitlyReserves Managed Implicitly
+Management
+Reserve
+Contingency
+Reserve
+Cost
+Baseline
+Initial
+Budget
+Work Cost
+Estimates
+Total Amount
+Management
+Reserve
+Contingency
+Reserve
+Cost
+Baseline
+Initial
+Budget
+Work Cost
+Estimates
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

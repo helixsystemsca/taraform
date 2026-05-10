@@ -1,0 +1,49 @@
+52
+3.7.2 Principle in Action
+To provide an example of the principle of Integrate Sustainability Within All Project Areas, consider a
+construction project. Construction projects often require materials derived from natural resources,
+which may be sourced externally. If sustainability principles are overlooked, the project team might
+choose the least expensive materials, potentially harming the environment and human health. By
+adhering to sustainability principles, the project team not only focuses on the project’s value and the
+internal rate of return, but also demonstrates a commitment to environmental sustainability and the
+responsible use of materials and natural resources while involving local communities. This effort could
+involve carefully planning the required materials and selecting sources with the least environmental
+impact or seeking materials that mimic natural processes and draw inspiration from nature
+(e.g., constructing urban buildings with wood or using recycled concrete instead of natural stone).
+Technology projects can enhance sustainability by integrating eco-friendly practices into project
+management, emphasizing social responsibility, and maximizing social impact. By adopting
+appropriate tools and innovative technologies, project teams can reduce resource consumption and
+waste, streamline processes, and improve efficiency. Projects can also focus on creating positive social
+impacts such as improving access to education and healthcare through technology. Environmental
+sustainability is achieved by selecting sustainable materials, minimizing carbon footprints, and
+implementing eco-friendly technologies. This holistic approach helps foster a more sustainable future.
+3.7.3 Connected Performance Domains
+The Integrate Sustainability Within All Project Areas principle may impact the Finance performance
+domain as sustainable practices may require additional funding, but they may also reduce the level of
+financial threat for the project (and the funding organization). The project team may consider green
+benefits to be included in the project requirements.
+The principle of Integrate Sustainability Within All Project Areas can positively impact the Risk
+performance domain by enabling proactive identification and mitigation of long-term risks, such
+as environmental, regulatory, or societal challenges. Sustainability initiatives can also create
+opportunities for innovation by encouraging project teams to develop resource-efficient solutions
+and sustainable practices. Embedding societal and environmental values into project management
+strengthens the Governance, Scope, and Stakeholders performance domains by fostering
+accountability, aligning scope with organizational goals and societal needs, and enhancing stakeholder
+trust. This approach benefits the project team during execution and delivers lasting value to the
+organization, improving its reputation and resilience once the project or product life cycle is complete.
+Integrating sustainability can affect many aspects of a project, including but not limited to the following:
+⚫
+Governance. The project team’s proactive and collaborative approach with the governance
+team develops a positive, transparent communication channel with management, helping
+to ensure alignment with the project objectives and outcomes, with the least deviations
+and less confusion. This approach includes integrating sustainability goals into governance
+practices to ensure long-term environmental and social benefits.
+⚫
+Scope. Open-channel communication proactively calibrates to a project’s evolving needs
+to add elements, adjust quality, or remove elements of the scope or project requirements.
+Sustainability considerations should be embedded into the scope to help ensure that
+project deliverables meet or exceed the organization’s sustainability goals, as well as
+environmental and social standards.
+The Standard for Project Management
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

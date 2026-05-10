@@ -1,0 +1,60 @@
+112
+A Guide to the Project Management Body of Knowledge
+3.7 Summary
+Tailoring adapts the approach, governance, and processes to fit the project’s environment and
+objectives, which involves analyzing and modifying people, processes, and tools. The tailoring process
+includes four steps:
+⚫
+Select the initial development approach,
+⚫ Tailor for the organization,
+⚫ Tailor for the project, and
+⚫ Improve continuously.
+Tailoring is typically led by project stakeholders, with organizational guidelines and governance ensuring
+alignment and consistency across teams. Tailoring is not just about making changes, but also about
+verifying and validating that the tailored approaches are effective and aligned with project outcomes.
+Table 3-1. Common Situations and Tailoring Suggestions
+Situation Tailoring Suggestion
+The deliverables are poor quality. Analyze the root causes of poor quality and implement targeted
+feedback and quality assurance measures where needed. Focus on
+process improvements rather than just increasing verification steps.
+Team members are unsure of
+how to proceed or undertake their
+work.
+Assess the specific needs of the team to identify the most
+appropriate support mechanisms, including guidance, mentorship,
+training, and knowledge-sharing practices.
+Team members are not
+cooperative and are working in
+silos.
+Conduct team-building activities and hold individual meetings
+to understand the cause. Take actions to strengthen bonds and
+promote coordination among team members.
+There are long delays waiting for
+approvals.
+Streamline the approval process by appointing people who are
+authorized to make decisions up to certain value thresholds,
+shortening the time needed for approvals.
+There is too much work in progress
+and/or waste.
+Use techniques like value stream mapping and kanban boards to
+visualize work, identify issues, and find solutions.
+Stakeholders are not engaged or
+they share negative feedback.
+Assess whether stakeholders receive timely and relevant information,
+tailoring communication methods to balance simplicity with the need
+for deeper engagement.
+There is a lack of transparency
+and understanding about project
+progress.
+Check to ensure that appropriate data is collected, analyzed, shared,
+and discussed during team and stakeholder meetings. Validate
+agreement on the measures with the team and stakeholders.
+Issues and/or risks for which the
+team is unprepared continue to
+surface, requiring the team to
+react rather than make progress
+on their work.
+Explore root causes to identify whether there are related gaps in
+project processes or activities.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

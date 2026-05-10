@@ -1,0 +1,43 @@
+14
+A Guide to the Project Management Body of Knowledge
+2.1.5 Key Concepts
+The key concepts detailed in Sections 2.1.5.1 through 2.1.5.4 support effective practices for the
+Governance performance domain.
+2.1.5.1 Leading Indicators
+Leading indicators indicate upcoming changes or reveal trends in the project. If the change or trend is
+unfavorable, the project team should evaluate the root cause of the leading indicator measurement and
+take corrective actions to address the trend. Used in this way, leading indicators can reduce performance
+risk on a project by identifying potential performance variances before they cross the tolerance threshold.
+Leading indicators may be quantifiable, such as the size of the project or the number of items
+that are in progress in the backlog. Other leading indicators are more difficult to quantify, but
+they provide early warning signs of potential problems. The lack of a risk management process,
+stakeholders who are not available or engaged, or poorly defined project success criteria are all
+examples of leading indicators that project performance may be at risk.
+Using leading indicators is preferable whenever possible because they can be used to prevent future
+problems that may require rework.
+2.1.5.2 Lagging Indicators
+Lagging indicators measure project deliverables or events. These indicators provide information after
+the fact. Lagging indicators reflect past performance or conditions and are easier to measure than
+leading indicators. Examples include the number of deliverables completed, the schedule or cost
+variance, and the amount of resources consumed.
+Lagging indicators can also be used to find correlations between outcomes and environmental
+variables. For example, a lagging indicator that reveals a schedule variance may show a correlation
+with project team member dissatisfaction. This correlation can assist the project team in addressing a
+root cause that may not have been obvious if the only measurement was the schedule status.
+2.1.5.3 SMART Criteria
+SMART criteria are guidelines used to set clear, attainable, and meaningful goals. The acronym
+SMART stands for specific, measurable, achievable, realistic, and time-bound. These criteria help
+ensure that objectives are well defined and reachable within a certain timeframe, making them more
+effective and easier to track.
+2.1.5.4 Sourcing Strategy
+Project resources can be insourced, outsourced, or both. Determining which parts of a project should
+use which approaches represents a set of governance decisions. A project’s sourcing strategy should
+consider impacts to schedule, scope, finances, resource capacity, risks, and other considerations.
+These considerations include but are not limited to the following:
+⚫
+How might the project organization’s culture, differentiating skills, and proximity motivate
+more use of internal resources?
+⚫ How might the project’s need for specialized skills or supplies, scaled capacity, or variable
+capacity motivate increased use of outsourcing?
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

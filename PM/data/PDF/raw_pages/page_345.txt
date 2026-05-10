@@ -1,0 +1,49 @@
+240
+A Guide to the Project Management Body of Knowledge
+Project Management
+Performance Domain AI Strategy Use Case
+Governance Augmentation Data-driven decision-making. AI can analyze historical
+project data, market trends, and organizational priorities
+to help with the selection and prioritization of projects. AI
+can weigh elements such as potential ROI, strategic align-
+ment, resource availability, and risk levels to recommend
+the best projects to take forward.
+Governance Assistance Multicriteria decision analysis. AI can use sophisti-
+cated algorithms to evaluate multiple criteria all together,
+providing a balanced scorecard approach to prioritize
+projects based on their overall value and feasibility
+criteria. AI can also run resource-constrained scenarios
+to help choose projects with the highest impact use of
+available resources.
+Governance Augmentation Brainstorming/idea generation. AI tools can generate
+ideas and suggestions based on a given set of parame-
+ters, keywords, or previous successful endeavors. These
+tools can also use machine learning to provide insights
+into emerging trends and technologies that can inspire
+new project ideas. Additionally, these tools can be used
+to generate ideas for documents such as business cases
+and project charters.
+Governance Assistance Collaborative platforms with AI. Platforms enhanced
+with AI can facilitate brainstorming sessions by organizing
+and categorizing ideas in real time, ensuring all team con-
+tributions are considered and the best ideas surface.
+Governance Automation Automated reporting and representation. AI can
+automatically generate comprehensive reports on project
+status, performance metrics, and compliance, reducing
+manual effort and increasing accuracy. AI can also be
+incorporated into visual tools, dashboards, and informa-
+tion radiators to improve the understanding of the project
+status for both the project team and stakeholders.
+Governance Automation Process automation. Routine tasks such as project
+documentation, reports, compliance checks, lessons
+learned (at the portfolio level), and administrative
+approvals can be automated, allowing the PMO to focus
+on strategic activities.
+Governance Assistance Predictive analytics for planning. AI can predict
+project timelines, resource needs, and potential
+bottlenecks by analyzing historical data and project
+specifics. This use of predictive analytics leads to more
+accurate and realistic project plans.
+Table X3-1. Primary AI Use Cases in Project Management
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

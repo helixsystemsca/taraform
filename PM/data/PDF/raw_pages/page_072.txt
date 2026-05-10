@@ -1,0 +1,36 @@
+49
+Section 3 – Project Management Principles
+This principle involves considering strategies to address any externality that the project may
+create. Such strategies can be categorized as increasingly impactful, from at least compensating
+stakeholders for the negative outcomes created, to minimizing them, to avoiding them altogether
+(see Figure 3-7). This approach addresses environmental impacts, considerations for the well-being of
+people globally, and the implementation of sustainable strategies.
+Integrate Sustainability Within All Project Areas
+Consistently integrate
+sustainability practices
+across all project areas,
+through all phases of the
+project life cycle, as
+project manager s, teams,
+and sponsors are all
+jointly accountable for
+ensuring this integration./uni00A0
+Integrating sustainability means considering people, the
+planet, society, and value while performing project-related
+activities.
+Sustainability encompasses addressing en vironmental, social,
+and economic impacts, considering the well-being of people
+globally, the effective and wise use of natural resources,
+and implementing sustainable strategies.
+The sustainability principle can be ev ident at the tactical,
+operational, and strategic levels of all projects.
+Figure 3-6. Integrate Sustainability Within All Project Areas
+More desirable
+Avoid negative outcomes altogether
+Minimize negative outcomes generated
+Restore impacts of negative outcomes
+Compensate/offset for negative
+outcomes generated
+Figure 3-7. The Sustainability Pyramid
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

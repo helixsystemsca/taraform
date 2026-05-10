@@ -1,0 +1,50 @@
+28
+A Guide to the Project Management Body of Knowledge
+2.1.6.7.1 Measurement Pitfalls
+Project measurements help the project team meet the project objectives. However, there are some
+pitfalls associated with measurement. Awareness of these risks can help minimize their negative
+effects. Project practitioners should be aware of the following risks:
+⚫
+Hawthorne effect. The Hawthorne effect states that the very act of measuring something
+influences behavior. Therefore, take care in establishing metrics. For example, measuring
+only a project team’s output of deliverables can encourage the project team to focus on
+creating a large volume of deliverables rather than focusing on deliverables that would
+provide higher customer satisfaction.
+⚫
+Vanity metric. A vanity metric is a measure that shows data but does not provide useful
+information for making decisions. Measuring page views of a website is not as useful as
+measuring the number of new viewers.
+⚫
+Demoralization. If measures and goals are set that are not achievable, project team
+morale may fall as the team continuously fails to meet targets. Setting stretch goals
+and aspirational measures is acceptable, but people also want to see their hard work
+recognized. Unrealistic or unachievable goals can be counterproductive.
+⚫
+Misusing the metrics. Regardless of the metrics used to measure performance, there
+is the opportunity for people to distort the measurements or focus on the wrong thing.
+Examples include:
+◾ Focusing on less-important metrics rather than the m etrics that matter most,
+◾ Focusing on performing well for short-term measure s at the expense of long-term
+metrics, and
+◾ Working on out-of-sequence activities that are easy t o accomplish in order to improve
+performance indicators.
+⚫ Confirmation bias. Human beings tend to look for and see information that supports their
+preexisting points of view. This bias can lead people to make false interpretations of data.
+⚫ Correlation versus causation. A common mistake in interpreting measurement data
+is confusing the correlation of two variables with the idea that one causes the other. For
+example, seeing projects that are behind schedule and over budget might cause one to
+infer that those projects are over budget because of schedule issues. This assumption
+may not be true, nor is it always true that projects that are behind schedule cause budget
+overruns. Instead, there are likely other correlating factors that are not being considered,
+such as skill in estimating, the ability to manage change, and actively managing risks. Being
+aware of the pitfalls associated with metrics can help with establishing effective metrics in
+addition to being vigilant regarding the dangers related to inappropriate measures.
+2.1.6.8 Assess and Implement Changes
+The Assess and Implement Changes process occurs from the start of a project through its completion,
+as changes can occur at any stage. Change requests can affect various aspects such as project scope,
+product scope, project management plan components, and project documents. Such changes can be
+proposed by any stakeholder and may occur at any point in the project life cycle. The degree of project
+change request management that is applied depends on the scope of the project, its complexity, the
+contract requirements, and the development approach being used (see Figure 2-10).
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

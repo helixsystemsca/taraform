@@ -1,0 +1,62 @@
+46
+A Guide to the Project Management Body of Knowledge
+Finally, managing risk is intrinsic to managing scope, as risks can significantly alter a project’s
+trajectory. Comprehensive risk analysis is crucial to understanding potential impacts on the project
+scope. Rescoping may be employed as a strategy to mitigate, avoid, or transfer risks.
+2.2.5 Check Results
+Activities within the Scope performance domain should be considered successful only if they
+contribute to specific outcomes. Table 2-6 shows a set of sample target outcomes, along with a
+potential check to confirm whether those outcomes are met.
+Table 2-6. Check Outcomes—Scope Performance Domain
+Outcome Check
+The project employs
+effective change
+management.
+Projects using a predictive approach have a change log that demonstrates
+changes, taking into consideration the impact on the Scope, Schedule,
+Finance, Stakeholders, Resources, and Risk performance domains. Projects
+employing an adaptive approach use a backlog to manage scope, showing
+the rate of accomplishing the scope, the rate of adding new scope, and the
+prioritization and inclusion of stakeholder feedback.
+There is a clear
+understanding of
+requirements.
+In predictive development, fewer changes in the initial requirements may
+reflect understanding. In projects where requirements are evolving, each
+iteration provides a clear and well-defined understanding of short-term
+requirements, enabling a rolling wave approach to uncovering and refining
+longer-term requirements progressively.
+The project is aligned with
+business objectives and
+strategy.
+The business case and the organization’s strategic plan, along with the
+project-authorizing documents, demonstrate that the project deliverables and
+business objectives are aligned.
+Stakeholders accept
+and are satisfied with
+deliverables.
+Interviews, observation, and end-user feedback indicate stakeholder satis-
+faction with the deliverables. Levels of complaints and returns may also be
+used to indicate satisfaction.
+Scope items are clearly
+defined in the project scope
+statement in percentages.
+The scope definition accuracy is measured as: Scope Definition Accuracy (%) =
+(Planned Scope Items Correctly Delivered / Total Planned Scope Items) x 100
+Scope creep is measured
+in percentages.
+Scope creep, as a percentage, is measured as: Scope Creep (%) =
+(Unplanned Deliverables / Total Deliverables) x 100
+The stability of require-
+ments is measured in
+percentages.
+The stability of requirements, as a percentage, is measured as: Requirements
+Stability (%) = (Unchanged Requirements / Total Requirements) x 100
+Sustainability is considered
+in the project scope.
+The WBS or backlog should include activities to manage sustainability (e.g.,
+assess and manage CO
+2 emissions due to project activity, or manage the im-
+pact of project execution on local biodiversity in case of a significant impact).
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

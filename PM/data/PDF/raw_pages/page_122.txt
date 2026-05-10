@@ -1,0 +1,56 @@
+17
+Section 2 – Project Management Performance Domains
+⚫ Manage Project Knowledge. The process of utilizing existing knowledge, including lessons
+learned, and creating new knowledge to achieve project objectives, enhance decision-
+making, and contribute to organizational learning.
+⚫
+Monitor and Control Project Performance. The process of tracking, reviewing, and
+reporting overall project progress to meet performance objectives and provide an overview
+of the status of the project.
+⚫
+Assess and Implement Changes. The process of managing project changes that
+may impact various aspects of the project and adjusting plans based on stakeholder
+recommendations throughout the project life cycle.
+⚫
+Close Project or Phase. The process of finalizing all activities related to the project or
+phase, including archiving knowledge, completing planned work, and releasing resources
+for new projects or operations.
+2.1.6.1 Initiate Project or Phase
+The Initiate Project or Phase process officially authorizes the start of a project and grants the project
+manager the authority to allocate organizational resources to project activities by creating a project
+charter or similar document. Authorization—typically, but not always, via a charter—establishes a
+direct link between the project, the business case, and the organization’s strategic goals, creating an
+official record of the project and demonstrating the organization’s commitment to the project. This
+process is usually carried out once or at certain points during the life cycle of a project, depending on
+the project development approach (see Figure 2-3).
+Figure 2-3. Initiate Project or Phase Inputs, Tools and Techniques, and Outputs
+• Business documents
+– Business case
+– Beneﬁ  ts management plan
+• Agreements
+• Enterprise environmental
+factors
+• Organizational process
+assets
+• Etc.
+• Project charter
+• Assumption log
+• Etc.
+• Expert judgment
+• Data gathering
+– Brainstorming
+– Focus groups
+– Interviews
+• Interpersonal and team skills
+– Conﬂ  ict management
+– Facilitation
+– Meeting management
+• Meetings
+• Responsibility assignment
+matrix
+• Project canvas
+• Etc.
+Initiate Project or Phase
+Inputs OutputsTools & Techniques
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

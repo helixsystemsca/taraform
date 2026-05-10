@@ -1,0 +1,49 @@
+71
+Section 4 – Project Life Cycles
+may be required. In this context, planning can follow a progressive, iterative, or rolling wave approach
+according to the project phase or life cycle approach.
+Moreover, as project changes are encountered, update planning may be required at any appropriate
+moment of a project phase. This ongoing refinement of the project management plan is called
+progressive elaboration, indicating that planning is an iterative or ongoing activity. Highly predictive
+approaches tend to front-load their planning, although plan updates and refinements throughout the
+project life cycle are not uncommon. In contrast, highly iterative approaches tend to perform some
+brief, high-level planning up front—sometimes called “roadmapping”—typically followed by a more
+consistent level of frequent planning and replanning throughout the project life cycle.
+The key benefit of this Focus Area is to define the course of action for successfully completing the
+project or phase.
+When the initial planning effort is complete, the collection of knowledge and artifacts describing the
+course of action is often referred to as the project management plan. In some organizations, that
+plan is submitted for formal approval and used as the authoritative reference for how the project will
+be managed.
+Once the project management team is oriented to—and confident with—the course of action, they
+are ready to begin executing.
+2
+Project Boundaries
+Business
+Documents
+Deliverables
+Project Records
+End
+Users
+Organizational
+Process Assets
+Sponsor
+Monitoring and
+Controlling Processes
+Planning
+Processes
+Executing
+Processes
+Initiating
+Processes
+Closing
+Processes
+Figure 4-12. Project Boundaries
+2 Note that many project teams consider a simple, high-level roadmapping exercise as sufficient
+for the initial planning, especially in environments where the scope is expected to change
+significantly. As a result, the project team may consider a robust analysis of scope/schedule/
+cost trade-offs to be effectively useless; however, some discussion on how sensitive the project’s
+value proposition is to schedule durations or specific dates can often be crucial, as can any
+sensitivity to exceeding an investment–cost threshold.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

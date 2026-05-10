@@ -1,0 +1,76 @@
+164
+A Guide to the Project Management Body of Knowledge
+and complexity of the project. Decomposition of the total project work into work packages generally
+involves the following activities:
+⚫ Identifying and analyzing the deliverables and related work,
+⚫ Structuring and organizing the WBS,
+⚫ Decomposing the upper WBS levels into lower-level detailed components,
+⚫ Developing and assigning identification codes to the WBS components, and
+⚫ Verifying that the degree of decomposition of the deliverables is appropriate.
+A portion of a WBS with some branches of the WBS decomposed down through the work package
+level is shown in Figure 5-6.
+Computed:
+Payoffs Minus Costs
+Along Path
+Decision Deﬁnition Decision Node Chance Node Net Path Value
+Decision to
+Be Made
+Input: Cost of Each Decision
+Output: Decision Made
+Input: Scenario Probability,
+Reward if It Occurs
+Output: Expected Monetary
+Value (EMV)
+Build or Upgrade?
+$80M
+60%
+40%
+60%
+40%
+–$30M$36M = .60 ($80M) +
+.40 (–$30M)
+EMV (before costs) of Build
+New Plant considering demand
+$46M = .60 ($70M) +
+.40 ($10M)
+EMV (before costs) of Upgrade
+Plant considering demand
+Decision EMV = $46M
+(the larger of $36M
+and $46M)
+$80M = $200M – $120M
+–$30M = $90M – $120M
+$70M = $120M – $50M
+$10M = $60M – $50M
+$70M
+$10M
+Note 1: All monetary values listed are in U.S. dollars.
+Note 2: The decision tree shows how to make a decision between alternative capital strategies (represented as “decision
+nodes”) when the environment contains uncertain elements (represented as “chance nodes”).
+Note 3: Here, a decision is being made whether to invest $120M to build a new plant or to instead invest only $50M
+to upgrade the existing plant. For each decision, the demand (which is uncertain, and therefore represents a
+“chance node”) should be accounted for. For example, strong demand leads to $200M revenue with the new plant
+but only $120M for the upgraded plant, perhaps due to capacity limitations of the upgraded plant. The end of
+each branch shows the net effect of the payoffs minus costs. Fo r each decision branch, all effects are added (see
+shaded areas) to determine the overall expected monetary  value (EMV) of the decision. Remember to account for
+the investment costs. From the calculations in the shaded areas, the upgraded plant has a higher EMV of $46M—
+also the EMV of the overall decision. (This choice also represents the lowe st risk, avoiding the worst-case possible
+outcome of a loss of $30M.)
+Decision Node
+Chance Node
+End of Branch
+Strong Demand
+($200M)
+Weak Demand
+($90M)
+Strong Demand
+($120M)
+Weak Demand
+($60M)
+Build New Plant
+(Invest $120M)
+Upgrade Plant
+(Invest $50M)
+Figure 5-5. Example Decision Tree
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

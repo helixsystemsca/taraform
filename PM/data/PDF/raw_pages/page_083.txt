@@ -1,0 +1,32 @@
+60
+The choice of the development approach for a project is typically made by the project manager
+in consultation with the project management team, who, based on the nature of the project,
+carries out the necessary evaluations for establishing the framework and way of working with
+the team.
+The main factors that play a role in the choice of the approach are related to the requirements,
+scope, timeline, and goals of the project; the organization’s culture and needs; and the level of
+stakeholder involvement, risk profile, technological considerations, and overall complexity of the
+broader project context.
+When the requirements are sufficiently clear and stable early in the project, a predictive approach
+may be optimal and, in this setup, the schedule baseline, together with the cost baseline, are
+determined according to the scope that should be delivered. Taken together, the baselines for
+schedule, cost, and scope are referred to as the project’s integrated baseline.
+When the requirements are less clear early in the project, or the project is expected to incur more
+complexity and uncertainty, then more feedback is needed (e.g., details from the final customer
+or end user) to ensure project success. In such cases, an adaptive approach may be optimal. In an
+adaptive approach, work is reviewed periodically, often in a timeboxed cadence, so that feedback
+can be incorporated as the integrated baseline evolves. At the end of the timebox, the requirements
+that have been implemented will be reviewed and planning for the next timebox will commence. In
+this case, based on the timeboxes and the team involved (as well as the budget), the scope will be
+delivered in an adaptive way.
+However, it is important to note that differing possible adaptive approaches may provide different
+possible sets of project baselines. Projects often need the ability to vary a set of constraints in
+order to operate with other, more fixed constraints, often called the inverted triangle concept
+(see Figure 4-3).
+Development Approaches
+Predictive Hybrid Adaptive
+Increasingly Iterative and Incremental
+Figure 4-2. The Spectrum of Development Approaches
+The Standard for Project Management
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

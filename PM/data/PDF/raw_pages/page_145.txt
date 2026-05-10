@@ -1,0 +1,58 @@
+40
+A Guide to the Project Management Body of Knowledge
+⚫ Develop Scope Structure. The process of subdividing project deliverables and project work
+into smaller, more manageable components. In agile projects, this effort corresponds to the
+decomposition of the product backlog (product backlog breakdown), where work items can
+be broken down into epics, features, and user stories.
+⚫
+Monitor and Control Scope. The process of monitoring the status of the project and
+product scope, managing changes to the scope baseline, measuring the quality of the
+deliverables, and ensuring fulfillment of the required standards.
+⚫
+Validate Scope. The process of formalizing acceptance of the completed project
+deliverables.
+2.2.2.1 Plan Scope Management
+The objective of this process is to create a scope management plan. This process defines how
+the project will be delivered by establishing all of the work required to complete the project
+and eliminating or removing unnecessary work that will not add value to the project. The scope
+management plan should be defined, developed, monitored, validated, and controlled based on the
+project life cycle. While the objective of scope management—ensuring value delivery—remains the
+same, the process is approached differently in adaptive projects, if compared to predictive projects,
+as it is more iterative and collaborative. The key benefit of this process is that guidance on scope
+management is provided to ensure that value is delivered to stakeholders (see Figure 2-14).
+2.2.2.2 Elicit and Analyze Requirements
+The objective of this process is to define and document the stakeholders’ needs associated with the
+features and functions required in the product, service, or result to assure quality and value will be
+• Project charter
+• Project management plan
+• Project documents
+– Requirements
+documentation
+– Risk register
+– Stakeholder register
+• Enterprise environmental
+factors
+•Organizational process
+assets
+• Etc.
+• Project management plan
+updates
+– Scope management plan
+– Quality management plan
+– Requirements
+management  plan
+• Etc.
+• Expert judgment
+• Data gathering
+– Interviews
+– Focus groups
+– Questionnaires and
+surveys
+• Data analysis
+• Test and inspection planning
+• Etc.
+Plan Scope Management
+Inputs OutputsTools & Techniques
+Figure 2-14. Plan Scope Management Inputs, Tools and Techniques, and Outputs
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

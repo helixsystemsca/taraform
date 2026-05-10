@@ -1,0 +1,53 @@
+102
+A Guide to the Project Management Body of Knowledge
+requires integrating scope management, schedule planning, financial considerations, stakeholder
+engagement, and communication to help ensure tailored and comprehensive risk response
+strategies.
+2.7.5 Check Results
+Activities in the Risk performance domain are considered successful when they contribute to specific
+outcomes. Table 2-11 shows a set of sample target outcomes, along with a potential check to confirm
+whether those outcomes are met.
+Table 2-11. Check Outcomes—Risk Performance Domain
+Outcome Check
+There is an awareness of the environment
+in which projects occur, including techni-
+cal, social, political, market, and eco-
+nomic contexts.
+The team incorporates environmental considerations when
+evaluating uncertainty, risks, and responses.
+The project team proactively explores and
+responds to uncertainty.
+Risk responses are aligned with project constraints such as
+budget, schedule, and performance.
+The project team has the capacity to anti-
+cipate threats and opportunities and un-
+derstands the consequences of issues.
+A process is in place, and well understood by the project team,
+for identifying, assessing, documenting, and responding to
+risks.
+Project delivery is achieved with minimal
+negative impact from unknown events or
+conditions.
+Reserves are in place and utilized, scheduled delivery dates
+are met, and the budget performance is within the variance
+threshold.
+Opportunities to improve project perfor-
+mance and outcomes are realized.
+Project teams use established mechanisms to identify,
+leverage, and track the realization of opportunities.
+Project contingency reserves are used
+effectively to maintain alignment with
+project objectives.
+Project teams take steps to proactively prevent threats,
+thereby limiting the use of project contingency reserves.
+Resilience and the ability to recover
+quickly from setbacks are being devel-
+oped throughout the project.
+The project team is aware of the larger organization’s business
+continuity plan or emergency response plan. Where applicable,
+a project continuity plan is developed. A management reserve
+is available to cover unknown risks.
+During times of crisis, the project team can quickly adjust its
+structure and processes to adapt to new constraints.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

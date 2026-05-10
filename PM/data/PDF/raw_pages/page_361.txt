@@ -1,0 +1,43 @@
+256
+A Guide to the Project Management Body of Knowledge
+PMBOK®
+Guide Edition Key Evolutionary Changes
+1996 ⚫  Distinguished as “a guide to the body of knowledge,” rather than the body of
+knowledge for project management.
+⚫  Reflected the subset of the project management body of knowledge that is “generally
+accepted,” meaning applicable to most projects most of the time, with widespread
+consensus that practices have value and usefulness.
+⚫  Defined project management as “the application of knowledge, skills, tools, and
+techniques to project activities in order to meet or exceed stakeholder needs and
+expectations from a project.”
+⚫  Specific decision to shift to a process-based standard driven by a desire to show
+interactions among Knowledge Areas; create a robust and flexible structure; and
+recognize that International Organization for Standardization (ISO) and other
+standards organizations were establishing process-based standards.
+Third (2004)
+⚫  First edition to incorporate the American National Standards Institute (ANSI) “ANSI
+standard” logo on the cover.
+⚫  First edition to formally designate The Standard for Project Management of a Project
+separate and distinct from the Project Management Framework and Body of Knowledge.
+⚫  Included material “generally recognized as good practice on most projects most of
+the time.”
+⚫  Defined project management as “the application of knowledge, skills, tools, and
+techniques to project activities to meet the project requirements.”
+Sixth (2017)
+⚫  First edition to make a distinct separation between the ANSI standard and the guide.
+⚫  First time “agile” content is incorporated into the text, not just referenced in  examples.
+⚫  Expansion of Knowledge Area front material, including key concepts, trends and
+emerging practices, tailoring considerations, and considerations for agile/adaptive
+environments.
+Seventh (2021)
+⚫  First edition in which project management is characterized as a “system for value
+delivery,” with an attendant shift in focus toward a more holistic, value-oriented
+mindset, and less emphasis on project management mechanics.
+⚫  First edition in which project management principles were elaborated.
+⚫  Agile thinking and methods became more fully integrated compared to the sixth edition.
+⚫ Shift from a process-based guide to a principles-based ANSI standard.
+⚫  Shift from Knowledge Areas focused on processes to performance domains focused
+on results.
+Table X5-1. Evolutionary Changes of the PMBOK® Guide
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

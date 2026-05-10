@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { UploadCloud } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Trash2, UploadCloud } from "lucide-react";
 
 import { GlassCard } from "@/components/glass/GlassCard";
 import { SupportMessagesSettings } from "@/components/settings/SupportMessagesSettings";
@@ -10,17 +11,22 @@ import { Button } from "@/components/ui/button";
 import { useEncouragementAudio } from "@/hooks/useEncouragementAudio";
 import { cn } from "@/lib/utils";
 
-type AudioPresence = { before: string | null; after: string | null };
+export type SupporterAudioRow = {
+  id: string;
+  type: "before" | "after";
+  file_url: string;
+  created_at: string;
+};
 
 function UploadRow({
   label,
   type,
-  hasExisting,
+  count,
   onUploaded,
 }: {
   label: string;
   type: "before" | "after";
-  hasExisting: boolean;
+  count: number;
   onUploaded: () => void;
 }) {
   const inputRef = React.useRef<HTMLInputElement | null>(null);
@@ -45,7 +51,7 @@ function UploadRow({
     xhr.onload = () => {
       setProgress(null);
       if (xhr.status >= 200 && xhr.status < 300) {
-        setStatus({ kind: "ok", message: "Saved ✓" });
+        setStatus({ kind: "ok", message: "Saved to your library ✓" });
         onUploaded();
         return;
       }
@@ -72,7 +78,7 @@ function UploadRow({
         <div className="min-w-0">
           <div className="text-sm font-semibold text-ink">{label}</div>
           <p className="mt-1 text-xs text-ink/55">
-            {hasExisting ? "Audio uploaded." : "No audio uploaded yet."} MP3 only (max 10MB).
+            {count === 0 ? "No files yet." : `${count} in library`} · MP3 only (max 10MB). Each upload is kept — playback picks one at random.
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -122,20 +128,85 @@ function UploadRow({
   );
 }
 
+function AudioLibraryList({
+  rows,
+  onDeleted,
+}: {
+  rows: SupporterAudioRow[];
+  onDeleted: () => void;
+}) {
+  const [busyId, setBusyId] = React.useState<string | null>(null);
+
+  async function remove(id: string) {
+    setBusyId(id);
+    try {
+      const res = await fetch("/api/audio/delete", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) {
+        const j = (await res.json().catch(() => ({}))) as { error?: string };
+        window.alert(j.error ?? "Delete failed");
+        return;
+      }
+      onDeleted();
+    } finally {
+      setBusyId(null);
+    }
+  }
+
+  if (!rows.length) return null;
+
+  return (
+    <div className="mt-4 rounded-xl border border-[rgba(120,90,80,0.08)] bg-white/50">
+      <div className="border-b border-[rgba(120,90,80,0.08)] px-3 py-2 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-muted">
+        Library ({rows.length})
+      </div>
+      <ul className="max-h-52 divide-y divide-[rgba(120,90,80,0.06)] overflow-y-auto">
+        {rows.map((r) => (
+          <li key={r.id} className="flex items-center gap-2 px-3 py-2 text-xs">
+            <span className="rounded-md bg-copper/10 px-1.5 py-px font-medium text-copper">{r.type}</span>
+            <span className="min-w-0 flex-1 truncate font-mono text-[11px] text-ink-muted">{r.file_url.split("/").pop()}</span>
+            <span className="shrink-0 text-[10px] text-ink-muted">{new Date(r.created_at).toLocaleString()}</span>
+            <button
+              type="button"
+              disabled={busyId === r.id}
+              className="shrink-0 rounded-lg p-1.5 text-ink-muted hover:bg-rose-light/50 hover:text-rose-deep"
+              aria-label="Remove audio"
+              onClick={() => void remove(r.id)}
+            >
+              <Trash2 className="h-3.5 w-3.5" />
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function SupporterSettingsClient({
-  initialHasAudio,
+  initialAudioRows,
   initialSetupError,
 }: {
-  initialHasAudio: AudioPresence;
+  initialAudioRows: SupporterAudioRow[];
   initialSetupError?: string | null;
 }) {
-  const [presence, setPresence] = React.useState<AudioPresence>(initialHasAudio);
+  const router = useRouter();
+  const [rows, setRows] = React.useState<SupporterAudioRow[]>(initialAudioRows);
   const [setupError] = React.useState<string | null>(initialSetupError ?? null);
   const audio = useEncouragementAudio();
 
-  function onUploaded(type: "before" | "after") {
-    setPresence((p) => ({ ...p, [type]: "yes" }));
+  React.useEffect(() => {
+    setRows(initialAudioRows);
+  }, [initialAudioRows]);
+
+  const beforeCount = rows.filter((r) => r.type === "before").length;
+  const afterCount = rows.filter((r) => r.type === "after").length;
+
+  function onLibraryChanged() {
     void audio.refresh();
+    router.refresh();
   }
 
   return (
@@ -160,26 +231,30 @@ export function SupporterSettingsClient({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="text-sm font-semibold text-ink">Encouragement audio</div>
-            <p className="mt-1 text-sm text-ink/55">Upload MP3s to play before and after sessions.</p>
+            <p className="mt-1 text-sm text-ink/55">
+              Build a library of MP3s for before and after sessions. Taraform picks a random file from the matching pool when
+              you start or finish flashcards, quizzes, and study sessions.
+            </p>
           </div>
           <div className="flex gap-2">
-            <Button type="button" variant="ghost" disabled={!audio.data?.before} onClick={() => void audio.playBefore()}>
-              Preview “Before”
+            <Button type="button" variant="ghost" disabled={!audio.beforeUrls.length} onClick={() => void audio.playBefore()}>
+              Preview random “Before”
             </Button>
-            <Button type="button" variant="ghost" disabled={!audio.data?.after} onClick={() => void audio.playAfter()}>
-              Preview “After”
+            <Button type="button" variant="ghost" disabled={!audio.afterUrls.length} onClick={() => void audio.playAfter()}>
+              Preview random “After”
             </Button>
           </div>
         </div>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <UploadRow label="Before Study" type="before" hasExisting={!!presence.before} onUploaded={() => onUploaded("before")} />
-          <UploadRow
-            label="After Completion"
-            type="after"
-            hasExisting={!!presence.after}
-            onUploaded={() => onUploaded("after")}
-          />
+          <div>
+            <UploadRow label="Before sessions" type="before" count={beforeCount} onUploaded={onLibraryChanged} />
+            <AudioLibraryList rows={rows.filter((r) => r.type === "before")} onDeleted={onLibraryChanged} />
+          </div>
+          <div>
+            <UploadRow label="After sessions" type="after" count={afterCount} onUploaded={onLibraryChanged} />
+            <AudioLibraryList rows={rows.filter((r) => r.type === "after")} onDeleted={onLibraryChanged} />
+          </div>
         </div>
 
         {audio.error ? <div className="mt-3 text-xs text-ink/55">Audio note: {audio.error}</div> : null}

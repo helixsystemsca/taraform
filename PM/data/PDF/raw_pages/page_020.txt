@@ -1,0 +1,39 @@
+A Guide to the Project Management Body of Knowledge
+(PMBOK® Guide)
+Figures
+Figure 1-1 R elationship Between Project Management Principles and Project Management
+P erformance Domains  ...........................................................  4
+Figure 2-1 S tructured Versus Self-Governed Projects  .........................................  12
+Figure 2-2 G overnance Performance Domain Processes Overview  .............................  16
+Figure 2-3 I nitiate Project or Phase Inputs, Tools and Techniques, and Outputs ..................  17
+Figure 2-4 I ntegrate and Align Project Plans Inputs, Tools and Techniques, and Outputs  ..........  19
+Figure 2-5 P lan Sourcing Strategy Inputs, Tools and Techniques, and Outputs  ...................  20
+Figure 2-6 M anage Project Execution Inputs, Tools and Techniques, and Outputs  ................  22
+Figure 2-7 M anage Quality Assurance Inputs, Tools and Techniques, and Outputs  ...............  23
+Figure 2-8 M anage Project Knowledge Inputs, Tools and Techniques, and Outputs ...............  25
+Figure 2-9 M onitor and Control Project Performance Inputs, Tools and Techniques,
+a nd Outputs  ...................................................................  27
+Figure 2-10 A ssess and Implement Changes Inputs, Tools and Techniques, and Outputs ...........  29
+Figure 2-11 E xample Flow for Project Changes ................................................  30
+Figure 2-12 C lose Project or Phase Inputs, Tools and Techniques, and Outputs  ...................  31
+Figure 2-13 S cope Performance Domain Processes Overview ...................................  39
+Figure 2-14 P lan Scope Management Inputs, Tools and Techniques, and Outputs  .................  40
+Figure 2-15 E licit and Analyze Requirements Inputs, Tools and Techniques, and Outputs ...........  41
+Figure 2-16 D efine Scope Inputs, Tools and Techniques, and Outputs ............................  42
+Figure 2-17 D evelop Scope Structure Inputs, Tools and Techniques, and Outputs  .................  43
+Figure 2-18 M onitor and Control Scope Inputs, Tools and Techniques, and Outputs  ...............  43
+Figure 2-19 V alidate Scope Inputs, Tools and Techniques, and Outputs  ..........................  44
+Figure 2-20 S chedule Performance Domain Processes Overview ................................  48
+Figure 2-21 P lan Schedule Management Inputs, Tools and Techniques, and Outputs  ..............  49
+Figure 2-22 D evelop Schedule Inputs, Tools and Techniques, and Outputs  .......................  50
+Figure 2-23 S teps for Developing the Schedule ................................................  51
+Figure 2-24 M onitor and Control Schedule Inputs, Tools and Techniques, and Outputs  ............  54
+Figure 2-25 T wo Scenarios of Budget Buildup  .................................................  61
+Figure 2-26 F inance Performance Domain Processes Overview  .................................  62
+Figure 2-27 P lan Financial Management Inputs, Tools and Techniques, and Outputs ...............  63
+Figure 2-28 E stimate Costs Inputs, Tools and Techniques, and Outputs  ..........................  63
+Figure 2-29 D evelop Budget Inputs, Tools and Techniques, and Outputs  .........................  64
+Figure 2-30 M onitor and Control Finances Inputs, Tools and Techniques, and Outputs .............  65
+xixList of Figures and Tables
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

@@ -1,0 +1,50 @@
+78
+A Guide to the Project Management Body of Knowledge
+Some stakeholders can assist in lowering the amount of uncertainty present on a project, whereas
+others may cause an increase in uncertainty. The stakeholders may influence the project risks,
+especially when the right stakeholders are not identified at the beginning of the project and are
+not updated and checked throughout the duration of the project. Stakeholders, such as customers,
+senior management, project management office leads, or program managers, may focus on
+measures of performance for the project and its deliverables.
+The Stakeholders performance domain closely interacts with the Governance performance domain,
+particularly through the skills needed to engage with project governance bodies and organizational
+leadership. These interactions demonstrate how the Stakeholders domain connects with other
+performance domains, although they do not capture all the ways stakeholder interests can influence
+a project.
+The Stakeholders performance domain also aligns with the Finance performance domain, as
+stakeholders often help define budgets, make funding decisions, and oversee financial controls.
+These connections highlight the critical role stakeholders play in shaping both the direction and
+success of a project.
+2.5.5 Check Results
+Activities related to the Stakeholders performance domain should be considered successful only if
+they contribute to specific outcomes. Table 2-9 shows a set of sample target outcomes, along with a
+potential check to confirm whether those outcomes are met.
+Outcome Check
+Stakeholder engagement is
+maintained.
+Collect feedback from stakeholders through interviews or surveys,
+perform periodic alignment with stakeholders regarding project objectives,
+and check indicators such as the Net Promoter Score
+SM (NPS®).2
+Risk responses are identified
+and successfully implemented.
+Review the project’s issue log, risk register, and stakeholder register for
+assessment.
+Stakeholder agreement with
+project objectives is achieved.
+Review the number of change requests to requirements and collect
+feedback on increments.
+Communications management
+is performed.
+Review the communications management plan periodically and tailor it
+appropriately based on the needs of stakeholders.
+The project plans are integrated
+with the suppliers’ perspectives
+and work outputs.
+Align the project management plan with the vendor’s way of working.
+Table 2-9. Check Outcomes—Stakeholders Performance Domain
+2 Net Promoter®, NPS®, NPS Prism®, and the NPS-related emoticons are registered trademarks of Bain
+& Company, Inc., NICE Systems, Inc., and Fred Reichheld. Net Promoter ScoreSM and Net Promoter
+SystemSM are service marks of Bain & Company, Inc., NICE Systems, Inc., and Fred Reichheld.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

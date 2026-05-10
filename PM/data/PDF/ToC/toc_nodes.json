@@ -1,0 +1,31 @@
+[
+  { "id": "1", "title": "Introduction", "level": 1, "parent_id": null, "module": "M0", "order": 1 },
+  { "id": "1.1", "title": "Structure of the PMBOK Guide", "level": 2, "parent_id": "1", "module": "M0", "order": 1 },
+  { "id": "1.2", "title": "Relationship to The Standard", "level": 2, "parent_id": "1", "module": "M0", "order": 2 },
+  { "id": "1.3", "title": "Changes to the PMBOK Guide", "level": 2, "parent_id": "1", "module": "M0", "order": 3 },
+
+  { "id": "2", "title": "Performance Domains", "level": 1, "parent_id": null, "module": "M1", "order": 2 },
+
+  { "id": "2.1", "title": "Governance Domain", "level": 2, "parent_id": "2", "module": "M1", "order": 1 },
+  { "id": "2.1.1", "title": "Value Creation", "level": 3, "parent_id": "2.1", "module": "M1", "order": 1 },
+  { "id": "2.1.2", "title": "Governance Models", "level": 3, "parent_id": "2.1", "module": "M1", "order": 2 },
+  { "id": "2.1.3", "title": "Governance Metrics", "level": 3, "parent_id": "2.1", "module": "M1", "order": 3 },
+  { "id": "2.1.5", "title": "Key Concepts", "level": 3, "parent_id": "2.1", "module": "M1", "order": 4 },
+  { "id": "2.1.6", "title": "Processes", "level": 3, "parent_id": "2.1", "module": "M1", "order": 5 },
+
+  { "id": "2.2", "title": "Scope Domain", "level": 2, "parent_id": "2", "module": "M1", "order": 2 },
+  { "id": "2.3", "title": "Schedule Domain", "level": 2, "parent_id": "2", "module": "M1", "order": 3 },
+  { "id": "2.4", "title": "Finance Domain", "level": 2, "parent_id": "2", "module": "M1", "order": 4 },
+  { "id": "2.5", "title": "Stakeholders Domain", "level": 2, "parent_id": "2", "module": "M1", "order": 5 },
+  { "id": "2.6", "title": "Resources Domain", "level": 2, "parent_id": "2", "module": "M1", "order": 6 },
+  { "id": "2.7", "title": "Risk Domain", "level": 2, "parent_id": "2", "module": "M1", "order": 7 },
+
+  { "id": "3", "title": "Tailoring", "level": 1, "parent_id": null, "module": "M2", "order": 3 },
+  { "id": "3.1", "title": "Overview", "level": 2, "parent_id": "3", "module": "M2", "order": 1 },
+  { "id": "3.2", "title": "Why Tailor", "level": 2, "parent_id": "3", "module": "M2", "order": 2 },
+  { "id": "3.3", "title": "What to Tailor", "level": 2, "parent_id": "3", "module": "M2", "order": 3 },
+  { "id": "3.4", "title": "Tailoring Process", "level": 2, "parent_id": "3", "module": "M2", "order": 4 },
+
+  { "id": "4", "title": "Inputs and Outputs", "level": 1, "parent_id": null, "module": "M3", "order": 4 },
+  { "id": "5", "title": "Tools and Techniques", "level": 1, "parent_id": null, "module": "M3", "order": 5 }
+]

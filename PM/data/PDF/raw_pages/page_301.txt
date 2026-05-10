@@ -1,0 +1,41 @@
+196
+A Guide to the Project Management Body of Knowledge
+Rolling wave planning. Rolling wave planning is an iterative planning technique in which the work
+to be accomplished in the near term is planned in detail, while the work in the future is planned at a
+higher level. This progressive elaboration allows work to exist at various levels of detail, depending
+on the project life cycle stage. During early strategic planning, when information is less defined, work
+packages are outlined at a high level. As more information becomes available, these packages are
+decomposed into detailed activities.
+Root cause analysis. Root cause analysis is an analytical method used to determine the basic
+underlying reason that causes a variance, defect, or risk. A root cause may underlie more than one
+variance, defect, or risk. Root cause analysis may also be used as a technique for identifying the root
+causes of a problem and solving them. When all root causes for a problem are removed, the problem
+does not recur.
+Schedule compression. Schedule compression is a technique used to shorten the schedule duration
+without reducing the project scope. Schedule compression techniques are used to meet schedule
+constraints, imposed dates, or other schedule objectives. A helpful technique is the negative float
+analysis. The critical path is the one with the least float. Due to violating a constraint or imposed date,
+the total float can become negative. Schedule compression techniques are compared in Figure 5-20
+and include:
+⚫
+Crashing. A schedule compression technique used to shorten the schedule duration for
+the least incremental cost by adding resources. Examples of crashing include approving
+overtime, bringing in additional resources, or paying to expedite delivery to activities on
+Figure 5-20. Schedule Compression Comparison
+Normal
+Crashing
+Fast
+Tracking
+1 2 3 4 5
+1 2 3 4 5
+4 5 6 7 8
+7 8 9 10 11
+12 1 3
+4 5 6 7
+8 9 10
+6 7 8 9 10
+11 12 13 14 15
+High Risk
+High Cost
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

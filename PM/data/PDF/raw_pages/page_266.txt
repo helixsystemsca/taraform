@@ -1,0 +1,59 @@
+161
+Section 5 – Tools and Techniques
+The critical path method is also used to calculate the total and free float, or scheduling flexibility,
+for all logical paths in the network. On any network path, total float refers to the amount of time an
+activity can be delayed without delaying the project finish date or violating a constraint. Free float is
+the time an activity can be delayed without affecting the early start of its successor; for example, the
+free float for Activity B in Figure 5-4 is 5 days.
+While the critical path is usually characterized by zero total float, positive float may occur if a
+constraint is placed later than the calculated early finish (from the forward pass). Conversely,
+negative float occurs when constraints force dates earlier than logic and duration allow. Negative
+float analysis can be used to explore acceleration strategies.
+Some schedule networks may have multiple near-critical paths, and many software tools allow users
+to define how criticality is measured. Adjustments to activity durations, logical relationships, leads
+and lags, or constraints may be necessary to bring float values to zero or positive levels.
+Critical thinking. Critical thinking is the ability to objectively question, analyze, interpret, evaluate,
+and judge information to make reasonable decisions. Throughout the various project management
+performance domains, there is a need to recognize bias, identify the root cause of problems, and
+consider challenging issues such as ambiguity and complexity. Critical thinking helps to accomplish
+these activities. Critical thinking includes disciplined, rational, logical, and evidence-based thinking.
+This approach requires an open mind and the ability to analyze objectively. Critical thinking,
+especially when applied to discovery, can include conceptual imagination, insight, and intuition;
+it can also include reflective thinking and metacognition (thinking about thinking and being aware of
+one’s awareness).
+Critical Path Link
+Noncritical Path Link
+Activity
+Node
+Start FinishA
+15 5
+10 5
+C
+61 01 5
+60 15
+B
+65 10
+11 51 5
+D
+16 15 30
+16 03 0
+Activity Name
+Early
+Start Duration Early
+Finish
+Late
+Start
+Total
+Float
+Late
+Finish
+Path A–B–D = 25
+Path A–C–D = 30
+(Critical Path)
+KEY
+Note: This example uses the accepted convention of the project
+starting on Day 1 for calculating start and ﬁnish dates. There are
+other accepted conventions that may be used.
+Figure 5-4. Example of Critical Path Method
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

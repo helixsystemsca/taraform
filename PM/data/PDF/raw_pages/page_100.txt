@@ -1,0 +1,74 @@
+77
+Index
+A
+Academic research, 19
+Acceptance criteria, 44, 58
+Accountability, 36, 37, 46–48
+Achievement-oriented project management, 51
+Active listening, 50
+Adaptability
+importance of, 4
+in leadership, 29, 46
+of portfolios, 12
+of programs, 12
+of projects, 12
+Adaptive development approach, 59, 60, 63–67
+Adopt a Holistic View principle, 36, 37, 38–40
+Agile development approach, 63–65
+Agreements, team, 54
+Artifact, 4
+Artificial intelligence (AI), 4, 26, 32
+B
+Be an Accountable Leader principle, 36, 37, 46–48
+Benefit(s). See also Value
+creation of, 16
+definition of, 5
+sustainability and, 50
+Build an Empowered Culture principle, 36, 37, 53–55
+Business acumen, 29, 31
+Business case, 40, 51, 70
+Business documents, 70
+C
+Centralized coordination, 25, 33
+Change
+ease of, 67
+stakeholder influence on, 59
+value creation through, 7
+Change-driven development approach, 63–65
+Cloud computing, 32
+Communication
+enhanced, 39
+flow of, 24
+Complexity
+and development approach, 68
+managing, 39
+Compliance-oriented project management, 51
+Constraint options for adaptive development
+approaches, 60, 61
+Construction projects, 52, 61, 66
+Continuous deliveries, 69
+Continuous improvement, 31, 43
+Coordination
+oversight and, 25
+types of, 25
+Customers
+benefits related to, 50
+role of, in project management, 32–33
+D
+Data accuracy, 32
+Data storage, 32
+Decentralized coordination, 25, 33
+Decision-making, integrated, 39
+Decision point review, 58
+Deliverables
+and development approaches, 63, 65, 67
+embedding quality into, 36, 37, 43–46
+tangible or intangible, 7
+Delivery cadence, 69
+Design projects, 64
+Digital projects, 65
+Disbenefits, 16
+Diversity, 8, 54, 67
+Index
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

@@ -1,0 +1,35 @@
+62
+A Guide to the Project Management Body of Knowledge
+⚫ Develop Budget. The process of aggregating the estimated costs of individual activities or
+work packages to establish an authorized cost baseline.
+⚫ Monitor and Control Finances. The process of monitoring the project’s financial status,
+updating project finances, managing changes to the cost baseline and revenue forecasts,
+and ensuring that the project deliverables maintain their financial viability throughout the
+project life cycle.
+2.4.2.1 Plan Financial Management
+Plan Financial Management is the process of defining how the project revenues and expenses will be
+estimated, budgeted, managed, monitored, and controlled. The key benefit of this process is that it
+provides guidance and direction on how the project finances will be managed throughout the project.
+This process is performed once up front or at predefined points in the project (see Figure 2-27).
+2.4.2.2 Estimate Costs
+Estimate Costs is the process of developing an approximation of the cost of resources needed to
+complete project work. The key benefit of this process is that it determines the monetary resources
+required for the project. The process is performed periodically throughout the project as needed
+(see Figure 2-28).
+Figure 2-26. Finance Performance Domain Processes Overview
+ClosingPlanning
+Executing
+Monitoring and Controlling
+Initiating
+Plan
+Financial
+Management
+Estimate
+Costs
+Develop
+Budget
+Monitor and
+Control
+Finances
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

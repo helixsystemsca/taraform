@@ -1,0 +1,52 @@
+251
+Appendix X4
+X4.8.1 Fundamental Contract Models
+Some of the more common contract models and how they can be viewed from both the client and
+contractor perspectives are as follows (Please note that the types and names of contract types can
+vary in different industries and organizations.):
+⚫
+Fixed-price contract. Fixed-price contracts are agreements that establish a predetermined
+fee against a clearly defined scope of work, transferring cost risk to the seller while offering
+budget predictability for the buyer. Fixed-price contracts are common in construction
+projects, product development, and service delivery where the work can be accurately
+estimated.
+◾
+Client perspective: Provides budget certainty but may result in higher prices due to
+risk premiums.
+◾
+Contractor perspective: Offers profit potential if managed efficiently but bears the
+risk of cost overruns.
+⚫ Cost-reimbursable contract.  Cost-reimbursable contracts are a type of contract involving
+payment to the seller for the seller’s actual costs, plus a fee typically representing the
+seller’s profit. These contracts are used when the project scope is uncertain or when
+the project is high risk. Cost-reimbursable contracts are common in research and
+development projects, complex construction projects, and situations where flexibility is
+needed.
+◾
+Client perspective: Allows for flexibility but carries the risk of cost escalation.
+◾ Contractor perspective: Reduces financial risk but may limit profit potential.
+⚫ Time and materials (T&M) contract. T&M contracts are a type of contract that is a hybrid
+contractual arrangement containing aspects of both cost-reimbursable and fixed-price
+contracts. The buyer typically pays for actual time and materials used plus a profit margin.
+These contracts are often used for smaller projects, maintenance work, or when the scope
+is not clearly defined at the outset. T&M contracts are common in technology services,
+consulting, and some construction projects.
+◾
+Client perspective: Provides flexibility but requires close monitoring to control costs.
+◾ Contractor perspective: Ensures cost coverage but may lead to scrutiny of time and
+resource usage.
+⚫ Target-cost contract. Target-cost contracts set a target cost, with provisions for sharing
+cost savings or overruns between the buyer and seller. These contracts are used to
+encourage efficiency and cost control while maintaining flexibility. Target-cost contracts are
+often seen in large infrastructure projects or complex manufacturing projects.
+◾
+Client perspective: Encourages cost control but requires clear definition of target costs
+and sharing mechanisms.
+◾
+Contractor perspective: Offers incentives for efficiency but bears partial risk of cost
+overruns.
+Moreover, there can be several hybrid contracts depending on the project requirements, which
+may incorporate elements of both fixed-price and cost-reimbursable models or other provisions for
+flexibility.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

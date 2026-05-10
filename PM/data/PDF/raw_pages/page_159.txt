@@ -1,0 +1,85 @@
+54
+A Guide to the Project Management Body of Knowledge
+When using a predictive approach, any change to the schedule baseline or agreed-upon schedule
+can only be approved through the Assess and Implement Changes process by applying integrated
+change control. Monitor and Control Schedule, as part of the Monitoring and Controlling Focus Area,
+is concerned with the following:
+⚫
+Determining the status of the project schedule,
+⚫ Influencing the factors that create schedule changes,
+⚫ Reconsidering necessary schedule reserves,
+⚫ Determining if the overall project schedule has changed, and
+⚫ Managing the actual changes as they occur.
+When an adaptive or agile approach is used, the Monitor and Control Schedule process is concerned
+with the following:
+⚫
+Determining the status of  the project schedule by comparing the total amount of work
+delivered and accepted against the estimates of work completed for the elapsed time cycle;
+Figure 2-24. Monitor and Control Schedule Inputs, Tools and Techniques, and Outputs
+• Project management plan
+– Schedule management
+plan
+– Scope baseline
+– Performance
+measurement
+baseline
+• Product backlog
+• Project documents
+– Lessons learned register
+– Project calendars
+– Project schedule
+– Resource calendars
+– Risk register
+– Schedule data
+• Work performance data
+• Enterprise environmental
+factors
+• Organizational process
+assets
+• Etc.
+• Work performance
+information
+• Schedule forecasts
+• Change requests
+• Project management plan
+updates
+– Schedule management
+plan
+– Schedule baseline
+– Cost baseline
+– Performance
+measurement
+baseline
+• Project document updates
+– Assumption log
+– Basis of estimates
+– Lessons learned register
+– Project schedule
+– Resource calendars
+– Risk register
+– Schedule data
+• Etc.
+• Data analysis
+– Earned value analysis
+– Burnup/burndown chart
+– Performance reviews
+– Trend analysis
+– Variance analysis
+– What-if scenario analysis
+• Critical path method
+• Critical chain method
+• Project management
+information system
+• Resource optimization
+• Leads and lags
+• Schedule compression
+• Branch and bound
+• Velocity
+• Daily coordination meetings
+• Sprint reviews
+• Backlog reﬁ  nement
+• Etc.
+Monitor and Control Schedule
+Inputs OutputsTools & Techniques
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

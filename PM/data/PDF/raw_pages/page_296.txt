@@ -1,0 +1,140 @@
+191
+Section 5 – Tools and Techniques
+Project management information system (PMIS). A PMIS is an information system consisting
+of the tools and techniques used to gather, integrate, and disseminate the outputs of project
+management processes. A PMIS provides access to information technology software tools, such as
+scheduling software tools, work authorization systems, configuration management systems, and
+information collection and distribution systems, as well as interfaces to other online automated
+systems such as organizational knowledge repositories. Automated gathering and reporting on key
+performance indicators (KPIs) can be part of this system.
+Project reporting. Project reporting is the act of collecting and distributing project information.
+Project information is distributed to many groups of stakeholders and should be adapted to provide
+information at an appropriate level, format, and detail for each type of stakeholder. The format
+may range from a simple communication to more elaborate custom reports and presentations.
+Information may be prepared regularly or on an exception basis.
+Prompt lists. A prompt list is a predetermined list of risk categories that might give rise to individual
+project risks and that could also act as sources of overall project risk. The prompt list can be used
+as a framework to aid the project team in idea generation when using risk identification techniques.
+The risk categories in the lowest level of the risk breakdown structure can be used as a prompt list
+for individual project risks. Some common strategic frameworks are more suitable for identifying
+5393 97
+30-Nov-2810-Jun-27
+BL Start
+BL Finish
+Exp Finish
+Delay
+Due Date
+10-Jun-27
+30-Nov-28
+30-Nov-28
+0 Days
+30-Oct-27
+BL Duration
+Remaining Duration
+Overall Progress
+Total Mhr
+LTI
+Mhr/LTI
+Nil
+Safety Statistics
+14% Overall Progress
+Against Plan of 18%
+50 60 407030
+8020
+9010
+1000
+Overall
+Construction
+Delivery
+Engineering
+Tendering and Contracting
+Commissioning
+10-Jun-27 16-Aug-27 22-Oct-27 29-Dec-275 -Mar-28 11-May-281 8-Jul-28 23-Sep-28 30-Nov-28
+FINISHSTART
+Progress Monitor Graph
+Overall
+Tendering and
+Contracting
+Engineering
+Construction
+Delivery
+Manpower Plan vs. Actual
+Critical Issue
+Tracker
+Major Points to Focus on:
+Statistics
+S Curve 3-Month SPI Trend
+1078 1200
+1000
+800
+600
+400
+200
+0
+690
+325
+Required
+Available
+MechanicalCivil Electrical
+225
+50 20
+Jul-27A ug-27 Sep-27
+0.95
+0.98
+1
+SPI for Sep-27 is less than 1,
+which means that the project
+is behind the schedule
+100.0%
+90.0%
+80.0%
+70.0%
+60.0%
+50.0%
+40.0%
+30.0%
+20.0%
+10.0%
+0.0%
+12.0%
+10.0%
+8.0%
+6.0%
+4.0%
+2.0%
+0.0%
+May-27Jun-27Jul-27Aug-27Sep-27Oct-27Nov-27Dec-27Jan-28Feb-28Mar-28Apr-28May-28Jun-28Jul-28Aug-28Sep-28Gct-28Nov-28
+18%
+14%
+18%
+Planned
+Progress
+14%
+Actual
+Progress
+Duration in
+Days
+Total
+539
+Elapsed
+142
+Remaining
+397
+List
+Open
+Closed
+1
+22
+15
+10
+5
+0
+1
+2
+3
+4Minimal ModerateC ritical
+6 7
+10
+Figure 5-17. Project Dashboard Example 2
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

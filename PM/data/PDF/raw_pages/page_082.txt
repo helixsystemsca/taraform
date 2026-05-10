@@ -1,0 +1,34 @@
+59
+Section 4 – Project Life Cycles
+⚫ Stakeholder influence on change. In some scenarios, the ability of stakeholders to
+influence the project’s scope—increasing value without significantly impacting cost and
+schedule—is highest at the start of the project or phase and decreases as the project
+progresses toward completion. In other cases, stakeholders are encouraged to participate
+actively in the execution process, ensuring that value has been delivered according to
+their expectations and the organization’s best interest. Consistent feedback leads to the
+possibility of detecting risks and their impacts at an earlier stage (see Figure 4-1).
+4.2 Project Development Approaches
+A development approach is the means used to create and evolve a product, service, or result
+during the project life cycle. Note that the term “development approach” is separate from the term
+“development phase of the project.” The development approach refers to the method used to create
+and evolve the product, service, or result during the project life cycle, such as predictive, adaptive, or
+hybrid methods. The development approach defines how the project will be managed and executed.
+Conversely, the development phase of the project is a specific stage within the project life cycle
+where both the actual creation and testing of deliverables occur. This stage involves detailed work to
+produce the project’s outputs. There are different development approaches, and different industries
+may use different terms to refer to them.
+Three commonly used approaches are predictive, adaptive, and hybrid. These approaches are often
+viewed as a spectrum, from the predictive approach on one end of the spectrum to the adaptive
+approach on the other end. The hybrid approach is usually intended as a mix of predictive and
+adaptive approaches (see Figure 4-2).
+Risk and
+uncertainty
+Cost of
+changes
+Project Time
+Low
+High
+Degree
+Figure 4-1. Impact of Variables Over Time
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

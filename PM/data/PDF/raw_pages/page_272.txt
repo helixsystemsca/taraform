@@ -1,0 +1,75 @@
+167
+Section 5 – Tools and Techniques
+⚫ Mandatory dependencies. Mandatory dependencies are those that are legally or
+contractually required or inherent in the nature of the work. Mandatory dependencies
+often involve physical limitations, such as on a construction project, where it is impossible
+to erect the superstructure until after the foundation has been built, or on an electronics
+project, where a prototype has to be built before it can be tested. Mandatory dependencies
+are sometimes referred to as hard logic or hard dependencies. Technical dependencies
+may not be mandatory. The project team determines which dependencies are mandatory
+during the process of sequencing the activities. Mandatory dependencies should not be
+confused with assigning schedule constraints in the scheduling tool.
+⚫
+Discretionary dependencies. Discretionary dependencies are sometimes referred to as
+preferred logic, preferential logic, or soft logic. Discretionary dependencies are established
+based on knowledge of good practices within a particular application area or some unusual
+aspect of the project where a specific sequence is desired, even though there may be other
+acceptable sequences. For example, generally accepted good practices recommend that
+during construction, the electrical work should start after finishing the plumbing work.
+This order is not mandatory and both activities may occur at the same time (in parallel);
+however, performing the activities in sequential order reduces the overall project risk.
+Discretionary dependencies should be fully documented since they can create arbitrary
+total float values and can limit later scheduling options. When fast tracking techniques
+are employed, these discretionary dependencies should be reviewed and considered
+Note: The WBS is illustrative only. It is not intended to represent the full project scope of any speciﬁc project, nor to imply that this is the
+only way to organize a WBS on this type of project.
+Aircraft
+System
+Project
+Management Training Data Air
+Vehicle
+Support
+Equipment Facilities Test and
+Evaluation
+Mock-ups
+Operational
+Test
+Developmental
+Test
+Test
+System
+Engineering
+Management
+Supporting
+PM Activities
+Equipment
+Training
+Facilities
+Training
+Services
+Training
+Technical
+Orders
+Engineering
+Data
+Management
+Data
+Organizational-
+Level SE
+Intermediate-
+Level SE
+Depot-
+Level SE
+Base
+Buildings
+Maintenance
+Facility
+Airframe Engine Communication
+System
+Navigation
+System
+Fire Control
+System
+Figure 5-8. Sample WBS With Major Deliverables
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

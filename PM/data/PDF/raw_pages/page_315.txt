@@ -1,0 +1,75 @@
+210
+A Guide to the Project Management Body of Knowledge
+Table 5-1. (Continued)
+Earned Value Analysis
+Abbreviation Name
+Lexicon
+Definition How It Is Used Equation
+Interpretation
+of Result
+TCPI To-complete
+performance
+index
+A measure
+of the cost
+performance
+that should be
+achieved with
+the remaining
+resources in
+order to meet
+a specified
+management
+goal, expressed
+as the ratio of
+the cost to finish
+the outstanding
+work to the
+remaining budget
+It is the efficiency
+that should be
+maintained in order
+to complete on plan.
+TCPI =
+(BAC − EV) /
+(BAC − AC)
+Greater than
+1.0 = Harder
+to complete
+Exactly 1.0 =
+Same to
+complete
+Less than
+1.0 = Easier
+to complete
+It is the efficiency
+that should be main-
+tained in order to
+complete the current
+EAC.
+TCPI =
+(BAC − EV) /
+(EAC − AC)
+Greater than
+1.0 = Harder
+to complete
+Exactly 1.0 =
+Same to
+complete
+Less than
+1.0 = Easier
+to complete
+Training. Training includes all activities designed to enhance the competencies of the project team
+members. Training can be formal or informal. Examples of training methods include classroom,
+online, computer-based, on-the-job training from another project team member, mentoring, and
+coaching. If project team members lack the necessary management or technical skills, such skills can
+be developed as part of the project work.
+Scheduled training takes place as stated in the resource management plan. Unplanned training takes
+place as a result of observation, conversation, and project performance appraisals conducted during
+management of the project team. Training costs could be included in the project budget or supported
+by the performing organization if the added skills may be useful for future projects. Training may be
+performed by in-house or external trainers.
+Trend analysis. Trend analysis is an analytical method that uses mathematical models to forecast
+future outcomes based on historical results. The analysis looks ahead in the project for expected
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

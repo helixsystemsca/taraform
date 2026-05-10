@@ -1,0 +1,26 @@
+12
+A Guide to the Project Management Body of Knowledge
+Figure 2-1. Structured Versus Self-Governed Projects
+Under a structured governance model, project governance is often composed of an executive project
+sponsor, project management office (PMO) leader, some type of governance board, and a project
+manager who can provide project-level oversight while managing the integration of all performance
+domains for that project. Under a self-governance model, instead of a PMO leader, there may be a
+group of individual project managers that is collectively accountable for optimizing performance.
+There are proven and effective self-governance models where project management responsibilities
+are distributed among the team, rather than assigned to a single individual holding a formal project
+management title.
+A key challenge in self-governance models is the potential for fragmented decision-making, where
+decision-makers may act in conflicting ways, resulting in a lack of direction or accountability. To
+address this, it is essential to establish clear, measurable common objectives supported by leading
+indicators and effective feedback mechanisms. These tools enable self-governed teams to make
+informed decisions and align their efforts toward shared goals. Notably, structured governance
+models emphasize similar principles, as detailed in Section 2.1.3.
+In a structured governance model, which is often used on more predictive projects, one or
+more internal or external constituents governs project performance according to organizational
+requirements. In a self-governing model, which is often used on more adaptive projects, the team
+ensures the project is delivering value. Governance models should be designed to fit the specific
+needs of the project within the particular organizational context in which value is being delivered.
+Structured
+Governance Self-Governance
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

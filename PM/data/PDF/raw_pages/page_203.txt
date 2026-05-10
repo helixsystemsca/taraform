@@ -1,0 +1,64 @@
+98
+A Guide to the Project Management Body of Knowledge
+2.7.2.5 Implement Risk Responses
+Implement Risk Responses is the process of implementing sufficient risk response plans. The key
+benefit of this process is that it ensures that agreed-upon risk responses are executed as planned to
+address overall project risk exposure, minimize individual project threats, and maximize individual
+project opportunities (see Figure 2-52).
+2.7.2.6 Monitor Risks
+Monitor Risks is the process of monitoring the implementation of risk response plans, tracking
+identified risks, identifying and analyzing new risks, planning responses for new risks, and evaluating the
+effectiveness of risk responses and processes throughout the project. This process helps ensure that risk
+owners are assigned to maintain continuity and address emerging risks effectively (see Figure 2-53).
+2.7.3 Tailoring Considerations
+Because each project is unique, activities and processes in the Risk performance domain should be
+tailored. Considerations for tailoring may include the following:
+⚫
+Project size and complexity. Determine if the project’s size or complexity necessitates a
+more detailed risk management approach or if a simplified process suffices. Constraints
+Figure 2-50. Perform Risk Analysis Inputs, Tools and Techniques, and Outputs
+• Project management plan
+– Risk management plan
+– Scope baseline
+– Schedule baseline
+– Cost baseline
+• Project documents
+– Assumption log
+– Cost estimates
+– Duration estimates
+– Resource requirements
+– Risk register
+– Stakeholder register
+• Enterprise environmental
+factors
+• Organizational process
+assets
+• Etc.
+• Project document updates
+– Assumption log
+– Issue log
+– Risk register
+– Risk report
+• Etc.
+• Expert judgment
+• Data gathering and analysis
+– Interviews
+• Interpersonal and team
+skills
+– Facilitation
+• Risk categorization
+• Data analysis
+– Risk probability and
+impact assessment
+– Simulations
+– Sensitivity analysis
+– Decision tree analysis
+– Inﬂ  uence diagrams
+• Data representation
+– Probability and impact
+matrix
+• Etc.
+Perform Risk Analy sis
+Inputs OutputsTools & Techniques
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

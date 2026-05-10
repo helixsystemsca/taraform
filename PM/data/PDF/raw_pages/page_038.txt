@@ -1,0 +1,32 @@
+15
+Section 2 – A System for Value Delivery
+2.1.1 Value Delivery Components
+Portfolios, programs, projects, products, and operations all generate value, either individually or
+collectively. Together, these components form an integrated system designed to maximize and
+sustain value delivery while ensuring alignment with the organization’s strategy. Figure 2-2 illustrates
+this value delivery system.
+Portfolio management serves as the central framework that links strategy to execution, optimizing
+resource utilization to maximize value across programs, projects, products, and operations. Portfolios
+consist of programs and projects that deliver strategic benefits, including product development and
+operational improvements. Additionally, programs and projects may encompass product delivery. See
+Section 2.5 for more details on the relationships among portfolios, programs, projects, and operations.
+Figure 2-2. Example of a System for Value Delivery
+External Environment
+Vision
+Mission
+Organizational Strateg y
+and Objectives
+Management of
+Operations and Products
+Portfolio Management
+Strategic Planning
+Management of Programs and Products
+Organizational Resources
+Internal Environment
+System for Value Deliver y
+Management of
+Authorized Programs
+and Projects
+(Projectized Activities)
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

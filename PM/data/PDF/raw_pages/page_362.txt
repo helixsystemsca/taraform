@@ -1,0 +1,48 @@
+257Appendix X5
+X5.2 Changes in the Eighth Edition
+The results of market discovery offered clear and definitive findings that informed the content plan of
+the eighth edition. Key findings included the following:
+⚫ Simplify the principles. A significant number of respondents—88%—supported a
+principle-based standard, emphasizing the importance of project management principles.
+However, respondents also said principles should be more actionable and less confusing.
+Specifically, principles should have connection with performance domains while not
+overlapping. For example, a specific topic, such as engaging stakeholders, should not be
+formalized as both a principle and a performance domain.
+⚫
+Reintroduce Process Groups as Focus Areas.  A majority—80% of respondents—
+supported the reintroduction and refinement of Process Groups as foundational concepts
+within The Standard for Project Management. A full two-thirds of respondents also
+indicated these five historically accepted concepts are agnostic of development approach
+(e.g., adaptive, predictive, or hybrid). This edition reintroduces Initiating, Planning,
+Executing, Monitoring and Controlling, and Closing as Project Management Focus Areas,
+which can be performed via formal processes, informal practices, or policies. This
+approach was further validated by community feedback received through public exposure
+comment periods.
+⚫
+Reintroduce processes. Again, 79% of respondents recommended that technical ways of
+working and processes should be directly integrated into the PMBOK® Guide. While noting
+that not all processes apply to every project all of the time, the market asserted process
+control theory to be considerably helpful in the practice of project management. Therefore,
+this edition offers 40 nonprescriptive processes that are fully embedded within the project
+management performance domains. When tailoring a project with a focus on delivering
+positive outcomes, these processes may be used as a reference as needed.
+X5.3 Sources for the Eighth Edition
+To implement the community direction for this eighth edition, the volunteer development team
+referenced a broad range of resources, ranging from academic literature to multiple PMI standards
+and practice guides.
+Of all the sources, the PMBOK
+® Guide—Seventh Edition (2021) and Process Groups: A Practice
+Guide (2022) served as the primary reference points for historical project management concepts.
+Figure X5-1 illustrates the migration and synthesis of content from those primary sources to the
+PMBOK
+® Guide—Eighth Edition. A full list of the sources used in the creation of this edition can be
+found in the bibliography.
+X5.4 Refinement of Project Management Principles
+Market research and community input emphasized the importance of a principle-based standard
+for project management, as presented in the PMBOK
+® Guide—Seventh Edition. However, key
+improvements were recommended for consideration in this eighth edition, specifically the following:
+⚫ Principles should be more actionable. Although respondents overwhelmingly agreed that
+principles serve as universal drivers of project success, practitioners also requested more
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

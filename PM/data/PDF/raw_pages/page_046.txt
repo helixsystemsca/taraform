@@ -1,0 +1,46 @@
+23
+Section 2 – A System for Value Delivery
+The disciplines of portfolio, program, project, and product management are interdependent and
+operate within a value delivery framework to ensure alignment with organizational strategy. While
+portfolio, program, and product management are beyond the scope of this standard, understanding
+each discipline and the relationships among them provides a useful context for projects where the
+deliverables are products.
+Product management may initiate programs or projects at any point in the product life cycle to create
+or enhance specific components, functions, or capabilities (see Figure 2-5). The initial product may
+begin as a deliverable of a program or project. Throughout its life cycle, a new program or project
+may add or improve specific components, attributes, or capabilities that create additional value
+for customers and the sponsoring organization. In some instances, a program may encompass the
+full life cycle of a product or service to manage benefits and create value for the organization more
+directly.
+The relationships among portfolio, program, project, and product management can exist in different
+forms, as shown in Figure 2-5, including but not limited to the following:
+⚫
+Program management within a product life cycle. This approach incorporates related
+projects, subsidiary programs, and program activities. For very large or long-term products,
+one or more product life cycle phases may be sufficiently complex to merit a set of
+programs and projects working together.
+Figure 2-5. Sample Product Life Cycle
+Introduction Growth Maturity Decline/Retirement
+Product Usage, Sales, Impact
+Time
+Project 3
+(Additions)
+Project 7
+(Retirement)
+Project 1
+(Initial Creation)
+Project 4
+(Revisions)
+Project 5
+(Revisions)
+Project 6
+(Revisions)
+Project 2
+(More Features)
+Program A Program B
+Portfolio
+Product
+Life Cycle
+Phases:
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

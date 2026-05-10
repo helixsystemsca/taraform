@@ -1,0 +1,35 @@
+186
+A Guide to the Project Management Body of Knowledge
+In the precedence diagramming method, FS is the most commonly used type of precedence
+relationship. The SF relationship is very rarely used, but it is included here to present a complete list
+of the relationship types in the precedence diagramming method.
+Two activities can have two logical relationships at the same time (for example, SS and FF). Multiple
+relationships among the same activities are not recommended, so a decision has to be made to
+select the relationship with the highest impact. Closed loops are also not recommended in logical
+relationships.
+Predictive analytics. Predictive analytics uses machine learning and current and historical data to
+discover patterns and to predict and forecast future scenarios, performance, trends, or events. For
+example, predictive analytics can be used when predicting project risks and suggesting effective
+mitigation strategies based on historical data.
+Presentations. A presentation is the formal delivery of information and/or documentation. Clear and
+effective presentations of project information to relevant stakeholders can include but are not limited
+to the following:
+⚫
+Progress reports and information updates to stakeholders;
+⚫ Background information to support decision-making;
+⚫ General information about the project and its objectives, for the purposes of raising the
+profile of the work of the project and the team; and
+Finish to Start (FS)
+Start to Finish (SF)
+Start to Start (SS) Finish to Finish (FF)
+Activity A
+Activity A
+Activity B
+Activity A
+Activity B
+Activity A
+Activity B
+Activity B
+Figure 5-13. Precedence Diagramming Method Relationship Types
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

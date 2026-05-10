@@ -3,7 +3,7 @@
 import * as React from "react";
 import type { PDFDocumentProxy } from "pdfjs-dist";
 import { getStroke } from "perfect-freehand";
-import { Minus, Plus, X } from "lucide-react";
+import { Minus, Plus, Search, X } from "lucide-react";
 import { v4 as uuid } from "uuid";
 
 import { NotesToolbar } from "@/components/notes/NotesToolbar";
@@ -19,6 +19,7 @@ import {
   stickyHitId,
   strokeBBox,
 } from "@/lib/annotations";
+import { hexToRgba } from "@/lib/highlightText";
 import { configurePdfjsWorker } from "@/lib/pdfjsClient";
 import {
   createStickyNote,
@@ -303,6 +304,8 @@ function PdfPageInner({
   pageStickies,
   onStrokesChange,
   onAddHighlight,
+  highlightColor,
+  onTextHighlightComplete,
   onErasePage,
   onExcerpt,
   onStickyCreate,
@@ -325,6 +328,8 @@ function PdfPageInner({
   pageStickies: StickyNoteDto[];
   onStrokesChange: (next: NoteStroke[]) => void;
   onAddHighlight: (hl: PdfTextHighlightDto) => void;
+  highlightColor: string;
+  onTextHighlightComplete?: (hl: PdfTextHighlightDto) => void;
   onErasePage: (page: number, xr: number, yr: number, cw: number, ch: number) => void;
   onExcerpt: (text: string, force?: boolean) => void;
   onStickyCreate: (page: number, x: number, y: number) => void;
@@ -441,12 +446,15 @@ function PdfPageInner({
         const t = window.getSelection()?.toString().replace(/\s+/g, " ").trim() ?? "";
         if (rects.length && t.length && t !== lastHlTextRef.current) {
           lastHlTextRef.current = t;
-          onAddHighlight({
+          const dto: PdfTextHighlightDto = {
             id: uuid(),
             page_number: pageNumber,
             text: t,
             rects,
-          });
+            color: highlightColor,
+          };
+          onAddHighlight(dto);
+          onTextHighlightComplete?.(dto);
           onExcerpt(t, false);
         }
         return;
@@ -458,7 +466,7 @@ function PdfPageInner({
     };
     wrap.addEventListener("pointerup", onUp);
     return () => wrap.removeEventListener("pointerup", onUp);
-  }, [tool, pageNumber, onAddHighlight, onExcerpt]);
+  }, [tool, pageNumber, highlightColor, onAddHighlight, onTextHighlightComplete, onExcerpt]);
 
   const onSelectPointerDownCapture = React.useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -704,12 +712,13 @@ function PdfPageInner({
                 {h.rects.map((r, i) => (
                   <div
                     key={`${h.id}-${i}`}
-                    className="absolute rounded-sm bg-[rgba(255,230,120,0.42)] mix-blend-multiply animate-[tara-hl-in_100ms_ease-out_both]"
+                    className="absolute rounded-sm mix-blend-multiply animate-[tara-hl-in_100ms_ease-out_both]"
                     style={{
                       left: `${r.x * 100}%`,
                       top: `${r.y * 100}%`,
                       width: `${r.w * 100}%`,
                       height: `${r.h * 100}%`,
+                      backgroundColor: hexToRgba(h.color ?? "#fde047", 0.42),
                     }}
                   />
                 ))}
@@ -830,6 +839,8 @@ function PdfPageSlot({
   pageHighlights,
   pageStickies,
   onAddHighlight,
+  highlightColor,
+  onTextHighlightComplete,
   onErasePage,
   onExcerpt,
   onStickyCreate,
@@ -854,6 +865,8 @@ function PdfPageSlot({
   pageHighlights: PdfTextHighlightDto[];
   pageStickies: StickyNoteDto[];
   onAddHighlight: (hl: PdfTextHighlightDto) => void;
+  highlightColor: string;
+  onTextHighlightComplete?: (hl: PdfTextHighlightDto) => void;
   onErasePage: (page: number, xr: number, yr: number, cw: number, ch: number) => void;
   onExcerpt: (text: string, force?: boolean) => void;
   onStickyCreate: (page: number, x: number, y: number) => void;
@@ -882,6 +895,8 @@ function PdfPageSlot({
           pageStickies={pageStickies}
           onStrokesChange={(next) => onStrokesChangeForPage(pageNumber, next)}
           onAddHighlight={onAddHighlight}
+          highlightColor={highlightColor}
+          onTextHighlightComplete={onTextHighlightComplete}
           onErasePage={onErasePage}
           onExcerpt={onExcerpt}
           onStickyCreate={onStickyCreate}
@@ -910,19 +925,30 @@ function emptyMarkup(): MarkupSnapshot {
   return { strokesByPage: {}, textHighlights: [] };
 }
 
-export function StudyPdfMarkupViewer({
-  file,
-  unitId,
-  stickyNotes,
-  onStickyNotesChange,
-  onExcerpt,
-}: {
+export type StudyPdfViewerHandle = {
+  scrollToPage: (page: number) => void;
+  focusSearch: () => void;
+};
+
+type StudyPdfMarkupViewerProps = {
   file: File;
   unitId: string | null;
   stickyNotes: StickyNoteDto[];
   onStickyNotesChange: React.Dispatch<React.SetStateAction<StickyNoteDto[]>>;
   onExcerpt: (text: string, force?: boolean) => void;
-}) {
+  onHighlightsChange?: (highlights: PdfTextHighlightDto[]) => void;
+  highlightActions?: {
+    onFlashcards: (hl: PdfTextHighlightDto) => void;
+    onQuiz: (hl: PdfTextHighlightDto) => void;
+    onNote: (hl: PdfTextHighlightDto) => void;
+  };
+};
+
+export const StudyPdfMarkupViewer = React.forwardRef<StudyPdfViewerHandle, StudyPdfMarkupViewerProps>(
+  function StudyPdfMarkupViewer(
+    { file, unitId, stickyNotes, onStickyNotesChange, onExcerpt, onHighlightsChange, highlightActions },
+    ref,
+  ) {
   const tool = useAnnotationToolbarStore((s) => s.tool);
   const setTool = useAnnotationToolbarStore((s) => s.setTool);
   const color = useAnnotationToolbarStore((s) => s.color);
@@ -949,6 +975,74 @@ export function StudyPdfMarkupViewer({
   zoomRef.current = zoom;
   const pdfRef = React.useRef<PDFDocumentProxy | null>(null);
   const markupSaveTimer = React.useRef<ReturnType<typeof setTimeout> | null>(null);
+  const rootRef = React.useRef<HTMLDivElement>(null);
+  const numPagesRef = React.useRef(0);
+  const pageTextsRef = React.useRef<Record<number, string>>({});
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
+
+  const effectiveHlColor = color && color !== "#2b2b2b" ? color : "#fde047";
+
+  const [searchOpen, setSearchOpen] = React.useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [dockHl, setDockHl] = React.useState<PdfTextHighlightDto | null>(null);
+  const [textReadyTick, setTextReadyTick] = React.useState(0);
+
+  React.useEffect(() => {
+    numPagesRef.current = numPages;
+  }, [numPages]);
+
+  React.useEffect(() => {
+    onHighlightsChange?.(markup.textHighlights);
+  }, [markup.textHighlights, onHighlightsChange]);
+
+  React.useEffect(() => {
+    if (!dockHl) return;
+    const t = window.setTimeout(() => setDockHl(null), 14_000);
+    return () => window.clearTimeout(t);
+  }, [dockHl]);
+
+  React.useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const t = e.target as HTMLElement;
+      if (t.closest("textarea, input, [contenteditable=true]")) return;
+      if (e.ctrlKey && e.key.toLowerCase() === "f") {
+        e.preventDefault();
+        setSearchOpen(true);
+        window.setTimeout(() => searchInputRef.current?.focus(), 30);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  React.useEffect(() => {
+    if (!pdf || numPages < 1) return;
+    let cancelled = false;
+    pageTextsRef.current = {};
+    void (async () => {
+      const texts: Record<number, string> = {};
+      try {
+        for (let i = 1; i <= numPages; i++) {
+          const page = await pdf.getPage(i);
+          const tc = await page.getTextContent();
+          const parts = tc.items.map((item) =>
+            "str" in item && typeof item.str === "string" ? item.str : "",
+          );
+          texts[i] = parts.join(" ").replace(/\s+/g, " ").trim();
+          if (cancelled) return;
+        }
+        if (!cancelled) {
+          pageTextsRef.current = texts;
+          setTextReadyTick((x) => x + 1);
+        }
+      } catch {
+        /* ignore */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [pdf, numPages]);
 
   React.useEffect(() => {
     if (tool === "pen") setTool("highlighter");
@@ -960,6 +1054,29 @@ export function StudyPdfMarkupViewer({
     pageHeightsRef.current.set(page, h);
     bumpHeights((n) => n + 1);
   }, []);
+
+  const scrollToPageInternal = React.useCallback((page: number) => {
+    const root = rootRef.current;
+    const n = numPagesRef.current;
+    if (!root || page < 1 || page > n) return;
+    let y = 0;
+    for (let i = 1; i < page; i++) {
+      y += pageHeightsRef.current.get(i) ?? 960;
+    }
+    root.scrollTo({ top: Math.max(0, y - 8), behavior: "smooth" });
+  }, []);
+
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      scrollToPage: (page: number) => scrollToPageInternal(page),
+      focusSearch: () => {
+        setSearchOpen(true);
+        window.setTimeout(() => searchInputRef.current?.focus(), 30);
+      },
+    }),
+    [scrollToPageInternal],
+  );
 
   React.useEffect(() => {
     const el = outerRef.current;
@@ -1088,7 +1205,6 @@ export function StudyPdfMarkupViewer({
     [setMarkup],
   );
 
-  const rootRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     setScrollRoot(rootRef.current);
   }, [pdf, numPages]);
@@ -1199,6 +1315,27 @@ export function StudyPdfMarkupViewer({
 
   const placeholderHeight = (page: number) => pageHeightsRef.current.get(page) ?? 960;
 
+  const searchHits = React.useMemo(() => {
+    void textReadyTick;
+    const q = searchQuery.trim().toLowerCase();
+    if (q.length < 2) return [];
+    const texts = pageTextsRef.current;
+    const out: { page: number; snippet: string }[] = [];
+    for (let p = 1; p <= numPages; p++) {
+      const full = texts[p] ?? "";
+      const low = full.toLowerCase();
+      if (!low.includes(q)) continue;
+      const idx = low.indexOf(q);
+      const slice = full.slice(Math.max(0, idx - 28), Math.min(full.length, idx + q.length + 56)).trim();
+      out.push({ page: p, snippet: slice || full.slice(0, 96) });
+    }
+    return out.slice(0, 30);
+  }, [searchQuery, numPages, textReadyTick]);
+
+  const onTextHighlightComplete = React.useCallback((hl: PdfTextHighlightDto) => {
+    setDockHl(hl);
+  }, []);
+
   if (loadError) {
     return (
       <div className="flex min-h-[42dvh] items-center justify-center px-4 text-center text-sm text-red-700">
@@ -1214,7 +1351,7 @@ export function StudyPdfMarkupViewer({
   }
 
   return (
-    <div ref={outerRef} className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+    <div ref={outerRef} className="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
       <div className="flex shrink-0 flex-col gap-1.5 border-b border-[rgba(120,90,80,0.08)] bg-[rgba(251,248,244,0.88)] px-2 py-2">
         <div className="flex min-w-0 flex-wrap items-start gap-2">
           <div className="min-w-0 min-w-[200px] flex-1">
@@ -1263,8 +1400,63 @@ export function StudyPdfMarkupViewer({
             >
               <Plus className="h-4 w-4" />
             </button>
+            <button
+              type="button"
+              className="inline-flex h-8 items-center gap-1 rounded-md border border-transparent px-2 text-[11px] font-medium text-ink-secondary hover:bg-black/[0.04]"
+              aria-label="Search in PDF"
+              onClick={() => {
+                setSearchOpen((o) => !o);
+                window.setTimeout(() => searchInputRef.current?.focus(), 30);
+              }}
+            >
+              <Search className="h-3.5 w-3.5" />
+              Search
+            </button>
           </div>
         </div>
+        {searchOpen ? (
+          <div className="flex flex-col gap-1.5 rounded-lg border border-[rgba(120,90,80,0.08)] bg-white/90 px-2 py-2 shadow-sm">
+            <div className="flex items-center gap-2">
+              <Search className="h-3.5 w-3.5 shrink-0 text-ink-muted" />
+              <input
+                ref={searchInputRef}
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Find in extracted text…"
+                className="min-w-0 flex-1 rounded-md border border-[rgba(120,90,80,0.12)] bg-white px-2 py-1 text-xs text-ink outline-none focus-visible:ring-2 focus-visible:ring-copper/20"
+              />
+              <button
+                type="button"
+                className="shrink-0 text-[11px] font-medium text-ink-muted hover:text-ink"
+                onClick={() => {
+                  setSearchOpen(false);
+                  setSearchQuery("");
+                }}
+              >
+                Close
+              </button>
+            </div>
+            {searchQuery.trim().length >= 2 && searchHits.length === 0 ? (
+              <p className="text-[10px] text-ink-muted">No matches in extracted text.</p>
+            ) : null}
+            {searchHits.length > 0 ? (
+              <ul className="max-h-28 space-y-1 overflow-y-auto text-[11px]">
+                {searchHits.map((h) => (
+                  <li key={`${h.page}-${h.snippet.slice(0, 12)}`}>
+                    <button
+                      type="button"
+                      className="w-full rounded-md px-2 py-1 text-left text-ink-secondary hover:bg-rose-light/40 hover:text-ink"
+                      onClick={() => scrollToPageInternal(h.page)}
+                    >
+                      <span className="font-semibold text-copper">p.{h.page}</span> · {h.snippet}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
+            <p className="text-[10px] text-ink-muted">Tip: Ctrl+F opens search while not typing in a field.</p>
+          </div>
+        ) : null}
         <p className="text-[10px] leading-snug text-ink-muted">
           {tool === "select"
             ? "Tap ink, highlights, or stickies to select; drag to move. Drag text to pull an excerpt into the study panel."
@@ -1298,6 +1490,8 @@ export function StudyPdfMarkupViewer({
             pageHighlights={markup.textHighlights.filter((h) => h.page_number === pageNumber)}
             pageStickies={stickyNotes.filter((n) => n.page_number === pageNumber)}
             onAddHighlight={onAddHighlight}
+            highlightColor={effectiveHlColor}
+            onTextHighlightComplete={onTextHighlightComplete}
             onErasePage={onErasePage}
             onExcerpt={onExcerpt}
             onStickyCreate={onStickyCreate}
@@ -1311,6 +1505,58 @@ export function StudyPdfMarkupViewer({
           />
         ))}
       </div>
+
+      {dockHl && highlightActions ? (
+        <div className="pointer-events-none absolute inset-x-0 bottom-4 z-40 flex justify-center px-3">
+          <div
+            className="pointer-events-auto flex max-w-[min(520px,100%-24px)] flex-wrap items-center justify-center gap-2 rounded-2xl border border-[rgba(120,90,80,0.12)] bg-white/95 px-4 py-3 shadow-[0_18px_50px_rgba(40,30,20,0.12)] backdrop-blur-md"
+            data-study-highlight-dock
+          >
+            <span className="w-full text-center text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-muted">
+              Highlight actions
+            </span>
+            <button
+              type="button"
+              className="rounded-lg bg-gradient-to-br from-copper/90 to-rose-deep/85 px-3 py-1.5 text-[12px] font-medium text-white shadow-sm hover:opacity-95"
+              onClick={() => {
+                highlightActions.onFlashcards(dockHl);
+                setDockHl(null);
+              }}
+            >
+              Flashcards
+            </button>
+            <button
+              type="button"
+              className="rounded-lg border border-[rgba(120,90,80,0.15)] bg-white px-3 py-1.5 text-[12px] font-medium text-ink shadow-sm hover:bg-rose-light/35"
+              onClick={() => {
+                highlightActions.onQuiz(dockHl);
+                setDockHl(null);
+              }}
+            >
+              Quiz
+            </button>
+            <button
+              type="button"
+              className="rounded-lg border border-[rgba(120,90,80,0.15)] bg-white px-3 py-1.5 text-[12px] font-medium text-ink shadow-sm hover:bg-rose-light/35"
+              onClick={() => {
+                highlightActions.onNote(dockHl);
+                setDockHl(null);
+              }}
+            >
+              Add note
+            </button>
+            <button
+              type="button"
+              className="text-[11px] font-medium text-ink-muted underline decoration-rose-deep/30 underline-offset-2 hover:text-ink"
+              onClick={() => setDockHl(null)}
+            >
+              Dismiss
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
-}
+});
+
+StudyPdfMarkupViewer.displayName = "StudyPdfMarkupViewer";

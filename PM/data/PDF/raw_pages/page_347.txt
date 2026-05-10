@@ -1,0 +1,44 @@
+242
+A Guide to the Project Management Body of Knowledge
+Table X3-1. (Continued)
+Project Management
+Performance Domain AI Strategy Use Case
+Risk Assistance Risk impact analysis. AI can evaluate the impact of
+actual risks on project goals such as time, cost, and
+quality. By providing detailed impact assessments, AI
+helps project managers understand the gravity of risks
+and prioritize their responses accordingly.
+Risk Augmentation Risk-adjusted ROI analysis. At the portfolio, program,
+or project level, AI can use pattern recognition to augment
+existing ROI analysis in factoring in risk adjustments to
+expected ROI assessments.
+Stakeholders Augmentation Stakeholder sentiment analysis. AI-powered
+natural language processing (NLP) tools can analyze
+communication data (e.g., emails, chats, meeting
+notes, social media) to determine stakeholder feelings.
+By ethically understanding stakeholders’ emotions
+and concerns, project managers can address issues
+proactively and improve engagement.
+Stakeholders Augmentation Personalized communication. AI can investigate
+stakeholders’ preferences and past interactions in order
+to tailor communication strategies. For example, AI can
+determine the most effective communication channels
+and frequencies for each stakeholder, ensuring timely and
+relevant communication that enhances engagement and
+satisfaction.
+Schedule Assistance Dynamic scheduling. AI can optimize project schedules
+by considering project dependencies, resource availability,
+and milestone deadlines. AI can adjust schedules in
+response to internally and externally generated changes,
+ensuring optimal resource utilization.
+Schedule Assistance
+Schedule conflict resolution. AI can identify potential
+scheduling conflicts (at the portfolio, program, or project
+level) and propose solutions to resolve them, minimizing
+delays and resource bottlenecks.
+Schedule Assistance
+Schedule risk impact analysis. AI can apply pattern
+recognition to help assess schedule risks such as inherent
+risks associated with branching and merging paths.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

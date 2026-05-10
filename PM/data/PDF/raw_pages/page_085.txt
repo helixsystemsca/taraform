@@ -1,0 +1,26 @@
+62
+Sample Predictive Life Cycle
+Feasibility
+Design
+Build
+Check
+Transfer
+Close
+Figure 4-4. Sample Predictive Life Cycle
+Sample Life Cycle With an Incremental Development Approach
+Concept
+Plan
+Design
+Build
+Plan
+Design
+Build
+Plan
+Design
+Build
+Close
+Increment 3Increment 2Increment 1
+Figure 4-5. Sample Predictive Life Cycle With an Incremental Delivery
+The Standard for Project Management
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

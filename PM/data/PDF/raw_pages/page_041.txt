@@ -1,0 +1,39 @@
+18
+2.2.1 Enterprise Environmental Factors
+Enterprise environmental factors refer to conditions not directly influenced by the project team
+that impact, constrain, or direct the project. These conditions can be internal and/or external to the
+organization. The EEFs are considered as inputs to many project management processes, specifically
+for most planning processes. These factors can either enhance or constrain project management
+options as well as influence tailoring needs and project outcomes, positively or negatively.
+Enterprise environmental factors vary widely in type or nature and should be considered if the
+project is to be effective. The EEFs include but are not limited to the factors described in Sections
+2.2.1.1 and 2.2.1.2.
+2.2.1.1 Enterprise Environmental Factors Internal to the Organization
+The following are examples of EEFs that are internal to the organization:
+⚫
+Organizational culture, structure, and governance. Examples include vision, mission,
+values, beliefs, cultural norms, leadership styles, hierarchy and authority relationships,
+organizational styles, ethics, and codes of conduct.
+⚫ Geographic distribution of facilities and resources. Examples include physical locations,
+corporate offices, research and development centers, customer service hubs, and virtual or
+hybrid teams.
+⚫
+Infrastructure. Examples include existing facilities, equipment, organizational
+telecommunications channels, information technology hardware, availability, and capacity.
+Figure 2-4. Project Influences
+Organizational
+Knowledge
+Repository
+Processes,
+Policies, and
+Procedures
+InternalExternal
+Enterprise
+Environmental
+Factors
+Organizational
+Process Assets
+Inﬂuences
+The Standard for Project Management
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

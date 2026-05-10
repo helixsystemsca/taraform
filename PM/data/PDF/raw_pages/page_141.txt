@@ -1,0 +1,40 @@
+36
+A Guide to the Project Management Body of Knowledge
+Table 2-4. Governance Interactions With Other Performance Domains
+Performance Domain Explanation
+Scope Since project scope is where the project’s core value lies, the Governance
+and Scope performance domains often comprise the most important domain
+interaction. The Scope–Governance approach can have extensive formal con-
+trols or be more informal, but such governance decisions are pivotal.
+Schedule Because most projects involve some form of investment—be it financial,
+strategic, or otherwise—and because the value proposition is often sensitive
+to time, the interaction between the Governance and Schedule performance
+domains can be critical.
+Well-applied governance may increase a project’s speed and effectiveness,
+while poorly applied governance can slow it down or result in ineffective
+outcomes.
+Finance All projects are investments, and the value proposition of any investment is
+sensitive to the amount being invested (i.e., cost). Consequently, the interac-
+tion between the Governance and Finance performance domains can impact
+projects with cost overruns or underruns.
+Stakeholders Well-applied project governance can help ensure that all stakeholders are
+engaged at the right time in order to achieve project success. Governance
+considers the vantage points of all players to help ensure individuals are
+aware of what is happening in a project and can give input, provide advice, or
+perform work at the appropriate time.
+Resources Since the completion of project work is heavily dependent on how well the
+right resources are allocated to the right project priorities at the right times,
+the interaction between the Governance and Resources performance domains
+requires attention in the context of the specific project, as well as how resour-
+ces are allocated across the organization.
+Risk All projects are investments with inherent risks, requiring effective interaction
+between the Governance and Risk performance domains. Risks, encompas-
+sing both threats and opportunities, impact project outcomes. Mitigating risks
+or seizing opportunities should align with strategic objectives and be managed
+under clear governance to optimize risk-adjusted returns.
+For example, risk mitigation efforts may incur additional expenditures, but
+they can be worthwhile if they enhance the overall project outcomes, such
+as improving safety, regulatory compliance, stakeholder confidence, or the
+risk-adjusted return on investment.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

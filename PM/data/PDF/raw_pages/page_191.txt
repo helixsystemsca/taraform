@@ -1,0 +1,49 @@
+86
+A Guide to the Project Management Body of Knowledge
+2.6.2.4.2 High-Performing Project Teams
+The following list is not comprehensive, but identifies some of the factors associated with high-
+performing project teams, which is a goal of effective leadership:
+⚫ Open communication. An environment that fosters open and safe communication
+allows for productive meetings, problem-solving, brainstorming, understanding, trust, and
+collaboration.
+⚫
+Shared understanding. Shared understanding can be achieved when the purpose of the
+project and the benefits that it will provide are held in common with the team. Shared
+understanding is closely related to project alignment, which helps ensure that the project’s
+goals and activities are in line with the organization’s mission and strategy. This effort
+involves developing a shared understanding of the project’s purpose and goals—and how
+to achieve them.
+⚫
+Shared ownership. The more ownership that project team members feel over the
+outcomes, the more likely they are to perform effectively.
+⚫
+Trust. A project team that is composed of members who trust one another is more willing
+to perform at a higher level to deliver success. People are less likely to do the extra work it
+may take to succeed if they do not trust their project team members, project manager, or
+the organization.
+⚫
+Collaboration. Project team members who work as a team, rather than working in silos or
+competitively, tend to generate more diverse ideas and deliver better outcomes.
+⚫ Adaptability. Project teams that can adapt the way they work to their particular
+environment or situation are more effective.
+⚫
+Resilience. When issues or failures occur, high-performing project teams recover quickly.
+⚫ Empowerment, delegation, and autonomy. Project team members who feel empowered
+to make decisions about the way they work and about specific details in the deliverables
+being produced—even under limited range—perform better and have a higher degree of
+satisfaction than those who are micromanaged.
+⚫
+Recognition. Project team members who are recognized for the work they put in and the
+performance that they achieve are more likely to continue to perform well. Even the simple
+act of showing appreciation reinforces positive team behaviors.
+The specific tools and techniques of the Lead the Team process are colocation, virtual teams,
+recognition and rewards, training, individual and team assessments, emotional intelligence,
+leadership, distributed management and leadership, centralized management and leadership,
+servant leadership, coaching and mentoring, organizational cultural intelligence, virtual collaboration
+tools, retrospectives, critical thinking, and specific problem-solving methods such as Six Thinking
+Hats
+®3 (see Section 5 on Tools and Techniques).
+The specific outputs of the Lead the Team process include team performance assessments.
+3 Six Thinking Hats® is a registered trademark of The de Bono Group.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

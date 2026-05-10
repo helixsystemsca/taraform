@@ -1,0 +1,46 @@
+4 The Standard for Project Management
+The project management landscape has undergone significant changes in recent years, shaped
+by evolving global challenges such as climate change, resource constraints, geopolitical
+instability, and widening inequalities, alongside advancements in technology like artificial
+intelligence (AI).
+Adaptive project management approaches, including but not limited to agile practices, have become
+increasingly important. These approaches enable project teams to tailor their strategies to meet the
+unique challenges and dynamic conditions of each project. While this standard discusses relevant
+agile practices in project management, it is important to note that the practice of agile extends
+beyond project management.
+Simultaneously, generative AI (GenAI) is contributing to the field of project management by offering
+advanced tools and capabilities that, when used responsibly and correctly, can potentially improve
+project outcomes. Artificial intelligence–driven solutions can analyze vast amounts of data to provide
+actionable insights, predict risks, and recommend optimal courses of action. This technology can
+enhance decision-making processes, automate routine tasks, and support more accurate forecasting
+and planning. When applied effectively, AI can help project managers focus on performing strategic
+activities, managing stakeholder engagement, fostering innovation, and driving continuous
+improvement within the context of their projects. However, the impact of using AI depends on factors
+such as the quality of system inputs and human oversight.
+In this evolving landscape, the role of a project manager continues to expand beyond traditional
+organizing skills. Project practitioners should be able to navigate complex environments, leverage
+emerging technologies, and align project outcomes with organizational strategic objectives.
+In today’s business environment, project managers should be skilled strategists and change
+managers, capable of driving value to their organization, industry, and situation. While no one
+person can be an expert in all these things, the expectation in the modern workplace remains the
+same. Therefore, the practice of project management now requires excellence in an expanding
+array of disciplines.
+The Standard for Project Management serves as a foundational guide for project management
+practitioners, providing a common language and framework that can be applied across various
+industries, methodologies, and technological advancements. The standard supports organizations
+and project professionals in navigating the complexities of modern project management, ensuring
+consistency and effectiveness in project delivery while allowing for the flexibility needed in today’s
+dynamic business environment. By applying the standard, organizations can better position
+themselves to achieve strategic objectives, drive innovation, maintain competitiveness, and
+contribute to societal impact.
+1.2 Key Terms and Concepts
+The Standard for Project Management reflects the advancement of the profession. Organizations
+expect projects to deliver outcomes. Project managers are expected to deliver projects that create
+value for the organization and stakeholders within the organization’s system for value delivery. The
+following terms are defined to provide context for the content in this standard:
+⚫
+Artifact.  A document or other item created during a portfolio, program, or project
+to help manage it and provide information to the project team, stakeholders, and
+management.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

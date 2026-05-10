@@ -1,0 +1,45 @@
+93
+Section 2 – Project Management Performance Domains
+not materialize in a portfolio, program, or project. Potentially harmful risks, often called
+threats, may negatively impact one or more project objectives through project delays,
+cost overruns, or reputation damage. Positive risks, better known as opportunities, may
+positively affect one or more project objectives, including a potential increase in market
+share, cost savings, or a positive environmental impact. A risk may be described in a
+“cause, event, and consequence” structure (see the risk register in Section 4 on Inputs and
+Outputs). Risks can also be classified into unknown-known, unknown-unknown, known-
+known, and known-unknown (see Figure 2-46).
+⚫
+Issue. An issue is a current condition or situation that may have an impact on one or
+more project objectives. An issue has already occurred and may require immediate
+action or management attention. Reviewing the project issue log and risk register can
+identify challenges associated with individual stakeholders. Risks and issues may be
+closely related as an issue may arise from a poorly managed risk. However, issues also
+differ from risks as issues have already occurred or are still occurring, whereas risks are
+potential future problems that have not yet occurred.
+⚫
+Overall risk. Overall risk is the effect of uncertainty on the portfolio, program, or project
+as a whole. Overall risk may arise from everything that is uncertain or unknown in the
+project, including individual risks. Responses to overall project risk are the same as
+for individual threats and opportunities, though responses are applied to the overall
+project rather than to a specific event. If the overall risk to the project is too high, the
+organization may choose to cancel the project.
+Unknown–Known
+Knowledge exists in the
+community but not with the
+entity working on the endeavor.
+(Hidden fact)
+Unknown–Unknown
+Knowledge does not exist
+within the sphere of inﬂuence.
+(Emergent risk)
+Known–Known
+Managed as a part of scope.
+Not a risk.
+(Facts and requirements)
+Known–Unknown
+There is knowledge to identify
+probability and impact.
+(Classic risk)
+Figure 2-46. Risk Classification
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

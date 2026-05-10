@@ -1,0 +1,42 @@
+48
+A Guide to the Project Management Body of Knowledge
+⚫ Schedule flexibility. Flexibility is essential for adapting to changes, managing risks, and
+optimizing resource allocations. Flexibility enhances team morale, supports incremental
+delivery, and helps ensure higher-quality outcomes.
+⚫
+Schedule forecasts. Schedule forecasts are estimates or predictions of conditions and
+events in the project’s future based on information and knowledge available at the time the
+schedule is calculated. The schedule forecast predicts a timeline based on current progress,
+performance trends, and other information pertaining to the project. Forecasts are updated
+and reissued based on work performance obtained as the project is executed.
+⚫
+Actual duration. The actual duration is the time, in calendar units, between the actual
+start date of the schedule activity and the data date of the project schedule, if the schedule
+activity is in progress, or the actual finish date if the schedule activity is complete.
+⚫
+Project schedule network diagrams. A project schedule network diagram is a graphical
+representation of the logical relationships (also called dependencies) among the project
+schedule activities. Sequencing can be performed by using project management software.
+2.3.2 Processes
+The Schedule performance domain includes the processes required to manage the timely completion
+of the project. The following processes are included in the Schedule performance domain (see
+Figure 2-20):
+⚫
+Plan Schedule Management. The process of establishing policies, procedures, and
+documentation for designing, developing, managing, performing, and maintaining the
+schedule.
+Figure 2-20. Schedule Performance Domain Processes Overview
+ClosingPlanning
+Executing
+Monitoring and Controlling
+Initiating
+Plan
+Schedule
+Management
+Develop
+Schedule
+Monitor and
+Control
+Schedule
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

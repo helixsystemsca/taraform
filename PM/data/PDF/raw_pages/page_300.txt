@@ -1,0 +1,57 @@
+195
+Section 5 – Tools and Techniques
+these meetings, fostering a collaborative environment where everyone can contribute their insights
+and suggestions. The outcomes of retrospectives are actionable, with specific actions identified
+and owners assigned to implement the improvements. This immediate impact allows for quick
+adjustments and continuous enhancement of the project process.
+Risk categorization. Risks to the project can be categorized by sources of risk (e.g., using the
+risk breakdown structure [RBS]); the area of the project affected (e.g., using the work breakdown
+structure [WBS]); or other useful categories (e.g., project phase, project budget, and roles and
+responsibilities) to determine the areas of the project most exposed to the effects of uncertainty.
+Risks can also be categorized by common root causes. Risk categories that may be used for the
+project are defined in the risk management plan.
+Grouping risks into categories can lead to the development of more effective risk responses by
+focusing attention and effort on the areas of highest risk exposure, or by developing generic risk
+responses to address groups of related risks.
+Risk probability and impact assessment. Risk probability assessments consider the likelihood
+that a specific risk will occur. Risk impact assessments consider the potential effect on one or
+more project objectives such as schedule, cost, quality, or performance. Impacts will be negative
+for threats and positive for opportunities. Probability and impact are assessed for each identified
+individual project risk. Risks can be assessed in interviews or meetings with participants selected
+for their familiarity with the types of risk recorded in the risk register. Project team members and
+knowledgeable persons external to the project are included. The level of probability for each risk
+and its impact on each objective are evaluated during the interview or meeting. Differences in the
+levels of probability and impact perceived by stakeholders are to be expected, and such differences
+should be explored. Explanatory detail, including assumptions justifying the levels assigned, are
+also recorded. Risk probabilities and impacts are assessed using the definitions given in the risk
+management plan. Risks with low probability and impact may be included within the risk register as
+part of a watch list for future monitoring.
+Figure 5-19. Sample RACI Matrix
+RACI Matrix Person
+Activity
+Create charter
+Collect
+requirements
+Submit change
+request
+Develop test plan
+Ann Ben Carlos Dina Ed
+A
+I
+R
+R = Responsible   A = Accountable   C = Consulted   I = Informed
+C
+CC
+A
+A
+AI
+II
+I
+I
+C
+R
+R
+R
+IR
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

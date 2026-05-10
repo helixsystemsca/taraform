@@ -1,0 +1,38 @@
+Figure 2-31 E xamples of Project Stakeholders  ................................................  68
+Figure 2-32 S takeholders Performance Domain Processes Overview  ............................  70
+Figure 2-33 I dentify Stakeholders Inputs, Tools and Techniques, and Outputs  ....................  71
+Figure 2-34 P lan Stakeholder Engagement Inputs, Tools and Techniques, and Outputs  ............  72
+Figure 2-35 P lan Communications Management Inputs, Tools and Techniques, and Outputs  .......  73
+Figure 2-36 M anage Stakeholder Engagement Inputs, Tools and Techniques, and Outputs  .........  74
+Figure 2-37 M anage Communications Inputs, Tools and Techniques, and Outputs  ................  75
+Figure 2-38 M onitor Stakeholder Engagement Inputs, Tools and Techniques, and Outputs  .........  76
+Figure 2-39 M onitor Communications Inputs, Tools and Techniques, and Outputs  ................  77
+Figure 2-40 R esources Performance Domain Processes Overview ...............................  80
+Figure 2-41 P lan Resource Management Inputs, Tools and Techniques, and Outputs  ..............  81
+Figure 2-42 E stimate Resources Inputs, Tools and Techniques, and Outputs ......................  82
+Figure 2-43 A cquire Resources Inputs, Tools and Techniques, and Outputs .......................  83
+Figure 2-44  L ead the Team Inputs, Tools and Techniques, and Outputs  ..........................  85
+Figure 2-45 M onitor and Control Resourcing Inputs, Tools and Techniques, and Outputs ...........  87
+Figure 2-46 R isk Classification ...............................................................  93
+Figure 2-47 R isk Performance Domain Processes Overview  ....................................  95
+Figure 2-48 P lan Risk Management Inputs, Tools and Techniques, and Outputs  . . . . . . . . . . . . . . . . . . .  96
+Figure 2-49 I dentify Risks Inputs, Tools and Techniques, and Outputs  ...........................  97
+Figure 2-50 P erform Risk Analysis  Inputs, Tools and Techniques, and Outputs ....................  98
+Figure 2-51 P lan Risk Responses Inputs, Tools and Techniques, and O utputs  .....................  99
+Figure 2-52 I mplement Risk Responses Inputs, Tools and Techniques, and Outputs  ..............  100
+Figure 2-53 M onitor Risks Inputs, Tools and Techniques, and Outputs  ..........................  100
+Figure 3-1 D etails of the Steps in the Tailoring Process .......................................  106
+Figure 3-2 A ssessing the Organizational and Project Factors When Tailoring ....................  107
+Figure 3-3 T he Tailoring Process ...........................................................  110
+Figure 3-4  T ailoring to Fit the Project Context ...............................................  111
+Figure 4-1 C ost Baseline, Expenditures, and Funding Requirements ...........................  126
+Figure 4-2 E xample of a Project Schedule Network Diagram ..................................  127
+Figure 4-3 E xample of a Requirements Traceability Matrix ....................................  132
+Figure 4-4  S ample Resource Breakdown Structure  ..........................................  133
+Figure 4-5 E xcerpt From a Sample Risk Breakdown Structure .................................  135
+Figure 5-1 R elationship Among Product Vision, Release Planning, and Iteration Planning  ........  147
+Figure 5-2 C ommunication Model for Cross-Cultural Communication ..........................  154
+Figure 5-3 C ost of Quality  ................................................................  159
+xx List of Figures and Tables
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

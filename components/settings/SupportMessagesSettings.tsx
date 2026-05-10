@@ -24,6 +24,9 @@ export function SupportMessagesSettings() {
   const persist = React.useCallback((next: SupportMessage[]) => {
     setMessages(next);
     saveSupportMessages(next);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("taraform-support-messages-changed"));
+    }
   }, []);
 
   function addMessage() {

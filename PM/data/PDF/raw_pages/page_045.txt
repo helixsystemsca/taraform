@@ -1,0 +1,90 @@
+22
+Table 2-1. Influences of Organizational Structures on Projects
+Project Characteristics
+Organizational
+Structure Type
+Work Group
+Arrangement
+Project Manager’s
+Authority
+Project Manager’s
+Role
+Resource
+Availability
+Organic or simple Flexible; people
+working side by side
+Low Part-time role; may
+or may not be a
+designated job role
+such as coordinator
+Low
+Functional
+(centralized)
+Job being done
+(e.g., engineering,
+manufacturing)
+Low Part-time role; may
+or may not be a
+designated job role
+such as coordinator
+Low
+Multidivisional
+(may replicate
+functions for each
+division with little
+centralization)
+One of the following:
+product; production
+processes; portfolio;
+program; geographic
+region; customer
+type
+Low Part-time role; may
+or may not be a
+designated job role
+such as coordinator
+Low
+Matrix—strong By job function, with
+project manager as a
+function
+Moderate to high Full-time, designated
+job role
+Moderate to
+high
+Matrix—weak Job function Low Part-time role; done
+as part of another
+job and not a
+designated job role
+such as coordinator
+Low
+Matrix—
+balanced
+Job function Low to moderate Part-time role;
+embedded in the
+functions as a skill
+and may not be a
+designated job role
+such as coordinator
+Low to
+moderate
+Project-oriented
+(composite,
+hybrid)
+Project High to almost
+total
+Full-time, designated
+job role
+High to almost
+total
+Virtual/network Network structure
+with nodes at points
+of contact with other
+people
+Low to moderate Full-time or part-time
+role
+Low to
+moderate
+Hybrid Mix of other types Mixed Mixed Mixed
+The Standard for Project Management
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

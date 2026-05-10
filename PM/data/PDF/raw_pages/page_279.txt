@@ -1,0 +1,98 @@
+174
+A Guide to the Project Management Body of Knowledge
+In-progress postmortems. An in-progress postmortem is a structured process conducted at various
+stages of the project life cycle to analyze current performance, identify issues, and implement
+improvements. Unlike traditional postmortems held at the end of a project, these reviews are
+conducted periodically to ensure continuous improvement and timely problem-solving.
+Inspections. An inspection is the examination of a work product to determine if it conforms to
+documented standards. The results of inspections generally include measurements and may be conducted
+at any level. The results of a single activity can be inspected or the final product of the project can be
+inspected. Inspections may be called reviews, peer reviews, audits, or walkthroughs. In some application
+areas, these terms have narrow and specific meanings. Inspections also are used to verify defect repairs.
+Integrated change control. Integrated change control helps ensure that changes to the project are
+managed in a coordinated and controlled manner. By evaluating change requests, conducting impact
+analyses, making informed decisions, and documenting and communicating changes, the project can
+maintain alignment with its objectives and constraints, ultimately contributing to project success.
+Interpersonal and team skills. Interpersonal skills that are used frequently in projects include
+emotional intelligence, decision-making, facilitation, and conflict management and resolution, among
+others. (See emotional intelligence; decision-making; conflict management.) As for team management,
+this effort entails applying knowledge, skills, tools, and techniques for management activities as well
+Risk Description Date Likelihood Impact Risk Rating
+Risk Log
+Response OwnerReference
+The main supplier cannot
+deliver on time because of
+other commercial
+commitments
+Shows how
+much work
+is yet to be
+completed
+Shows how
+much work
+has been
+completed
+Shows how
+much work has
+been completed
+and how much
+remains
+Include ﬁnancial penalties
+in contract; build
+contingency into the
+schedule; monitor
+contractor perfor mance
+Order leased line earl ier
+than necessary; incur
+additional rental fees
+Employ temporary  staff
+to free up resources for
+testing; revise project
+schedule
+Prioritize projects;
+temporarily remo ve
+alternative development
+instance
+The lead time for the
+leased line exceeds
+90 days
+Release of the new system
+is delayed because user
+acceptance testing
+commences after the
+planned start
+There is insufﬁcient
+capacity to create
+additional database
+instances for data
+migration and testing
+Annie
+Jim
+Mark
+Jim
+High
+Medium
+High
+Low
+High
+Medium
+High
+Medium
+Likely
+Unlikely
+Very
+likely
+Very
+unlikely
+03/21
+03/21
+03/21
+04/18
+1
+2
+3
+4
+Burndown Chart Burnup Chart Combined Burn Chart
+Figure 5-9. Information Radiator
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

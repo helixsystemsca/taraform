@@ -1,0 +1,51 @@
+134
+A Guide to the Project Management Body of Knowledge
+⚫ Project organization charts. A project organization chart is a graphical display of project
+team members and their reporting relationships. The chart can be formal or informal,
+highly detailed or broadly framed, based on the needs of the project. For example, the
+project organization chart for a 3,000-person disaster response team should have greater
+detail than a project organization chart for an internal, 20-person project.
+⚫
+Project team resource management. Guidance on how the project team resources
+should be defined, staffed, managed, and eventually released.
+⚫
+Training. Training strategies for team members.
+⚫ Team development. Methods for developing the project team.
+⚫ Resource control. Methods for ensuring adequate physical resources are available as
+needed and that the acquisition of physical resources is optimized for project needs. The
+resource control includes information on managing inventory, equipment, and supplies
+throughout the project life cycle.
+⚫
+Recognition plan. A plan for which recognitions and rewards will be given to team
+members, and when they will be given.
+Resource requirements. Resource requirements identify the types and quantities of resources
+required for each work package or activity in a work package and can be aggregated to determine the
+estimated resources for each work package, each WBS branch, and the entire project. The amount
+of detail and the level of specificity of the resource requirement descriptions can vary by application
+area. The resource requirements documentation may include assumptions made in determining
+which types of resources should be applied, their availability, and what quantities are needed.
+Revenue forecasts. Revenue forecasts are projections of the future financial performance of an
+organization or project, specifically focusing on the expected income generated from sales or services
+over a certain period. These forecasts are crucial for strategic planning, budgeting, and decision-
+making processes as they provide insights into potential financial outcomes and help in managing
+resources effectively.
+Risk management plan. The risk management plan is a component of the project management plan
+and describes how risk management activities will be structured and performed.
+The risk management plan may include some or all of the following elements:
+⚫
+Risk strategy. The risk strategy describes the general approach to managing risk on a project.
+⚫ Methodology. The methodology defines the specific approaches, tools, and data sources
+that will be used to perform risk management on a project.
+⚫ Roles and responsibilities. The roles and responsibilities define the lead, support, and risk
+management team members for each type of activity described in the risk management
+plan and help to clarify their responsibilities.
+⚫
+Funding. Funding identifies the funds needed to perform activities related to the
+management of risk. Funding also establishes protocols for the application of contingency
+and management reserves.
+⚫
+Timing. Timing defines when and how often the risk processes will be performed
+throughout the project life cycle and establishes risk management activities for inclusion in
+the project schedule.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

@@ -1,0 +1,49 @@
+39
+Section 3 – Project Management Principles
+⚫ Integrated decision-making. Decisions are made considering the disparate perspectives
+across the entire project ecosystem, ensuring that outputs lead to more sustainable and
+effective outcomes.
+⚫ Enhanced communication. Clear and consistent communication across all stakeholders
+helps ensure that everyone is informed and aligned.
+⚫ Managing uncertainty and complexity. In projects with high uncertainty, a holistic view
+helps ensure that planning and execution incorporate techniques to progressively identify
+and address sources of uncertainty and possible impacts that are likely to harm the
+project’s value proposition. Similarly, for highly complex projects, a holistic approach seeks
+to understand and simplify the intricate interdependencies within the project, uncovering
+inherent simplicity.
+⚫
+Proactive and pragmatic risk management. By having a holistic view from the onset,
+the project management team can have a wider and clearer understanding of the
+interconnectedness of the project. Hence, the project management team is in a better
+position for informed and timely decision-making to effectively and efficiently mitigate
+threats while exploiting opportunities.
+Having a holistic approach to sustainability can ensure that all aspects of the project are making a
+positive contribution (or at least any negative contribution is quantified). This approach can relate
+to the environmental cost/impact of the project activities as well as the environmental benefits (or
+negative impacts) delivered by the project. This approach also aligns with the Integrate Sustainability
+Within All Project Areas principle. By embracing a holistic view, project managers and stakeholders
+can increase the likelihood of considering all aspects of the project, leading to better decision-making
+and more effective project execution, which not only aligns with organizational goals but also fosters
+resilience and adaptability, resulting in a successful project.
+3.3.2 Principle in Action
+To provide an example of this principle in action, consider a nonprofit, nongovernmental organization
+(NGO) that is launching a project to promote public health practices in a local community, supported
+by a dedicated volunteer team. Following a conventional, narrowly focused approach, the focus is on
+creating educational materials and then organizing events. However, midway through the project,
+the NGO learns of a local government initiative with similar goals, offering a funding grant for aligned
+efforts. Recognizing the potential for greater impact, the team adapts their communications to align
+with the government initiative, qualifying for the grant. While this introduces stricter policy and
+communication constraints, the project now has more resources and broader reach, enabling the
+NGO to make a more significant and lasting impact on public health in the community.
+3.3.3 Connected Performance Domains
+The Adopt a Holistic View principle interacts with and elevates the performance of all domains. By
+applying this principle, each domain can be managed more effectively, helping to ensure a cohesive
+and integrated approach to project management. This principle benefits each project management
+performance domain in the following ways:
+⚫
+Governance. A holistic view promotes transparency and accountability, enabling informed,
+data-driven decision-making based on a wider scope and impacts that can drive progress in
+a manner that maximizes the positive impact from project investments for a given portfolio,
+program, or project.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

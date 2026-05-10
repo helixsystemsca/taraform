@@ -1,0 +1,36 @@
+127
+Section 4 – Inputs and Outputs
+Project management plan updates. Project management plan updates are updates to the
+document that describes how the project is being executed, monitored and controlled, and closed.
+Project schedule. The project schedule is an output of a schedule model that presents linked
+activities with planned dates, durations, milestones, and resources. The detailed project
+schedule should be flexible throughout the project to adjust for the knowledge gained, increased
+understanding of the risks, and value-added activities.
+Project schedule network diagram. The project schedule network diagram is a graphical
+representation of the logical relationships among the project schedule activities. Logical
+relationships may also be referred to as dependencies. Figure 4-2 illustrates a project schedule
+network diagram. A project schedule network diagram is produced manually or by using project
+management software. The diagram may include full project details or may have one or more
+summary activities. A summary narrative can accompany the diagram and describe the basic
+approach used to sequence the activities. Any unusual activity sequences within the network should
+be fully described within the narrative.
+Activities that have multiple predecessor activities indicate a path convergence. Activities that have
+multiple successor activities indicate a path divergence. Activities with divergence and convergence
+are at greater risk as they are affected by multiple activities or can affect multiple activities. Activity I
+is called a path convergence, as it has more than one predecessor, while activity K is called a path
+divergence, as it has more than one successor.
+Figure 4-2. Example of a Project Schedule Network Diagram
+FF
+FS + 15
+SS + 10
+SS
+AB
+CD E
+Begin HFG End
+IJ
+KL
+Note: SS means start-to-start;
+FS means ﬁnish-to-start; and
+FF means ﬁnish-to-ﬁnish.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

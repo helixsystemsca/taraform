@@ -1,0 +1,48 @@
+162
+A Guide to the Project Management Body of Knowledge
+Cultural awareness. Cultural awareness is an understanding of the differences among individuals,
+groups, and organizations and adapting the project’s communication strategy in the context of these
+differences. This awareness and any consequent actions can minimize misunderstandings and
+miscommunication that may result from cultural differences within the project’s stakeholder community.
+Cultural awareness and cultural sensitivity help the project manager to plan communications based on
+the cultural differences and requirements of stakeholders and team members.
+Customer talks and tests. Customer talks and tests consist of the collaborative processes and
+activities involving direct interaction and feedback from customers during the development and
+testing phases of a project. These practices are integral to ensuring that the final product or service
+aligns with customer expectations and requirements. By engaging customers early and throughout
+the project life cycle, organizations can enhance transparency, build trust, and improve the overall
+quality of the deliverables.
+Daily coordination meeting. A daily coordination meeting is a brief, daily collaboration meeting
+in which the team reviews progress from the previous day, declares intentions for the current day,
+and highlights any obstacles encountered or anticipated. Daily coordination meetings are a key tool
+used to enable the project team to self-direct and self-manage project work, particularly in agile
+approaches to project management. The primary goal is to increase visibility, foster collaboration,
+and ensure that the team is aligned and moving forward effectively.
+⚫
+Short and focused. Daily coordination meetings are typically brief, lasting no more than
+15 minutes. This brevity helps ensure that the meeting remains focused and efficient.
+⚫
+Progress updates. Team members share what they accomplished the previous day, what
+they plan to do today, and any obstacles they are facing. This structure helps to keep
+everyone informed about the current status of the project.
+⚫
+Obstacle identification. By discussing obstacles or blockers, the team can quickly identify
+issues that should be addressed, allowing for timely problem-solving and support.
+⚫ Accountability. Regular updates create a sense of accountability among team members,
+as they commit to specific tasks and report on their progress daily.
+⚫ Collaboration and communication. Daily coordination meetings enhance communication
+within the team, fostering a collaborative environment where team members can support
+one another and work together more effectively.
+Data analysis. Data analysis is a process that involves data preprocessing, cleaning, transforming,
+analyzing, interpreting, and visualization in order to discover insights for informed and data-driven
+project decision-making. Data analysis can be done manually by project team members or other
+dedicated functions or by including business intelligence tools and software.
+Data gathering. Data gathering is a process of selecting, collecting, measuring, and analyzing data based
+on the area of interest or variables (e.g., to answer relevant project-related questions or outcomes).
+Data representation. Data representation is the way that data is stored, processed, and
+transmitted. Data representation can include but is not limited to the following:
+⚫
+Pie chart or circle chart for nominal data representation. Nominal data can be
+categorized (e.g., it can be a mode of transportation such as a car, train, bus, or bicycle).
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

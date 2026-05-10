@@ -1,0 +1,72 @@
+71
+Section 2 – Project Management Performance Domains
+2.5.2.1 Identify Stakeholders
+The Identify Stakeholders process involves selecting the individuals, groups, or organizations
+that have a stake in the project. The process includes identifying project stakeholders regularly
+and analyzing and documenting relevant information regarding their interests, involvement,
+interdependencies, influence, and potential impact on project success. The key benefit of this
+process is that it enables the project team to identify the appropriate focus for the engagement of
+each stakeholder or group of stakeholders. Continuous stakeholder identification can work as a risk
+management strategy as the project environment evolves. This process is performed periodically
+throughout the project as needed (see Figure 2-33).
+2.5.2.2 Plan Stakeholder Engagement
+Plan Stakeholder Engagement is the process of developing strategies to engage identified project
+stakeholders based on their needs, expectations, interests, requirements, and potential impact on
+the project. The key benefit of this process is that it provides an actionable plan to interact effectively
+with stakeholders. This process is performed periodically throughout the project as needed (see
+Figure 2-34).
+Figure 2-33. Identify Stakeholders Inputs, Tools and Techniques, and Outputs
+• Project charter
+• Business documents
+– Business case
+– Beneﬁ  ts management
+plan
+• Project management plan
+– Communications
+management plan
+– Stakeholder engagement
+plan
+• Project documents
+– Change log
+– Issue log
+– Requirements
+documentation
+• Agreements
+• Enterprise environmental
+factors
+• Organizational process
+assets
+• Etc.
+• Stakeholder register
+• Change requests
+• Project management plan
+updates
+– Requirements
+management plan
+– Communications
+management plan
+– Risk management plan
+– Stakeholder engagement
+plan
+• Project document updates
+– Assumption log
+– Issue log
+– Risk register
+• Etc.
+• Expert judgment
+• Data gathering
+– Questionnaires and
+surveys
+– Brainstorming
+• Data analysis
+– Stakeholder analysis
+– Document analysis
+• Data representation
+– Stakeholder mapping/
+representation
+• Meetings
+• Etc.
+Identify Stak eholder s
+Inputs OutputsTools & Techniques
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

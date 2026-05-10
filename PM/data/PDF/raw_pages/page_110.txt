@@ -1,0 +1,29 @@
+5
+Section 1 – Introduction
+1.3 Changes to the PMBOK ® Guide
+This edition of the PMBOK® Guide focuses on delivering outcomes regardless of the approach used by
+the project team. However, project practitioners using the PMBOK® Guide also benefit from some level
+of understanding of how to deliver projects.
+This eighth edition takes the best parts of previous editions of the PMBOK® Guide to offer project
+managers a more practical and complete framework. The detailed, process-oriented approach of
+the sixth edition (using inputs, tools and techniques, and outputs [ITTOs]) is combined with the
+seventh edition’s valuable concept of performance domains, which emphasizes how different project
+elements are interconnected. This edition integrates ITTOs and process descriptions directly into the
+performance domain structure. This combined approach provides both a thorough understanding
+of individual processes and a broader view of how those processes interact to produce the desired
+project results. This approach makes the guide more adaptable and useful for project managers
+using a variety of approaches and working in diverse situations.
+Tailoring is the deliberate adaptation of the project management approach, governance, and
+processes to make them more suitable for a given environment (environmental factors include
+industry, culture, regulations, etc.) and fit for the purpose of the work at hand. The tailoring process
+is driven by the guiding project management principles, organizational values, and organizational
+culture. This guide preserves tailoring guidance from the previous edition while also adding tailoring
+considerations for each project management performance domain.
+In embracing the full spectrum of project management approaches, this edition of the PMBOK
+® Guide
+recognizes that no publication can capture every tool, technique, process, or practice that project teams
+might use. Therefore, this edition presents an array of commonly used good practices, activities, and
+processes that project practitioners can use to accomplish their work. These practices and processes
+are able to fit most projects most of the time.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

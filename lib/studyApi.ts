@@ -153,6 +153,51 @@ export type PdfTextHighlightDto = {
   page_number: number;
   text: string;
   rects: { x: number; y: number; w: number; h: number }[];
+  /** Hex fill for overlay (optional; default yellow). */
+  color?: string;
+};
+
+export type StudyHighlightRead = {
+  id: string;
+  unit_id: string;
+  user_id: string | null;
+  page: number;
+  extracted_text: string;
+  normalized_text: string;
+  text_hash: string;
+  rects: { x: number; y: number; w: number; h: number }[];
+  color: string;
+  created_at: string;
+};
+
+export type StudyGenerateResponse = {
+  flashcards_created: number;
+  quiz_questions_created: number;
+  skipped_flashcards: boolean;
+  skipped_quiz: boolean;
+  fingerprint: string | null;
+};
+
+export type StudyFlashcardRead = {
+  id: string;
+  unit_id: string;
+  highlight_id: string | null;
+  question: string;
+  answer: string;
+  difficulty: string;
+  created_at: string;
+};
+
+export type StudyQuizQuestionRead = {
+  id: string;
+  unit_id: string;
+  highlight_id: string | null;
+  question: string;
+  options: string[];
+  correct_answer: string;
+  explanation: string;
+  question_type: string;
+  created_at: string;
 };
 
 export type PdfMarkupPayload = {
@@ -230,5 +275,57 @@ export async function putPdfMarkup(unitId: string, payload: PdfMarkupPayload): P
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ payload }),
   });
+  return parseJson(res);
+}
+
+export async function syncStudyHighlights(unitId: string, highlights: PdfTextHighlightDto[]): Promise<StudyHighlightRead[]> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/study/highlights`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      unit_id: unitId,
+      highlights: highlights.map((h) => ({
+        id: h.id,
+        page: h.page_number,
+        extracted_text: h.text,
+        rects: h.rects,
+        color: h.color ?? "#fef08a",
+      })),
+    }),
+  });
+  return parseJson(res);
+}
+
+export async function fetchStudyHighlights(unitId: string): Promise<StudyHighlightRead[]> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/study/highlights?unit_id=${encodeURIComponent(unitId)}`);
+  return parseJson(res);
+}
+
+export async function postStudyGenerate(body: {
+  unit_id: string;
+  modes: ("flashcards" | "quiz")[];
+  highlight_ids?: string[] | null;
+  force?: boolean;
+}): Promise<StudyGenerateResponse> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/study/generate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return parseJson(res);
+}
+
+export async function fetchStudyFlashcards(unitId: string): Promise<StudyFlashcardRead[]> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/study/flashcards?unit_id=${encodeURIComponent(unitId)}`);
+  return parseJson(res);
+}
+
+export async function fetchStudyQuizzes(unitId: string): Promise<StudyQuizQuestionRead[]> {
+  const b = baseUrl();
+  const res = await fetch(`${b}/api/study/quizzes?unit_id=${encodeURIComponent(unitId)}`);
   return parseJson(res);
 }

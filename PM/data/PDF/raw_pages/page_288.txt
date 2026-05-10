@@ -1,0 +1,47 @@
+183
+Section 5 – Tools and Techniques
+Multicriteria decision analysis. Multicriteria decision analysis is a technique that utilizes a decision
+matrix to provide a systematic analytical approach for establishing criteria, such as risk levels,
+uncertainty, and valuation, to evaluate and rank many ideas. Multicriteria decision analysis tools (e.g.,
+prioritization matrix or analytic hierarchy process [AHP] software) can be used to identify the key
+issues and suitable alternatives to be prioritized as a set of decisions for implementation. Criteria are
+prioritized and weighted before being applied to all available alternatives to obtain a mathematical
+score for each alternative. The alternatives are then ranked by score.
+Multipoint estimating. Multipoint estimating is a method used to estimate cost or duration by
+applying an average or weighted average of optimistic, pessimistic, and most likely estimates when
+there is uncertainty with the individual activity estimates. The accuracy of single-point duration
+estimates may be improved by considering estimation uncertainty and risk. Using multipoint
+estimates helps define an approximate range for an activity’s duration:
+⚫
+Most likely (tM). This estimate is based on the duration of the activity, given the resources
+likely to be assigned, their productivity, realistic expectations of availability for the activity,
+dependencies on other participants, and interruptions.
+⚫
+Optimistic (tO). The activity duration based on analysis of the best-case scenario for the
+activity.
+⚫
+Pessimistic (tP). The duration based on analysis of the worst-case scenario for the activity.
+Depending on the assumed distribution of values within the range of the estimates, the expected
+duration, tE, can be calculated. One commonly used formula is triangular distribution:
+tE = (tO + tM + tP) / 3
+Triangular distribution is used when there is insufficient historical data or when using judgmental
+data. Duration estimates based on three points with an assumed distribution provide an expected
+duration and clarify the range of uncertainty around the expected duration.
+Negotiation. Negotiation is a discussion aimed at reaching an agreement. Negotiation is used to
+achieve support or agreement that supports the work of the project or its outcomes and to resolve
+conflicts within the team or with other stakeholders. Negotiation among team members is used to
+reach consensus on project needs. Negotiation can build trust and harmony among team members.
+Procurement negotiation clarifies the structure, rights, and obligations of the parties and other
+terms of the purchases so that mutual agreement can be reached prior to signing a contract. Final
+document language reflects all agreements reached. Negotiation concludes with a signed contract
+document or other formal agreement that can be executed by both buyer and seller.
+The negotiation should be led by a member of the procurement team who has the authority to
+sign contracts. The project manager and other members of the project management team may be
+present during negotiation to provide assistance as needed.
+Networking. Networking is the establishment of connections and relationships with other people
+from the same or other organizations for the purpose of exchanging information and developing
+contacts. Networks provide project managers and their teams with access to informal organizations
+to solve problems, influence actions of their stakeholders, and increase stakeholder support for the
+work and outcomes of the project, thus improving performance.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

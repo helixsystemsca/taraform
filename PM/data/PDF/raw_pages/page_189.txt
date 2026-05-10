@@ -1,0 +1,53 @@
+84
+A Guide to the Project Management Body of Knowledge
+⚫ These factors and criteria may be considered and addressed during the project planning
+stage. The project manager or team may need to document the impact of the unavailability
+of required resources on the project schedule, budget, risks, quality, training plans, and
+other project management plans.
+2.6.2.4 Lead the Team
+Lead the Team is the process of applying knowledge, skills, tools, and techniques for managing and
+leading the team by improving competencies, team member interactions, and the overall team
+environment to enhance project performance. This process also involves tracking team member
+performance, providing feedback, resolving and escalating issues, and managing team changes to
+optimize project performance. The key benefit of this process is that it influences team behavior,
+manages conflict, and resolves issues among team members (see Figure 2-44).
+The Lead the Team process involves both management and leadership activities as follows:
+⚫
+Management activities. Management activities focus on the means of meeting project
+objectives such as having effective processes, planning, coordinating, measuring, and
+monitoring work.
+⚫
+Leadership activities. Leadership activities focus on people and encompass influencing,
+motivating, listening, enabling, and other activities related to leading the project team, all of
+which are important in delivering the intended project outcomes. A project manager should
+be sensitive to the willingness and ability of team members to perform their work and should
+adjust their management and leadership styles to account for these factors as needed.
+2.6.2.4.1 Common Aspects of Team Development
+Regardless of how management activities are structured, the common aspects of project team
+development include the following:
+⚫
+Vision and objectives. The vision and objectives are communicated throughout the project
+and are essential for understanding. This communication includes referencing the intended
+outcomes when the project team makes decisions and solves problems.
+⚫
+Roles and responsibilities. Project managers should ensure that project team members
+understand and fulfill their roles and responsibilities. This effort may include identifying
+gaps in knowledge and skills and developing strategies to address those gaps through
+training, mentoring, or coaching. For more information, refer to the responsibility
+assignment matrix information in Section 5, Tools and Techniques.
+⚫
+Project team operations. Facilitating project team communication, problem-solving, and
+the process of consensus building may include working with the project team to develop a
+project team charter and a set of operating guidelines or project team norms.
+⚫
+Guidance. Guidance should be directed to the overall project team to keep everyone
+headed in the right direction. Individual project team members may also provide guidance
+on a particular task or deliverable.
+⚫
+Growth. Identifying areas where the project team is performing well and pointing out areas
+where the project team can improve helps everyone grow. Working collaboratively, the
+project team should identify goals for improvement and take steps to meet those goals.
+Individuals may want to develop their skills and experience in certain areas, and the project
+manager can assist with that.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

@@ -1,0 +1,46 @@
+91
+Section 2 – Project Management Performance Domains
+⚫ Emphasis on employee well-being. Employee burnout has been a major concern in
+recent years. Quiet quitting is when employees continually put in the minimum amount
+of effort to keep their jobs but do not go the extra mile for their employer. This lack of
+engagement could mean a reluctance to speak up in meetings or not volunteering for tasks.
+Quiet quitting may also result in greater absenteeism. Companies are prioritizing mental
+health initiatives and creating a work culture that fosters a work-life balance. This effort
+may include flexible work schedules, stress management programs, and generous time-off
+policies.
+2.6.3.1 Examples
+The following are two examples of how these considerations might be applied:
+⚫
+Example 1. A project team working on a large, high-variability project with an adaptive
+approach may find that resource planning for physical, virtual, or human resources is less
+predictable, requiring flexible agreements and lean methods to control costs and meet
+schedule demands.
+⚫
+Example 2. A project with a newly formed virtual team may encounter collaboration issues.
+Thus, some suggestions that could be provided include:
+◾ Ensuring there are collaboration sites for working tog ether;
+◾ Having a project team site to keep all relevant projec t and project team information
+available;
+◾ Using audio, video, and virtual conferencing capabilit ies for meetings;
+◾ Using technology to maintain ongoing contact, such a s messaging and texting;
+◾ Scheduling time to get to know remote project team members;
+◾ Having at least one face-to-face meeting to establish relationships; and
+◾ Creating a team charter and defining ways of working .
+2.6.4 Interactions With Other Domains
+The Resources performance domain interacts with all other performance domains. The Stakeholders,
+Resources, and Risk performance domains significantly impact the project outcome, which is defined
+by schedule, cost, and scope parameters. Additionally, other projects may compete for the same
+available resources at the same time and location. This competition for resources may considerably
+impact project costs, schedules, risks, scope, quality, and other project areas.
+The Estimate Resources process is closely coordinated with other processes, such as the Estimate
+Costs process, to help ensure a comprehensive approach to project planning and execution. This
+coordination is crucial as it helps to align the resource estimation with the project’s overall budget
+and financial constraints. Doing so helps ensure that the project remains financially viable and that
+resources are utilized optimally without unnecessary expenditure.
+Project managers are responsible for leading the team to work together to focus on what is
+essential at the project level. This coordination is achieved through the integration of processes,
+knowledge, and people. So, to integrate all of the performance domains and lead the project work,
+the project manager’s main concern should be to lead the project team to achieve the project
+objectives.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

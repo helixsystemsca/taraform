@@ -1,0 +1,51 @@
+54
+3.8.1 Project Impact
+Project stakeholders are influenced by the cultures of the organizations involved in the project and by
+the environment in which they operate. Within these influences, project teams often establish their
+own cultural norms. Project teams have the flexibility to customize their organizational frameworks
+to optimally achieve the intended project goal within such new cultures.
+The principle of Build an Empowered Culture enables successful project execution in the following
+areas:
+⚫
+Diversity. A diverse project team can enrich the project environment to create a more
+inclusive space by bringing together different perspectives. In a global economy, the project
+team may comprise internal organizational staff, contracted contributors, volunteers, or
+external third parties. Some project team members may also be brought in for a short term
+to work on a specific deliverable. Incorporating these key members into a project team may
+present challenges. However, cultivating a team environment that honors diversity and
+seeks to harness it constructively fosters an atmosphere where conflicts can be managed
+efficiently.
+⚫
+Process definition. Project teams should define processes that enable the completion of
+tasks and work assignments. Additionally, project teams should engage other stakeholders
+to understand, consider, communicate, and respond to their interests, needs, and opinions.
+⚫
+Interpersonal skills. Project team members and stakeholders should develop a set of
+interpersonal skills such as initiative, integrity, honesty, collaboration, respect, empathy,
+and confidence. These competencies and perspectives assist teams in adjusting to the tasks
+and one another. Coupled with an active involvement of stakeholders from inception to
+completion, these competencies pave the way for success.
+⚫
+Knowledge of organizational structures. Being aware of the various configurations and
+relationships among the components of project tasks and organizational procedures is
+important for teams to consider when building an empowered culture. Project teams tailor
+and employ frameworks that facilitate the synchronization of personal contributions within
+project tasks.
+⚫
+Team agreements. Team agreements represent a set of behavioral parameters and
+working norms that are established by the project team and upheld through individual and
+team commitments. These agreements should be created at the beginning of a project to
+determine the essential norms and practices that facilitate ongoing collaborative success.
+3.8.2 Principle in Action
+To provide an example of the principle of Build an Empowered Culture, consider a project team that
+is facing challenges with stakeholder engagement due to the territorial complexities and diversity of
+the people involved in the project. Building an empowered culture enables stakeholders to be seen
+and included from the project’s inception. This involvement provides stakeholders with guidelines to
+add value and actively participate, contributing to the project’s success.
+Remote and virtual teams face heightened challenges due to varying work styles, time zones, and
+the absence of in-person interaction, which can hinder collaboration and relationship building.
+An empowered culture gives all team members and stakeholders the opportunity to build and
+collaborate in effective and constructive ways, solving differences and managing conflicts proactively.
+The Standard for Project Management
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

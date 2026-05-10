@@ -1,0 +1,38 @@
+65
+Section 4 – Project Life Cycles
+⚫ New product development. Adaptive approaches are also appropriate for projects
+where the final features of the product are refined based on market needs such as the
+development of a new mobile app or web service.
+⚫ Digital projects. Adaptive approaches are popular with software projects due to their
+dynamic nature. While not all software development projects require an adaptive approach,
+those with evolving scope, high uncertainty, and the need for early or incremental delivery
+are strong candidates for this approach.
+4.2.3 Hybrid Approaches
+A hybrid development approach is a combination of adaptive and predictive approaches. This
+development approach incorporates some elements from a predictive approach and some from an
+adaptive approach. This development approach might be appropriate when there is uncertainty or
+risk around the requirements such as the design of a custom home. Once the design is complete,
+it makes sense to iterate no more than once for the build. Hybrid approaches are also useful when
+deliverables can be modularized or when there are deliverables that can be developed by different
+project teams.
+In practice, most projects can strongly benefit from a hybrid approach that combines adaptive and
+predictive methodologies. Focusing exclusively on either an adaptive or predictive approach does
+not fully address the varied challenges and complexities that modern projects present. A hybrid
+approach provides flexibility to adapt to changing conditions while retaining control over predictable
+aspects.
+Another example is a project with two main deliverables, where one deliverable is developed using
+an adaptive approach and the other using a predictive approach (e.g., software that will be developed
+with an adaptive approach but needs to be installed in a new data center that will be built with a
+predictive approach).
+With a hybrid approach, the various phases of the project can be approached differently. Projects
+can primarily be carried out using one approach while subsidiary streams can use a different way of
+working—in certain cases, adaptive, and in other cases, predictive.
+Hybrid project management methods follow four common patterns, as illustrated in Figures 4-8
+through 4-11.
+⚫
+The early processes use an adaptive development life cycle, which is then followed by a
+predictive rollout phase.
+Adaptive Adaptive Adaptive Predictive Predictive Predictive
+Figure 4-8. Adaptive Development Followed by a Predictive Rollout
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

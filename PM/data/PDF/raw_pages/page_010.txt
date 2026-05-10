@@ -1,0 +1,21 @@
+Updated Performance Domains
+Community input for the PMBOK® Guide—Eighth Edition overwhelmingly recommended updating
+the project performance domains to include and integrate various project management concepts
+described in previous editions. The concepts included are as follows:
+⚫ Project Management Knowledge Areas are fields or areas of specialization that are
+commonly employed when managing projects. They are historically defined in prior
+editions as a set of processes associated with a particular topic. This edition synthesizes
+those Knowledge Areas with other accepted concepts into seven project management
+performance domains.
+⚫
+Project management processes are a formalized series of logically connected activities
+that manage a project throughout its life cycle. This edition includes a selection of
+40 nonprescriptive processes that can be adapted to varied approaches, life cycles, and
+environments.
+⚫
+Tailoring considerations and examples are inserted into each performance domain.
+These considerations and examples illustrate how practitioners can apply context-specific
+adjustments to individual processes or the overall performance domain.
+Preface ix
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

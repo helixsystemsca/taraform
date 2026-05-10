@@ -1,0 +1,52 @@
+121
+Section 4 – Inputs and Outputs
+support it throughout its life cycle. This output refers to the transition of the final product, service, or
+result that the project was authorized to produce (or in the case of phase closure, the intermediate
+product, service, or result of that phase) from one team to another.
+Final report. A final report is a summary of project performance, which can include information such as:
+⚫
+Summary-level description of the project or phase;
+⚫ Scope objectives, the criteria used to evaluate the scope, and evidence that the completion
+criteria were met;
+⚫ Quality objectives, the criteria used to evaluate the project and product quality, the
+verification and actual milestone delivery dates, and reasons for variances;
+⚫ Cost objectives, including the acceptable cost range, actual costs, and reasons for any
+variances;
+⚫ Summary of the validation information for the final product, service, or result;
+⚫ Schedule objectives, including whether the results achieved the benefits that the project
+was undertaken to address (If the benefits are not met at the close of the project, indicate
+the degree to which they were achieved and an estimate for future benefits realization.);
+⚫ Summary of how the final product, service, or result achieved the business needs identified
+in the business plan (If the business needs are not met at the close of the project, indicate
+the degree to which they were achieved and an estimate for when the business needs will
+be met in the future.); and
+⚫
+Summary of any risks or issues encountered on the project and how they were addressed.
+Financial management plan. A financial management plan is a component of a program or project
+management plan that describes how costs will be planned, structured, and controlled. The financial
+management processes, and their associated tools and techniques, are documented in the financial
+management plan. For example, the financial management plan can establish the following:
+⚫
+Units of measure. Each unit used in measurements (e.g., staff hours, staff days, or weeks
+for time measures; meters, liters, tons, kilometers, or cubic yards for quantity measures; or
+lump sum in currency form) is defined for each of the resources.
+⚫
+Level of precision. This is the degree to which cost estimates will be rounded up or down
+(e.g., US$995.59 to US$1,000) based on the scope of the activities and magnitude of
+the project.
+⚫
+Level of accuracy. The acceptable range (e.g., ±10%) used in determining realistic cost
+estimates is specified and may include an amount for contingencies.
+⚫
+Organizational procedures links. The work breakdown structure (WBS) (see Section 5)
+provides the framework for the financial management plan, allowing for consistency with
+the estimates, budgets, and control of costs. The WBS component used for project cost
+accounting is called the control account. Each control account is assigned a unique code or
+account number(s) that links directly to the performing organization’s accounting system.
+⚫
+Control thresholds. Variance thresholds for monitoring cost performance may be
+specified to indicate an agreed-upon amount of variation to be allowed before some action
+should be taken. Thresholds are typically expressed as percentage deviations from the
+baseline plan.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

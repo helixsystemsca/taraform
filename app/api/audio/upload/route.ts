@@ -58,9 +58,13 @@ export async function POST(req: Request) {
   }
 
   // Store the storage path (in `file_url`) so we can generate signed URLs for playback.
-  const { error: dbErr } = await supabase.from("user_audio").insert({ user_id: userId, type, file_url: path });
+  const { data: inserted, error: dbErr } = await supabase
+    .from("user_audio")
+    .insert({ user_id: userId, type, file_url: path })
+    .select("id")
+    .single();
   if (dbErr) return NextResponse.json({ error: dbErr.message }, { status: 500 });
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true, id: inserted?.id ?? null });
 }
 

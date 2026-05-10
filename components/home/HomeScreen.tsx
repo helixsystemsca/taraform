@@ -3,18 +3,13 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, BookOpen, Clock, Highlighter, StickyNote } from "lucide-react";
+import { ArrowRight, BookOpen, Clock, Highlighter, StickyNote, Volume2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { useEncouragementAudio } from "@/hooks/useEncouragementAudio";
 import { loadLastStudy, readStudyMinutesToday } from "@/lib/lastStudySession";
+import { loadSupportMessages, pickRandomSupportMessage, SUPPORT_MESSAGES_KEY } from "@/lib/supportMessages";
 import { cn } from "@/lib/utils";
-
-function greetingSubtext(): string {
-  const h = new Date().getHours();
-  if (h < 12) return "Let's get a strong start.";
-  if (h < 17) return "Keep the momentum going.";
-  return "Let's finish strong.";
-}
 
 function suggestionLine(last: ReturnType<typeof loadLastStudy>, minutes: number): string {
   if (last && last.stickyCount >= 3) {
@@ -29,10 +24,42 @@ function suggestionLine(last: ReturnType<typeof loadLastStudy>, minutes: number)
   return "Open a PDF in Study when you're ready — your highlights and stickies stay synced.";
 }
 
+const SUPPORT_FALLBACK = "Keep the momentum going.";
+
 export function HomeScreen() {
   const router = useRouter();
+  const encouragement = useEncouragementAudio();
   const [last, setLast] = React.useState<ReturnType<typeof loadLastStudy>>(null);
   const [minutes, setMinutes] = React.useState(0);
+  const [supportTick, setSupportTick] = React.useState(0);
+  const [audioBusy, setAudioBusy] = React.useState(false);
+
+  const supportiveLine = React.useMemo(() => {
+    void supportTick;
+    const picked = pickRandomSupportMessage(loadSupportMessages());
+    return picked?.text?.trim() || SUPPORT_FALLBACK;
+  }, [supportTick]);
+
+  const messageAudioUrls = React.useMemo(() => {
+    void supportTick;
+    return loadSupportMessages().flatMap((m) => (m.audioUrl ? [m.audioUrl] : []));
+  }, [supportTick]);
+
+  const canPlayRandomAudio =
+    messageAudioUrls.length > 0 || encouragement.beforeUrls.length + encouragement.afterUrls.length > 0;
+
+  React.useEffect(() => {
+    const bump = () => setSupportTick((x) => x + 1);
+    const onStorage = (e: StorageEvent) => {
+      if (e.key === SUPPORT_MESSAGES_KEY) bump();
+    };
+    window.addEventListener("taraform-support-messages-changed", bump);
+    window.addEventListener("storage", onStorage);
+    return () => {
+      window.removeEventListener("taraform-support-messages-changed", bump);
+      window.removeEventListener("storage", onStorage);
+    };
+  }, []);
 
   React.useEffect(() => {
     setLast(loadLastStudy());
@@ -41,6 +68,7 @@ export function HomeScreen() {
       if (!document.hidden) {
         setLast(loadLastStudy());
         setMinutes(readStudyMinutesToday());
+        setSupportTick((x) => x + 1);
       }
     };
     document.addEventListener("visibilitychange", onVis);
@@ -57,9 +85,35 @@ export function HomeScreen() {
     <div className="mx-auto w-full max-w-3xl space-y-8 px-4 py-8 sm:py-12">
       <header className="space-y-2">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-ink-muted">Taraform</p>
-        <p className="text-base font-medium text-ink sm:text-lg">Hi Tara {'<3'},</p>
+        <p className="text-base font-medium text-ink sm:text-lg">Hi Tara ❤️,</p>
         <h1 className="font-display text-3xl font-semibold tracking-[-0.02em] text-ink sm:text-4xl">Welcome back</h1>
-        <p className="max-w-lg text-sm leading-relaxed text-ink-secondary">{greetingSubtext()}</p>
+        <p className="max-w-lg text-sm leading-relaxed text-ink-secondary">{supportiveLine}</p>
+        <div className="pt-1">
+          <Button
+            type="button"
+            variant="default"
+            size="sm"
+            className="gap-2 border-[rgba(120,90,80,0.12)] bg-white shadow-sm"
+            disabled={!canPlayRandomAudio || audioBusy}
+            onClick={() => {
+              if (!canPlayRandomAudio || audioBusy) return;
+              setAudioBusy(true);
+              try {
+                encouragement.playRandomWithExtras(messageAudioUrls);
+              } finally {
+                window.setTimeout(() => setAudioBusy(false), 800);
+              }
+            }}
+          >
+            <Volume2 className="h-4 w-4 text-copper" />
+            {audioBusy ? "Playing…" : "Play random encouragement"}
+          </Button>
+          {!canPlayRandomAudio ? (
+            <p className="mt-2 max-w-md text-[11px] text-ink-muted">
+              Add support-message audio or upload MP3s under Supporter settings to enable playback.
+            </p>
+          ) : null}
+        </div>
       </header>
 
       {last ? (

@@ -1,0 +1,38 @@
+Figure 5-4  E xample of Critical Path Method .................................................  161
+Figure 5-5 E xample Decision Tree  .........................................................  164
+Figure 5-6  S ample WBS Decomposed Down Through Work Packages ..........................  165
+Figure 5-7 S ample WBS Organized by Phase ................................................  166
+Figure 5-8  S ample WBS With Major Deliverables  ............................................  167
+Figure 5-9 I nformation Radiator ...........................................................  174
+Figure 5-10 I teration Burndown Chart  ......................................................  175
+Figure 5-11 C omponents of Emotional Intelligence  ...........................................  178
+Figure 5-12 E xamples of Lead and Lag  ......................................................  180
+Figure 5-13 P recedence Diagramming Method Relationship Types  .............................  186
+Figure 5-14 E xample Probability and Impact Matrix With Scoring Scheme .......................  187
+Figure 5-15 P roject Canvas Example  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  189
+Figure 5-16 P roject Dashboard Example 1 ...................................................  190
+Figure 5-17 P roject Dashboard Example 2 ...................................................  191
+Figure 5-18 R esource Leveling  .............................................................  193
+Figure 5-19 S ample RACI Matrix ............................................................  195
+Figure 5-20 S chedule Compression Comparison  .............................................  196
+Figure 5-21 E xample Tornado Diagram ......................................................  198
+Figure 5-22 E xample Probability Distribution of a Target Milestone .............................  199
+Figure 5-23 S takeholder Engagement Assessment Matrix  .....................................  200
+Figure 5-24 T o-Complete Performance Index (TCPI) ...........................................  206
+Figure 5-25 T ask Board or Kanban Board ....................................................  213
+Figure 5-26 B urnup Chart  .................................................................  214
+Figure X3-1 T he Relationship Among the Technologies Needed to Make
+G enerative Pretrained Transformers (GPTs) Work ..................................  238
+Figure X3-2 U se Cases Demonstrating Complexity and the Need for Human Intervention .........  243
+Figure X4-1 E xample Procurement Process Flow  .............................................  248
+Figure X5-1 PMBOK® Guide—Eighth Edition Content Migration  .................................  258
+Tables
+Table 2-1 M apping Project Management Focus Areas to Performance Domains ..................  9
+Table 2-2 S ampling of Common Project Governance Scenarios ................................  11
+Table 2-3 A dvantages of Insourcing Versus Outsourcing ......................................  21
+Table 2-4 G overnance Interactions With Other Performance Domains  . . . . . . . . . . . . . . . . . . . . . . . . .  36
+Table 2-5 C heck Outcomes—Governance Performance Domain ...............................  37
+Table 2-6 C heck Outcomes—Scope Performance Domain  ....................................  46
+xxiList of Figures and Tables
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

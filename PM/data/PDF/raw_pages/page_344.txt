@@ -1,0 +1,44 @@
+239
+Appendix X3
+register or scheduling plan with buffers. A project professional is expected to review the
+results to ensure they are accurate and complete.
+⚫ Augmentation. Augmentation is the enhancement of existing capabilities and the
+exploration of new ones by professionals. Augmentation focuses on strategic and complex
+tasks such as balancing the options of a project portfolio to maximize the return of
+investment or performing risk forecasting based on external variables. Project professionals
+should use the tool as a brainstorming partner, exchanging ideas and refining the results
+through multiple iterations.
+X3.1.2 State of the Market
+There are many AI tools, both free and paid, available for public use. Typically, the free options
+restrict the number of questions (prompts) that can be submitted to the engine in a given interval of
+time. The other big difference is how the engine deals with user data. Paid versions allow the user to
+restrict the use of its data to retrain the models, ensuring privacy and protecting intellectual property.
+X3.2 Common Use Cases
+Table X3-1 demonstrates how AI can significantly enhance various aspects of project management,
+including planning, controlling, stakeholder engagement, risk management, and strategic decision-
+making.
+Figure X3-2 presents some use cases classified by complexity and the need for human intervention.
+X3.3 Responsible Use and Ethical Concerns
+The use of AI in projects and organizations brings together associated benefits and risks that should
+be considered. On one hand, the use of AI may shift the daily work of project professionals from
+repetitive tasks to higher-level and more creative tasks. On the other hand, it is up to human beings to
+take the related risks into account and make appropriate decisions regarding AI’s use and potential.
+There are multiple ethical factors and risks that may play a critical role in the adoption of AI, particularly:
+⚫
+Bias. AI systems can be subject to bias if they are trained with biased data or if the
+algorithms they are using introduce bias themselves. The risk of bias can be mitigated
+through different actions such as:
+◾
+Diversification of the data sets on which the AI system is trained;
+◾ Periodic tests conducted on the AI system, with particular focus on bias; and
+◾ Involvement of different teams in the development of the AI system.
+⚫ Privacy. AI systems use large data sets that can be sensitive and regulated by privacy
+policies and laws. This use of sensitive information increases the need to properly secure
+the data and ensure that it is collected with a privacy policy in place. There is a risk that the
+data can be used in a way that violates privacy and ethical standards.
+⚫
+Accountability. AI systems may be responsible for certain decisions, depending on the
+working arrangement. Ultimately, a human should be accountable for each decision, and
+this accountability should be clearly defined.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

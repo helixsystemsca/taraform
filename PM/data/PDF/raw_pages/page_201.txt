@@ -1,0 +1,51 @@
+96
+A Guide to the Project Management Body of Knowledge
+2.7.2.2 Identify Risks
+Identify Risks includes recognizing both negative and positive risks. The process of risk identification
+focuses on distinguishing genuine risks from nonrisks, such as concerns and issues. It is important
+to recognize that not all risks can be identified at the outset due to the inherent uncertainties and
+unknowns present at the beginning of a project. Therefore, risk identification should be an iterative
+process, allowing for continuous identification and assessment of risks as more information becomes
+available and the project evolves. This iterative approach helps ensure that the risk management
+process remains dynamic and responsive, addressing emerging risks effectively and to a practical
+extent throughout the project life cycle (see Figure 2-49).
+2.7.2.3 Perform Risk Analysis
+Perform Risk Analysis involves an iterative process that combines both qualitative and quantitative
+risk analysis actions. Qualitative risk analysis is conducted throughout the project to evaluate
+individual project risks by assessing their probability of occurrence and impact. Other characteristics
+of assessment may include the degree of impact on the objectives, manageability, timing of
+possible impacts, relationships with other risks, and common causes or effects. Quantitative risk
+analysis, depending on the project, may not always be required, but when it is, it is also conducted
+throughout the project. This process includes numerically analyzing the combined effect of
+identified individual project risks and other sources of uncertainty on overall project objectives (see
+Figure 2-50).
+2.7.2.4 Plan Risk Responses
+Plan Risk Responses is the process of developing options, selecting strategies, and agreeing on
+actions to address overall project risk exposure, as well as to treat individual project risks. The key
+benefit of this process is that it identifies suitable ways to address overall project risk and individual
+• Project charter
+• Project management plan
+– All components
+• Project documents
+– Stakeholder register
+• Enterprise environmental
+factors
+• Organizational process
+assets
+• Etc.
+• Project management plan
+updates
+– Risk management plan
+• Etc.
+• Expert judgment
+• Data gathering
+– Interviews
+• Data analysis
+– Stakeholder analysis
+• Meetings
+• Etc.
+Plan Risk Management
+Inputs OutputsTools & Techniques
+Figure 2-48. Plan Risk Management Inputs, Tools and Techniques, and Outputs
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

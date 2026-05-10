@@ -1,0 +1,102 @@
+208
+A Guide to the Project Management Body of Knowledge
+Table 5-1. (Continued)
+Earned Value Analysis
+Abbreviation Name
+Lexicon
+Definition How It Is Used Equation
+Interpretation
+of Result
+SV Schedule
+variance
+A measure
+of schedule
+performance
+expressed as
+the difference
+between the
+earned value
+and the planned
+value
+It is the difference
+between the work
+completed to a point
+in time, usually the
+data date, and the
+work planned to be
+completed to the
+same point in time.
+SV =
+EV − PV
+Positive =
+Ahead of
+schedule
+Neutral = On
+schedule
+Negative =
+Behind
+schedule
+VAC Variance at
+completion
+A projection of
+the amount of
+budget deficit
+or surplus,
+expressed as
+the difference
+between the
+budget at
+completion and
+the estimate at
+completion
+It is the estimated
+difference in cost at
+the completion of the
+project.
+VAC =
+BAC − EAC
+Positive =
+Under
+planned cost
+Neutral =
+On planned
+cost
+Negative =
+Over planned
+cost
+CPI Cost
+performance
+index
+A measure of the
+cost efficiency
+of budgeted
+resources
+expressed as the
+ratio of earned
+value to actual
+cost
+A CPI of 1.0 means
+the project is exactly
+on budget; that the
+work actually done
+so far is exactly the
+same as the cost
+so far. Other values
+show the percentage
+of how much costs
+are over or under the
+budgeted amount for
+work accomplished.
+CPI =
+EV / AC
+Greater than
+1.0 = Under
+planned cost
+Exactly 1.0 =
+On planned
+cost
+Less than
+1.0 = Over
+planned cost
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

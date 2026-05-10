@@ -1,0 +1,44 @@
+27
+Section 2 – A System for Value Delivery
+2.4.7 Provide Resources
+Securing and providing the necessary resources is a crucial activity for project success. Some
+individuals, such as portfolio managers and project sponsors, are responsible for securing the
+necessary resources, including funding, physical resources, personnel, and authority, to enable
+project progress. These individuals champion the project at an organizational level and ensure it
+receives the necessary support from senior management.
+Individuals in resource-related functions, such as functional and resource managers, are responsible
+for allocating the necessary resources to the project team. These roles assign the right personnel,
+equipment, and expertise to the project team to meet the project requirements and ensure that
+resources are allocated efficiently and according to the needs of the project. These people also take
+care of any resource gaps that may occur during the project life cycle, ensuring smooth execution.
+Together, these roles help ensure that the project team is equipped with the necessary resources to
+achieve the project objectives and overcome any challenges related to resource allocation.
+2.5 Project Management Roles
+While Section 2.4 describes the functions that drive project delivery, many environments perform
+those functions through a variety of individuals and/or teams, with some organizations focusing
+on specific role definitions. Each role within a project setup adds specific value, and the project’s
+outcomes directly depend on those contributions.
+This section details some key project roles, such as the project management team, project
+manager, sponsor, customer, product owner, project team, and end user, which all add value to
+a project’s execution. However, as each enterprise and project is unique, the functions, roles, and
+responsibilities may differ accordingly.
+2.5.1 Project Management Team
+The project management team may consist solely of a project manager or may include more
+individuals who form a team; both structures will be referred to synonymously in this section. The
+project management team is essential for guiding the assigned team to achieve goals and deliver
+value to the organization and customers while considering flexibility, adaptability, and tailoring. The
+critical nature of this role is due to several factors ranging from uncertainty to new ways of working.
+A project management team performs various functions such as facilitating and mentoring the
+project team and managing the processes to deliver intended outcomes.
+Depending on the organization’s policies and processes, it is suggested that the project management
+team is involved from project initiation through closing and, in some cases, in post-project benefit
+analysis. Moreover, in some organizations, a project management team may be involved in
+evaluation and feasibility analysis activities before project initiation and may consult with executives
+and business unit leaders on ideas for advancing strategic objectives, improving organizational
+performance, and meeting customer needs. In some organizational settings, the project management
+team may also be called upon to manage or assist in business analysis, business case development,
+and aspects of portfolio management for a project. The project management team’s role and level of
+involvement may vary from organization to organization, and hence, the role should be tailored to fit
+the organizational structure, like tailoring project processes.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

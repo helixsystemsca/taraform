@@ -1,0 +1,47 @@
+241
+Appendix X3
+(continued)
+Table X3-1. (Continued)
+Project Management
+Performance Domain AI Strategy Use Case
+Governance Automation Real-time monitoring. AI tools can continuously moni-
+tor project progress against planned baselines, providing
+real-time updates and alerts for deviations, enabling
+timely corrective actions.
+Governance Assistance Early warning signaling. Even when critical path analy-
+sis, burndown charts, or cumulative flow diagrams show
+that things appear to be progressing according to plan,
+AI tools can use pattern recognition from similar projects
+to indicate when things may be at risk of falling behind or
+going off track.
+Governance Augmentation Baseline optimization. AI tools can augment trade-off
+analysis among scope, schedule, and cost factors to help
+determine the optimal baseline that maximizes a project’s
+value proposition.
+Governance Automation AI chatbots. Virtual assistants powered by AI can handle
+routine queries, provide project updates, and assist with
+task management, freeing up project managers to focus
+on more strategic activities.
+Governance Automation Task management. AI assistants can track activities’
+progress, send reminders, or assign tasks based on team
+members’ workloads and skill sets.
+Governance Automation Automated meeting minutes and summaries.
+AI can schedule and transcribe meetings; identify key
+points, decisions, and action items; and generate
+detailed minutes automatically. AI can also provide
+concise summaries of meetings, pointing out important
+discussions and follow-up actions, helping ensure that all
+stakeholders are aligned.
+Risk Augmentation Risk identification and assessment. AI algorithms can
+analyze historical project data and industry benchmarks to
+identify potential risks in new projects. By using predictive
+analytics, AI can assess the likelihood and impact of
+these risks, enabling project managers to develop com-
+prehensive risk management plans early in the planning
+phase.
+Risk Automation Automated risk mitigation actions. Once risks are
+detected, AI can suggest—and even automate—certain
+mitigation actions based on predefined rules on task
+assignment and historical data.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

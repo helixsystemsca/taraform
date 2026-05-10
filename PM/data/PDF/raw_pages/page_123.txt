@@ -1,0 +1,44 @@
+18
+A Guide to the Project Management Body of Knowledge
+The project charter forms a partnership between the performing and requesting organizations. The
+approved business case, or similar item, justifies the reason behind initiating the project and the
+expected value.
+For cross-corporate projects with two or more organizations involved, contracts are used to establish
+an agreement among the organizations. Project charters are then used inside the organizations
+to create internal agreements to ensure fulfillment of contractual obligations, which are mostly
+deliveries made by contractors, with payments made by customers. The approved project charter
+formally initiates the project, identifying and assigning a project manager as early as possible, ideally
+during the development of the charter and always before planning begins. The project charter can be
+developed by the sponsor or the project manager in collaboration with the initiating entity, allowing
+the project manager to gain a better understanding of the project’s purpose, objectives, and expected
+benefits. This understanding facilitates efficient resource allocation to project activities. The project
+charter grants the project manager the authority to support the project.
+In adaptive approaches, project charters are often designed to be more flexible, ranging from
+minimally impactful worksheets or concise vision statements to moderately detailed documents.
+These charters are tailored to the iterative and incremental nature of adaptive projects, providing
+just enough structure to guide the team while allowing for evolving requirements and priorities. An
+adaptive project charter typically focuses on answering a subset or all of the following key questions:
+⚫
+Why is the project being undertaken?
+⚫ Who will be engaged?
+⚫ What is this project about?
+⚫ Where will it occur?
+⚫ When will it start and end?
+⚫ How will it be carried out?
+⚫ Who is the customer?
+By emphasizing clarity and flexibility, adaptive project charters can ensure alignment among
+stakeholders while maintaining the ability to adapt to changes throughout the project’s life cycle.
+2.1.6.2 Integrate and Align Project Plans
+The Integrate and Align Project Plans process involves integrating, aligning, and coordinating all plan
+components and consolidating them into a unified project management plan. The primary benefit of
+this process is the creation of a thorough document outlining the basis for the various aspects of all
+project activities and how they will be executed. This process is typically conducted once or at specific
+intervals during the project.
+The project management plan specifies how the project will be executed, monitored and controlled,
+and closed. Its content varies depending on the project’s application context and complexity. The plan
+can be either high level or detailed, tailored to the project’s specific needs. This plan should also be
+adaptable enough to respond to the dynamic project environment—ideally, by following a progressive
+elaboration approach—ensuring that more accurate information is available as the project progresses.
+The output of this process should be documented and communicated to key project stakeholders.
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

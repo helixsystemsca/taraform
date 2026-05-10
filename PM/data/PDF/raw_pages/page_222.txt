@@ -1,0 +1,45 @@
+117
+Section 4 – Inputs and Outputs
+actions, preventive actions, defect repairs, or updates that reflect modified or additional ideas or
+content. Other change requests cover the needed preventive or corrective actions to eliminate or
+minimize a negative impact later in the project.
+Any stakeholder may request a change. Change requests are processed for review and disposition
+through the Assess and Implement Changes process.
+Communications management plan. The communications management plan is a component
+of the portfolio, program, or project management plan that describes how, when, and by whom
+information will be administered and disseminated. The communications management plan
+describes how project communications will be planned, structured, implemented, and monitored for
+effectiveness. The plan contains, but is not limited to, the following information:
+⚫
+Stakeholder communication requirements;
+⚫ Information to be communicated, including language, format, content, and level of detail;
+⚫ Escalation processes;
+⚫ Reason for the distribution of that information;
+⚫ Timeframe and frequency for the distribution of required information and receipt of
+acknowledgment or response, if applicable;
+⚫ Person responsible for communicating the information;
+⚫ Person responsible for authorizing release of confidential information;
+⚫ Person or groups that will receive the information, including information about their needs,
+requirements, and expectations;
+⚫ Methods or technologies used to convey the information, such as memos, emails, press
+releases, or social media announcements;
+⚫ Resources allocated for communication activities, including time and budget;
+⚫ Method for updating and refining the communications management plan as the project
+progresses and develops, such as when the stakeholder community changes as the project
+moves through different phases;
+⚫
+Glossary of common terminology;
+⚫ Flowcharts of the information flow in the project, workflows with possible sequence of
+authorization, list of reports, meeting plans, etc.; and
+⚫ Constraints derived from specific legislation or regulations, technologies, organizational
+policies, etc.
+The communications management plan may include guidelines and templates for project status
+meetings, project team meetings, virtual meetings, and email messages. The use of a project website
+and project management software can be included if these are to be used in the project.
+The communications management plan is both an input and an output that plays a crucial role in ensuring
+the smooth execution and delivery of a project. As an input, it serves as a guideline for the project team on
+how to disseminate information effectively. The communications management plan outlines:
+⚫
+Who needs to receive information (stakeholders, team members, etc.);
+⚫ What information needs to be communicated (project updates, risks, changes, etc.);Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

@@ -1,0 +1,56 @@
+70
+A Guide to the Project Management Body of Knowledge
+2.5.2 Processes
+The Stakeholders performance domain includes the processes required to determine, manage,
+and control the stakeholder engagement of the project. The following processes are included in the
+Stakeholders performance domain (see Figure 2-32):
+⚫
+Identify Stakeholders. The process of identifying project stakeholders regularly and
+analyzing and documenting relevant information regarding their interests, involvement,
+interdependencies, influence, and potential impact on project success.
+⚫
+Plan Stakeholder Engagement. The process of developing strategies to engage identified
+project stakeholders based on their needs, expectations, interests, requirements, and
+potential impact on the project.
+⚫
+Plan Communications Management. The process of planning how to communicate with
+stakeholders, both inside and outside the team.
+⚫ Manage Stakeholder Engagement. The process of communicating and working with
+stakeholders to meet their needs and expectations, address issues, and foster appropriate
+stakeholder involvement.
+⚫
+Manage Communications. The process of ensuring timely and appropriate collection,
+creation, distribution, storage, retrieval, management, monitoring, and the ultimate
+disposition of project information.
+⚫
+Monitor Stakeholder Engagement. The process of monitoring project stakeholder
+relationships and tailoring strategies for engaging stakeholders through the modification of
+engagement strategies and plans.
+⚫
+Monitor Communications. The process of ensuring the information needs of the project
+and its stakeholders are met.
+Figure 2-32. Stakeholders Performance Domain Processes Overview
+ClosingPlanning
+Executing
+Monitoring and Controlling
+Initiating
+Identify
+Stakeholders
+Plan
+Stakeholder
+Engagement
+Plan
+Communications
+Management
+Monitor
+Stakeholder
+Engagement
+Manage
+Communications
+Monitor
+Communications
+Manage
+Stakeholder
+Engagement
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

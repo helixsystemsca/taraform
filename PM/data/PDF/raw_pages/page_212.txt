@@ -1,0 +1,47 @@
+107
+Section 3 – Tailoring
+A project management office (PMO), in organizations that have one, can play a vital role
+in reviewing and approving tailored development approaches, which is well aligned to
+organizational policy. Tailoring that impacts the project team requires less oversight than
+tailoring impacting external groups, so project manager approval is usually enough for internal
+project tailoring. Tailoring that affects external groups may require the approval of PMOs, which
+may also assist project teams as they tailor their approaches by providing ideas and solutions
+from other projects.
+Project management offices continue to evolve in form, function, and naming, reflecting the
+unique needs and delivery approaches of each organization. Regardless of structure, what remains
+consistent is the PMO’s alignment to business priorities. The mission of a PMO is often centered
+on solving critical organizational challenges such as enabling value delivery, ensuring compliance,
+improving cost control, or enhancing delivery consistency.
+Modern PMOs are increasingly expected to go beyond operational support, acting as enablers of
+strategy execution and contributors to enterprise-wide outcomes. Their ability to adapt services
+based on what the organization values most—and to evolve in response to changing priorities—
+determines their long-term relevance and impact. See Appendix X2 on PMOs for more details.
+Projects sometimes require the collaboration of multiple organizations, with each bringing its
+own processes, governance structures, and delivery approaches. In such cases, it is important
+that tailoring is done using a multiorganization approach to help ensure alignment and cohesion.
+Tailoring at the Project Level
+Methodology
+for Project A
+Methodology
+for Project B
+Methodology
+for Project C
+Methodology
+for Project D
+Methodology
+for Project E
+Tailoring at the Organizational Level
+Organization’s Methodology
+for Small Projects
+Organization’s Methodology
+for Large/Sensitive Projects
+A General Project Management
+Methodology
+A General Development
+Approach
+Environmental
+Factors
+General Guides
+Figure 3-2. Assessing the Organizational and Project Factors When Tailoring
+Licensed To: Josh Collins PMI MemberID: 12596044
+This copy is a PMI Member benefit, not for distribution, sale, or reproduction.

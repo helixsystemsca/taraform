@@ -23,6 +23,24 @@ SYSTEM_FLASHCARDS = (
     "Return JSON with key \"cards\": an array of 5 to 10 objects, each with \"front\" and \"back\" strings."
 )
 
+SYSTEM_FLASHCARDS_HIGHLIGHTS = (
+    "You create flashcards for active recall. Use ONLY the excerpt blocks provided—do not invent facts "
+    "or use outside knowledge. Each card must be grounded in exactly one excerpt via highlight_index. "
+    "Questions should force retrieval (cloze-style, definition recall, or application). "
+    "Return JSON only: {\"cards\":[{\"question\":string,\"answer\":string,\"highlight_index\":int,"
+    "\"difficulty\":\"easy\"|\"medium\"|\"hard\"}, ...]}. Provide 4 to 12 cards when excerpts allow."
+)
+
+SYSTEM_QUIZ_HIGHLIGHTS = (
+    "You write quiz questions for active recall. Use ONLY the excerpt blocks provided. "
+    "Include a mix of question_type: \"mcq\" (4 options), \"true_false\", and \"short_answer\". "
+    "For mcq, include \"options\" array (4 strings). For true_false use options [\"True\",\"False\"]. "
+    "For short_answer use empty options []. "
+    "Return JSON only: {\"questions\":[{\"question_type\":\"mcq\"|\"true_false\"|\"short_answer\","
+    "\"question\":string,\"options\":string[],\"correct_answer\":string,\"explanation\":string,"
+    "\"highlight_index\":int}, ...]}. Aim for 6 to 14 questions."
+)
+
 
 def _client() -> AsyncOpenAI:
     key = os.getenv("OPENAI_API_KEY", "").strip()
@@ -154,6 +172,163 @@ def _parse_flashcards_json(raw: str) -> list[dict[str, str]]:
     if len(out) < 5:
         raise ValueError("too_few_cards")
     return out[:10]
+
+
+def _format_excerpt_lines(blocks: list[tuple[str, str]]) -> str:
+    lines: list[str] = []
+    for i, (hid, text) in enumerate(blocks):
+        excerpt = text.strip()[:4_000]
+        lines.append(f"{i} — {hid} — {excerpt}")
+    return "\n".join(lines)
+
+
+def _parse_flashcards_from_highlights(raw: str, n_excerpts: int) -> list[dict[str, Any]]:
+    data = json.loads(raw)
+    if not isinstance(data, dict) or not isinstance(data.get("cards"), list):
+        raise ValueError("expected cards array")
+    out: list[dict[str, Any]] = []
+    for item in data["cards"][:24]:
+        if not isinstance(item, dict):
+            continue
+        q = item.get("question")
+        a = item.get("answer")
+        idx = item.get("highlight_index")
+        diff = item.get("difficulty", "medium")
+        if not isinstance(q, str) or not isinstance(a, str) or not isinstance(idx, int):
+            continue
+        if not q.strip() or not a.strip():
+            continue
+        if idx < 0 or idx >= n_excerpts:
+            continue
+        dstr = str(diff).lower() if isinstance(diff, str) else "medium"
+        if dstr not in {"easy", "medium", "hard"}:
+            dstr = "medium"
+        out.append(
+            {
+                "question": q.strip()[:600],
+                "answer": a.strip()[:900],
+                "highlight_index": idx,
+                "difficulty": dstr,
+            }
+        )
+    if len(out) < 2:
+        raise ValueError("too_few_cards")
+    return out
+
+
+def _parse_quiz_from_highlights(raw: str, n_excerpts: int) -> list[dict[str, Any]]:
+    data = json.loads(raw)
+    if not isinstance(data, dict) or not isinstance(data.get("questions"), list):
+        raise ValueError("expected questions array")
+    out: list[dict[str, Any]] = []
+    for item in data["questions"][:30]:
+        if not isinstance(item, dict):
+            continue
+        qt = item.get("question_type")
+        q = item.get("question")
+        opts = item.get("options")
+        ca = item.get("correct_answer")
+        expl = item.get("explanation", "")
+        idx = item.get("highlight_index")
+        if qt not in ("mcq", "true_false", "short_answer"):
+            continue
+        if not isinstance(q, str) or not q.strip():
+            continue
+        if not isinstance(ca, str) or not ca.strip():
+            continue
+        if not isinstance(idx, int) or idx < 0 or idx >= n_excerpts:
+            continue
+        opt_list: list[str] = []
+        if isinstance(opts, list):
+            opt_list = [str(x).strip() for x in opts if str(x).strip()]
+        if qt == "mcq" and len(opt_list) < 2:
+            continue
+        if qt == "true_false" and len(opt_list) < 2:
+            opt_list = ["True", "False"]
+        if qt == "short_answer":
+            opt_list = []
+        expl_s = expl.strip()[:2_000] if isinstance(expl, str) else ""
+        out.append(
+            {
+                "question_type": qt,
+                "question": q.strip()[:1_200],
+                "options": opt_list[:8],
+                "correct_answer": ca.strip()[:600],
+                "explanation": expl_s,
+                "highlight_index": idx,
+            }
+        )
+    if len(out) < 2:
+        raise ValueError("too_few_questions")
+    return out
+
+
+async def run_flashcards_from_highlights(blocks: list[tuple[str, str]]) -> list[dict[str, Any]]:
+    if not blocks:
+        raise ValueError("no_excerpts")
+    lines = _format_excerpt_lines(blocks)
+    user_prompt = (
+        "EXCERPTS (index — highlight_id — text):\n"
+        f"{lines}\n\n"
+        "Create flashcards grounded in these excerpts only. "
+        "highlight_index must reference the excerpt index (left column). "
+        'Return JSON: {"cards":[{"question":"...","answer":"...","highlight_index":0,"difficulty":"medium"}, ...]}'
+    )
+    client = _client()
+    last_err: Exception | None = None
+    for attempt in range(2):
+        try:
+            completion = await client.chat.completions.create(
+                model="gpt-4o-mini",
+                temperature=0.35,
+                response_format={"type": "json_object"},
+                messages=[
+                    {"role": "system", "content": SYSTEM_FLASHCARDS_HIGHLIGHTS},
+                    {"role": "user", "content": user_prompt},
+                ],
+            )
+            raw = completion.choices[0].message.content or "{}"
+            return _parse_flashcards_from_highlights(raw, len(blocks))
+        except Exception as e:  # noqa: BLE001
+            last_err = e
+            if attempt == 0:
+                user_prompt += "\n\nReply with valid JSON; highlight_index must be within range."
+    assert last_err is not None
+    raise last_err
+
+
+async def run_quiz_from_highlights(blocks: list[tuple[str, str]]) -> list[dict[str, Any]]:
+    if not blocks:
+        raise ValueError("no_excerpts")
+    lines = _format_excerpt_lines(blocks)
+    user_prompt = (
+        "EXCERPTS (index — highlight_id — text):\n"
+        f"{lines}\n\n"
+        "Write quiz questions grounded in these excerpts only. "
+        "highlight_index must reference the excerpt index. "
+        "Vary question_type across mcq, true_false, and short_answer."
+    )
+    client = _client()
+    last_err: Exception | None = None
+    for attempt in range(2):
+        try:
+            completion = await client.chat.completions.create(
+                model="gpt-4o-mini",
+                temperature=0.35,
+                response_format={"type": "json_object"},
+                messages=[
+                    {"role": "system", "content": SYSTEM_QUIZ_HIGHLIGHTS},
+                    {"role": "user", "content": user_prompt},
+                ],
+            )
+            raw = completion.choices[0].message.content or "{}"
+            return _parse_quiz_from_highlights(raw, len(blocks))
+        except Exception as e:  # noqa: BLE001
+            last_err = e
+            if attempt == 0:
+                user_prompt += "\n\nReply with valid JSON only; include highlight_index for each question."
+    assert last_err is not None
+    raise last_err
 
 
 async def run_flashcards(user_summary: str, ai_feedback: dict[str, Any]) -> list[dict[str, str]]:
